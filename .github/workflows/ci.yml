@@ -1,0 +1,45 @@
+name: "Build and Deploy"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [node]
+
+    steps:
+      # Build
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      # Deploy
+
+      - name: Deploy
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        with:
+          user-email:
+          create-target-branch-if-needed: true
+          source-directory: "dist"
+          destination-github-username: ${{ secrets.DEPLOY_GITHUB_USERNAME }}
+          destination-repository-name: ${{ secrets.DEPLOY_GITHUB_REPOSITORY }}
