@@ -1,22 +1,21 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import React from "react";
 import {
-  IonList,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
   IonInput,
+  IonItem,
+  IonList,
   IonPage,
   IonText,
-  IonHeader,
-  IonButton,
-  IonRouterLink,
   IonToolbar,
-  IonBackButton,
-  IonButtons,
-  IonTitle,
-  IonContent,
-  IonItem,
 } from "@ionic/react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // Logo Image
 import logo from "../assets/paaumarket.svg";
@@ -38,7 +37,7 @@ const Register: React.FC = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: object) => {
     console.log(data);
   };
 
@@ -102,13 +101,7 @@ const Register: React.FC = () => {
             ></IonInput>
           </IonItem>
 
-          <IonButton
-            expand="full"
-            shape="round"
-            className="mt-5 font-bold capitalize"
-            color="success"
-            size="large"
-          >
+          <IonButton expand="full" shape="round" color="success">
             Get Started
           </IonButton>
         </IonList>
@@ -118,26 +111,14 @@ const Register: React.FC = () => {
             By creating an account you agree with our Terms of Service, Privacy
             Policy, and our default Notification Settings. By creating an
             account you agree with our{" "}
-            <IonRouterLink className="hover:underline text-jade-500 cursor-pointer">
-              Terms of Service, Privacy Policy
-            </IonRouterLink>
-            , and our default{" "}
-            <IonRouterLink className="hover:underline text-jade-500 cursor-pointer">
-              Notification Settings
-            </IonRouterLink>
-            .
+            <Link to="/">Terms of Service, Privacy Policy</Link>, and our
+            default <Link to="/">Notification Settings</Link>.
           </p>
         </IonText>
 
         <IonText className="ion-text-center">
           <p>
-            Already have an account?{" "}
-            <IonRouterLink
-              href="/login"
-              className="hover:underline text-jade-500 cursor-pointer"
-            >
-              Sign In
-            </IonRouterLink>
+            Already have an account? <Link to="/login">Sign In</Link>
           </p>
         </IonText>
       </IonContent>

@@ -1,21 +1,21 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import React from "react";
 import {
-  IonList,
-  IonInput,
-  IonPage,
-  IonText,
-  IonHeader,
-  IonButton,
-  IonRouterLink,
-  IonToolbar,
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
+  IonHeader,
+  IonInput,
   IonItem,
+  IonList,
+  IonPage,
+  IonText,
+  IonToolbar,
 } from "@ionic/react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // Logo Image
 import logo from "../assets/paaumarket.svg";
@@ -37,7 +37,7 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: object) => {
     console.log(data);
   };
 
@@ -84,26 +84,14 @@ const SignIn: React.FC = () => {
             ></IonInput>
           </IonItem>
 
-          <IonButton
-            expand="full"
-            shape="round"
-            className="mt-5 font-bold capitalize"
-            color="success"
-            size="large"
-          >
+          <IonButton expand="full" shape="round" color="success">
             Sign In
           </IonButton>
         </IonList>
 
         <IonText className="ion-text-center">
           <p>
-            Create an account?{" "}
-            <IonRouterLink
-              href="/register"
-              className="hover:underline text-jade-500 cursor-pointer"
-            >
-              Sign Up
-            </IonRouterLink>
+            Create an account? <Link to="/register">Sign Up</Link>
           </p>
         </IonText>
       </IonContent>
