@@ -27,10 +27,10 @@ import logo from "../assets/paaumarket.svg";
 // Schema for form validation
 const schema = yup
   .object({
-    name: yup.string().trim().required(),
-    email: yup.string().trim().email().required(),
-    mobile_number: yup.number().positive().required().label("Mobile Number"),
-    password: yup.string().trim().max(16).required(),
+    name: yup.string().trim().required().label("Full Name"),
+    email: yup.string().trim().email().required().label("Email"),
+    mobile_number: yup.string().required().label("Mobile Number"),
+    password: yup.string().trim().max(16).required().label("Password"),
   })
   .required();
 
@@ -78,6 +78,7 @@ const Register: React.FC = () => {
             </h2>
           </IonText>
         </div>
+
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <IonList className="ion-padding ion-margin-bottom">
