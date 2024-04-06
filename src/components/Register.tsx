@@ -113,7 +113,7 @@ const Register: React.FC = () => {
           </IonButton>
         </IonList>
 
-        <IonText>
+        <IonText className="ion-padding">
           <p className="text-center text-xs mb-5">
             By creating an account you agree with our Terms of Service, Privacy
             Policy, and our default Notification Settings. By creating an
