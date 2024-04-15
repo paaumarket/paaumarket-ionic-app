@@ -99,7 +99,7 @@ const Register: React.FC = () => {
           />
           <IonText className="ion-text-color">
             <h2 className="text-center text-md font-bold">
-              Sign up to Paau Market
+              Sign up to PAAU Market
             </h2>
           </IonText>
         </div>

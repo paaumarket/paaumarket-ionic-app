@@ -16,21 +16,22 @@ import {
 } from "@ionic/react";
 import Header from "../component/Header";
 import { callOutline } from "ionicons/icons";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
     <IonPage>
       <Header></Header>
 
-      <IonText className="ion-padding">Find anything in store.</IonText>
-
-      <IonSearchbar
-        showClearButton="focus"
-        value=""
-        placeholder="Search Paau Market"
-      ></IonSearchbar>
-
       <IonContent className="ion-padding">
+        <IonText className="ion-padding">Find anything in store.</IonText>
+
+        <IonSearchbar
+          showClearButton="focus"
+          value=""
+          placeholder="Search Paau Market"
+        ></IonSearchbar>
+
         <>
           <b>Phone & Tablets</b>
           <IonGrid>
@@ -68,19 +69,15 @@ export default function Home() {
 const Product = (props: any) => {
   return (
     <IonCol size="6" size-md="4" size-lg="2">
-      <IonCard>
-        <img alt={props.product_name} src={props.source} />
-        <IonCardHeader>
-          <IonCardTitle>{props.product_name}</IonCardTitle>
-          <IonCardSubtitle>{props.product_price}</IonCardSubtitle>
-        </IonCardHeader>
-
-        <IonCardContent>
-          <IonButton routerLink="wa.me/+2349025534431" expand="block">
-            <IonIcon icon={callOutline}></IonIcon>
-          </IonButton>
-        </IonCardContent>
-      </IonCard>
+      <Link to="/home/1">
+        <IonCard>
+          <img alt={props.product_name} src={props.source} />
+          <IonCardHeader>
+            <IonCardTitle>{props.product_name}</IonCardTitle>
+            <IonCardSubtitle>{props.product_price}</IonCardSubtitle>
+          </IonCardHeader>
+        </IonCard>
+      </Link>
     </IonCol>
   );
 };

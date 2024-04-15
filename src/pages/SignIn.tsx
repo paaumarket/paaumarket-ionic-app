@@ -70,7 +70,7 @@ const SignIn: React.FC = () => {
           />
           <IonText className="ion-text-color">
             <h2 className="text-center text-md font-bold">
-              Welcome back to Paau Market
+              Welcome back to PAAU Market
             </h2>
           </IonText>
         </div>

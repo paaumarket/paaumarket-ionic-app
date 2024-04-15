@@ -14,6 +14,7 @@ import {
 import { Route } from "react-router-dom";
 
 import Home from "../pages/Home";
+import SinglePage from "../pages/SinglePage";
 
 export default function Tabs() {
   return (
@@ -21,7 +22,10 @@ export default function Tabs() {
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/home">
-            <Home />
+            <Home></Home>
+          </Route>
+          <Route exact path="/home/:id">
+            <SinglePage></SinglePage>
           </Route>
         </IonRouterOutlet>
 
