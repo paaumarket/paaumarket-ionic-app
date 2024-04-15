@@ -1,10 +1,26 @@
-import { IonButton, IonContent, IonPage, IonText } from "@ionic/react";
+import {
+  IonButton,
+  IonContent,
+  IonPage,
+  IonSearchbar,
+  IonText,
+} from "@ionic/react";
+import Header from "../component/Header";
 
 export default function Home() {
   return (
     <IonPage>
-      <IonContent>
-        <IonText>Welcome to PaauMarket</IonText>
+      <Header></Header>
+
+      <IonText className="ion-padding">Find anything in store.</IonText>
+
+      <IonSearchbar
+        showClearButton="focus"
+        value=""
+        placeholder="Search Paau Market"
+      ></IonSearchbar>
+
+      <IonContent className="ion-padding">
         <p>
           <IonButton routerLink="/login" expand="block">
             Login
