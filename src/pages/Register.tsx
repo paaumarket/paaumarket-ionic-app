@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import {
@@ -14,6 +14,7 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
@@ -35,6 +36,11 @@ const schema = yup
   .required();
 
 const Register: React.FC = () => {
+  const [showModal, setShowModal] = useState({
+    message: "Fields required",
+    isOpen: false,
+  });
+
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -53,7 +59,18 @@ const Register: React.FC = () => {
 
   const onSubmit = (data: any) => {
     registrationMutation.mutate(data);
+
+    /*     if (registrationMutation.status === "success") {
+      console.log(registrationMutation.data);
+    }
+
+    setShowModal({
+      ...showModal,
+      message: "Hello word",
+    });
+    console.log(registrationMutation.error); */
   };
+  // console.log(showModal);
 
   return (
     <IonPage>
@@ -66,6 +83,14 @@ const Register: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
+        {/* Show Modal Ionic Toast */}
+        <IonToast
+          isOpen={showModal.isOpen}
+          message={showModal.message}
+          onDidDismiss={() => setShowModal({ ...showModal, isOpen: false })}
+          duration={5000}
+        ></IonToast>
+
         <div>
           <img
             src={logo}
@@ -170,7 +195,12 @@ const Register: React.FC = () => {
                 )}
               />
             </IonList>
-            <IonButton expand="full" shape="round" type="submit">
+            <IonButton
+              expand="full"
+              shape="round"
+              type="submit"
+              onClick={() => setShowModal({ ...showModal, isOpen: true })}
+            >
               {registrationMutation.isPending ? (
                 <IonSpinner />
               ) : (

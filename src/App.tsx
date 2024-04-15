@@ -26,6 +26,7 @@ import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "./lib/queryClient";
+import Tabs from "./component/Tabs";
 
 setupIonicReact();
 
@@ -36,7 +37,7 @@ const App: React.FC = () => {
         <IonReactRouter>
           <IonRouterOutlet>
             <Route path="/home">
-              <Home />
+              <Tabs />
             </Route>
             <Route path="/register">
               <Register />
