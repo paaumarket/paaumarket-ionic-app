@@ -22,6 +22,7 @@ import api from "../lib/api";
 // Logo Image
 import logo from "../assets/paaumarket.svg";
 import useFormMutation from "@/hooks/useFormMutation";
+import useAuth from "@/hooks/useAuth";
 
 // Schema for form validation
 const schema = yup
@@ -34,6 +35,7 @@ const schema = yup
   .required();
 
 const Register = () => {
+  const { login } = useAuth();
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -52,7 +54,14 @@ const Register = () => {
   });
 
   const onSubmit = (data) => {
-    registrationMutation.mutate(data);
+    registrationMutation.mutate(data, {
+      onSuccess({ user, token }) {
+        login({
+          user,
+          token,
+        });
+      },
+    });
   };
 
   return (
