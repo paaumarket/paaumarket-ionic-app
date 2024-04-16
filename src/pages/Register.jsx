@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import React, { useState } from "react";
 import clsx from "clsx";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import {
@@ -14,16 +13,15 @@ import {
   IonPage,
   IonSpinner,
   IonText,
-  IonToast,
   IonToolbar,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import api from "../lib/api";
 // Logo Image
 import logo from "../assets/paaumarket.svg";
+import useFormMutation from "@/hooks/useFormMutation";
 
 // Schema for form validation
 const schema = yup
@@ -36,11 +34,6 @@ const schema = yup
   .required();
 
 const Register = () => {
-  const [showModal, setShowModal] = useState({
-    message: "Fields required",
-    isOpen: false,
-  });
-
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -51,7 +44,8 @@ const Register = () => {
     },
   });
 
-  const registrationMutation = useMutation({
+  const registrationMutation = useFormMutation({
+    form,
     mutationKey: ["register"],
     mutationFn: (data) =>
       api.post("/register", data).then((response) => response.data),
@@ -59,18 +53,7 @@ const Register = () => {
 
   const onSubmit = (data) => {
     registrationMutation.mutate(data);
-
-    /*     if (registrationMutation.status === "success") {
-      console.log(registrationMutation.data);
-    }
-
-    setShowModal({
-      ...showModal,
-      message: "Hello word",
-    });
-    console.log(registrationMutation.error); */
   };
-  // console.log(showModal);
 
   return (
     <IonPage>
@@ -83,14 +66,6 @@ const Register = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-        {/* Show Modal Ionic Toast */}
-        <IonToast
-          isOpen={showModal.isOpen}
-          message={showModal.message}
-          onDidDismiss={() => setShowModal({ ...showModal, isOpen: false })}
-          duration={5000}
-        ></IonToast>
-
         <div>
           <img
             src={logo}
@@ -196,10 +171,10 @@ const Register = () => {
               />
             </IonList>
             <IonButton
+              disabled={registrationMutation.isPending}
               expand="full"
               shape="round"
               type="submit"
-              onClick={() => setShowModal({ ...showModal, isOpen: true })}
             >
               {registrationMutation.isPending ? (
                 <IonSpinner />
