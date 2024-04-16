@@ -10,7 +10,7 @@ import logo from "../assets/paaumarket.svg";
 import { Link } from "react-router-dom";
 import { personCircleOutline } from "ionicons/icons";
 
-export default function Header() {
+export default function Header({ title = "PAAU Market" }) {
   return (
     <>
       <IonHeader>
@@ -20,7 +20,7 @@ export default function Header() {
               <Link to="/">
                 <img src={logo} alt="Paau Market Logo" className="w-10 h-10" />
               </Link>
-              <div className="grow text-center">PAAU Market</div>
+              <div className="grow text-center">{title}</div>
               <Link to="/login">
                 <IonIcon icon={personCircleOutline} />
               </Link>
