@@ -1,14 +1,11 @@
 import {
-  IonButton,
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonCol,
   IonContent,
   IonGrid,
-  IonIcon,
   IonPage,
   IonRow,
   IonSearchbar,
@@ -72,7 +69,7 @@ export default function Home() {
   );
 }
 
-const Product = (props: any) => {
+const Product = (props) => {
   return (
     <IonCol size="6" size-md="4" size-lg="2">
       <Link to={"/home/" + props.id}>

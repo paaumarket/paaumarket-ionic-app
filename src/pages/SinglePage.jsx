@@ -12,8 +12,6 @@ import {
   IonLabel,
   IonPage,
   IonRow,
-  IonSearchbar,
-  IonText,
 } from "@ionic/react";
 import Header from "../component/Header";
 import { callOutline } from "ionicons/icons";
@@ -69,7 +67,7 @@ export default function SinglePage() {
   );
 }
 
-const Product = (props: any) => {
+const Product = (props) => {
   return (
     <IonCol>
       <IonCard>

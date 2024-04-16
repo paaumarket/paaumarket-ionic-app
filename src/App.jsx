@@ -27,7 +27,7 @@ import Tabs from "./component/Tabs";
 
 setupIonicReact();
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <IonApp>
       <IonReactRouter>

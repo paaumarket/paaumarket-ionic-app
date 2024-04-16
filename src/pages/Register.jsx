@@ -35,7 +35,7 @@ const schema = yup
   })
   .required();
 
-const Register: React.FC = () => {
+const Register = () => {
   const [showModal, setShowModal] = useState({
     message: "Fields required",
     isOpen: false,
@@ -57,7 +57,7 @@ const Register: React.FC = () => {
       api.post("/register", data).then((response) => response.data),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     registrationMutation.mutate(data);
 
     /*     if (registrationMutation.status === "success") {

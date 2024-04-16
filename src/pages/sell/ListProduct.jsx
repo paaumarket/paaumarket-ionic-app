@@ -1,10 +1,4 @@
-import {
-  IonIcon,
-  IonLabel,
-  IonRouterLink,
-  IonSearchbar,
-  IonText,
-} from "@ionic/react";
+import { IonIcon, IonRouterLink, IonSearchbar, IonText } from "@ionic/react";
 import { pencilOutline, trashOutline } from "ionicons/icons";
 
 export default function ListProduct({ products }) {
@@ -18,7 +12,7 @@ export default function ListProduct({ products }) {
       </tr>
     );
   } else {
-    list = products.map((sale: any, index: any) => {
+    list = products.map((sale, index) => {
       return <Product key={sale._id} {...sale} index={index} />;
     });
   }

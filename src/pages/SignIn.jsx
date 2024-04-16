@@ -32,7 +32,7 @@ const schema = yup
   })
   .required();
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -47,7 +47,7 @@ const SignIn: React.FC = () => {
       api.post("/login", data).then((response) => response.data),
   });
 
-  const onLogIn = (data: any) => {
+  const onLogIn = (data) => {
     logInMutation.mutate(data);
   };
 
