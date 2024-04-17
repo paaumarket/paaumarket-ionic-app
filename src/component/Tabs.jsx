@@ -14,7 +14,7 @@ import {
 import { Route } from "react-router-dom";
 
 import Home from "../pages/Home";
-import SinglePage from "../pages/SinglePage";
+import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 
 export default function Tabs() {
@@ -26,7 +26,7 @@ export default function Tabs() {
             <Home></Home>
           </Route>
           <Route path="/home/:id">
-            <SinglePage></SinglePage>
+            <SingleAdvertPage></SingleAdvertPage>
           </Route>
           <Route path="/home/post">
             <Sell></Sell>

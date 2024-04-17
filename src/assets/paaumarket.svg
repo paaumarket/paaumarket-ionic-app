@@ -7,46 +7,18 @@
    viewBox="0 0 180 180"
    version="1.1"
    id="svg1"
-   inkscape:export-filename="logo.svg"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16, custom)"
-   sodipodi:docname="logo.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="px"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="60.609153"
-     inkscape:cy="123.23861"
-     inkscape:window-width="1366"
-     inkscape:window-height="708"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
   <defs
      id="defs1" />
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="layer1">
     <path
        style="fill:#00c864;fill-opacity:1"
        d="m 74.751288,61.114229 c 0.673435,0.168359 1.326144,0.505076 2.020305,0.505076 0.376462,0 0.643699,-0.418852 1.010153,-0.505076 3.126453,-0.735636 10.780362,-2.481941 14.647212,-1.515229 2.911978,0.727995 10.335362,11.16637 11.111682,12.121831 2.33805,2.877611 4.64277,5.784415 7.07106,8.586296 2.78199,3.209985 8.56291,8.011065 10.10153,12.626907 0.42592,1.277753 0,2.69374 0,4.04061 0,7.336646 0.43437,7.632396 -1.51523,15.152286 -0.68951,2.65954 -2.20393,7.49003 -5.05076,9.09138 -2.17186,1.22167 -8.39792,1.17375 -10.6066,1.01015 -2.70729,-0.20054 -5.567158,0.0141 -8.081225,-1.01015 -2.215979,-0.90281 -3.826681,-2.89171 -5.555839,-4.54569 -2.152439,-2.05886 -4.386035,-4.10293 -6.060915,-6.56599 -2.740576,-4.03026 -2.445363,-6.751 -3.535534,-11.111681 -0.25825,-1.033002 -0.88574,-1.972956 -1.010152,-3.030457 -0.216384,-1.839262 0,-3.703893 0,-5.555839 0,-1.851947 -0.532153,-3.781996 0,-5.555839 1.60399,-5.346635 6.695785,-5.685633 10.101525,-9.091373"
        id="path2" />
     <circle
-       style="fill:#00c864;fill-opacity:1;stroke-width:1.02397"
+       style="fill:#4099ff;fill-opacity:1;stroke-width:1.02397"
        id="path1"
        cx="-89.918427"
        cy="89.642853"

@@ -1,5 +1,6 @@
 import {
   IonCard,
+  IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
@@ -16,24 +17,6 @@ import Header from "../component/Header";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useMemo } from "react";
-
-const advert_list = [
-  {
-    id: "1",
-    img_src:
-      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/advert/V/U/118566_1709127739.jpg",
-    name: "Xiaomi Redmi A3 - 6.71 -4gb Ram/ 128gb",
-    price: "N116,000.00 ",
-  },
-
-  {
-    id: "2",
-    img_src:
-      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/advert/C/S/225561_1699955276.jpg",
-    price: "N1,532,600.00",
-    name: "Apple iPhone 15 Pro 128GB White",
-  },
-];
 
 export default function Home() {
   const { data, isPending, hasNextPage } = useInfiniteQuery({
@@ -89,8 +72,11 @@ const Advert = ({ advert }) => {
         ) : null}
         <IonCardHeader>
           <IonCardTitle>{advert["title"]}</IonCardTitle>
-          <IonCardSubtitle>{advert["price"]}</IonCardSubtitle>
+          <IonCardSubtitle>{advert.description}</IonCardSubtitle>
         </IonCardHeader>
+        <IonCardContent>
+          ₦{Intl.NumberFormat().format(advert["price"])}
+        </IonCardContent>
       </IonCard>
     </IonCol>
   );
