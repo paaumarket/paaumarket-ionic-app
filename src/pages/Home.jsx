@@ -9,16 +9,19 @@ import {
   IonPage,
   IonRow,
   IonSearchbar,
+  IonSkeletonText,
   IonText,
 } from "@ionic/react";
 import Header from "../component/Header";
-import { Link } from "react-router-dom";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import api from "@/lib/api";
+import { useMemo } from "react";
 
-const product_list = [
+const advert_list = [
   {
     id: "1",
     img_src:
-      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/product/V/U/118566_1709127739.jpg",
+      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/advert/V/U/118566_1709127739.jpg",
     name: "Xiaomi Redmi A3 - 6.71 -4gb Ram/ 128gb",
     price: "N116,000.00 ",
   },
@@ -26,13 +29,28 @@ const product_list = [
   {
     id: "2",
     img_src:
-      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/product/C/S/225561_1699955276.jpg",
+      "https://www-konga-com-res.cloudinary.com/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/media/catalog/advert/C/S/225561_1699955276.jpg",
     price: "N1,532,600.00",
     name: "Apple iPhone 15 Pro 128GB White",
   },
 ];
 
 export default function Home() {
+  const { data, isPending, hasNextPage } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: ["adverts", "list"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(`/adverts?cursor=${pageParam}`, { signal })
+        .then((response) => response.data),
+    getNextPageParam: (lastPage) => lastPage["next_cursor"],
+  });
+
+  const adverts = useMemo(
+    () => data?.pages.reduce((carry, page) => carry.concat(page.data), []),
+    [data]
+  );
+
   return (
     <IonPage>
       <Header></Header>
@@ -46,41 +64,61 @@ export default function Home() {
           placeholder="Search Paau Market"
         ></IonSearchbar>
 
-        <>
-          <b>Phone & Tablets</b>
-          <IonGrid>
-            <IonRow>
-              {product_list.map((product) => {
-                return (
-                  <Product
-                    key={product.id}
-                    id={product.id}
-                    source={product.img_src}
-                    product_name={product.name}
-                    product_price={product.price}
-                  />
-                );
-              })}
-            </IonRow>
-          </IonGrid>
-        </>
+        <IonGrid>
+          <IonRow>
+            {isPending ? (
+              <AdvertPlaceholder />
+            ) : (
+              adverts.map((advert) => {
+                return <Advert key={advert.id} advert={advert} />;
+              })
+            )}
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
 }
 
-const Product = (props) => {
+const Advert = ({ advert }) => {
   return (
-    <IonCol size="6" size-md="4" size-lg="2">
-      <Link to={"/home/" + props.id}>
-        <IonCard>
-          <img alt={props.product_name} src={props.source} />
-          <IonCardHeader>
-            <IonCardTitle>{props.product_name}</IonCardTitle>
-            <IonCardSubtitle>{props.product_price}</IonCardSubtitle>
-          </IonCardHeader>
-        </IonCard>
-      </Link>
+    <IonCol size="12" sizeMd="6" sizeLg="2">
+      <IonCard routerLink={"/home/" + advert["id"]}>
+        {advert["preview_image"] ? (
+          <img alt={advert["title"]} src={advert["preview_image"]["path"]} />
+        ) : null}
+        <IonCardHeader>
+          <IonCardTitle>{advert["title"]}</IonCardTitle>
+          <IonCardSubtitle>{advert["price"]}</IonCardSubtitle>
+        </IonCardHeader>
+      </IonCard>
     </IonCol>
   );
 };
+
+const AdvertPlaceholder = () => (
+  <IonCol size="12" sizeMd="6" sizeLg="2">
+    <IonCard>
+      <IonSkeletonText
+        animated={true}
+        className="ion-no-margin aspect-square max-h-60"
+      ></IonSkeletonText>
+      <IonCardHeader>
+        <IonCardTitle>
+          <IonSkeletonText
+            animated={true}
+            style={{ width: "80%" }}
+            className="ion-no-margin"
+          ></IonSkeletonText>
+        </IonCardTitle>
+        <IonCardSubtitle>
+          <IonSkeletonText
+            animated={true}
+            style={{ width: "60%" }}
+            className="ion-no-margin"
+          ></IonSkeletonText>
+        </IonCardSubtitle>
+      </IonCardHeader>
+    </IonCard>
+  </IonCol>
+);
