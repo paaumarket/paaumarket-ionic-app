@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import React from "react";
 import {
   IonBackButton,
   IonButton,
@@ -20,9 +19,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 // Logo Image
 import logo from "../assets/paaumarket.svg";
-import { useMutation } from "@tanstack/react-query";
 import api from "../lib/api";
 import clsx from "clsx";
+import useAuth from "@/hooks/useAuth";
+import useFormMutation from "@/hooks/useFormMutation";
 
 // Schema for form validation
 const schema = yup
@@ -32,7 +32,9 @@ const schema = yup
   })
   .required();
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
+  const { login } = useAuth();
+
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -41,14 +43,24 @@ const SignIn = () => {
     },
   });
 
-  const logInMutation = useMutation({
+  const logInMutation = useFormMutation({
+    form,
     mutationKey: ["login"],
     mutationFn: (data) =>
       api.post("/login", data).then((response) => response.data),
   });
 
   const onLogIn = (data) => {
-    logInMutation.mutate(data);
+    logInMutation.mutate(data, {
+      onSuccess({ user, token }) {
+        login({
+          user,
+          token,
+        });
+
+        history.replace("/home");
+      },
+    });
   };
 
   return (

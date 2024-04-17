@@ -15,7 +15,6 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import React from "react";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
@@ -38,9 +37,7 @@ const App = () => {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/login">
-            <SignIn />
-          </Route>
+          <Route path="/login" component={SignIn} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
