@@ -44,7 +44,7 @@ export default function Home() {
     <IonPage>
       <Header>
         <Link to="/">
-          <img src={logo} alt="Paau Market Logo" className="w-10 h-10" />
+          <img src={logo} alt="Paau Market Logo" className="w-10 h-10 px-1" />
         </Link>
         <div className="grow">
           <IonSearchbar
