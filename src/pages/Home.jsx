@@ -7,16 +7,22 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
+  IonIcon,
   IonPage,
   IonRow,
   IonSearchbar,
   IonSkeletonText,
   IonText,
+  IonTitle,
 } from "@ionic/react";
 import Header from "../component/Header";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/paaumarket.svg";
+import { personCircleOutline } from "ionicons/icons";
 
 export default function Home() {
   const { data, isPending, hasNextPage } = useInfiniteQuery({
@@ -36,16 +42,22 @@ export default function Home() {
 
   return (
     <IonPage>
-      <Header></Header>
+      <Header>
+        <Link to="/">
+          <img src={logo} alt="Paau Market Logo" className="w-10 h-10" />
+        </Link>
+        <div className="grow">
+          <IonSearchbar
+            className="ion-searchbar"
+            showClearButton="focus"
+            value=""
+            placeholder="Search Paau Market"
+          ></IonSearchbar>
+        </div>
+      </Header>
 
       <IonContent className="ion-padding">
         <IonText className="ion-padding">Find anything in store.</IonText>
-
-        <IonSearchbar
-          showClearButton="focus"
-          value=""
-          placeholder="Search Paau Market"
-        ></IonSearchbar>
 
         <IonGrid>
           <IonRow>

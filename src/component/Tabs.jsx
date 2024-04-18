@@ -16,6 +16,7 @@ import { Route } from "react-router-dom";
 import Home from "../pages/Home";
 import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
+import Profile from "@/pages/Profile";
 
 export default function Tabs() {
   return (
@@ -31,6 +32,10 @@ export default function Tabs() {
           <Route path="/home/post">
             <Sell></Sell>
           </Route>
+
+          <Route path="/home/profile">
+            <Profile></Profile>
+          </Route>
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">
@@ -42,7 +47,7 @@ export default function Tabs() {
             <IonIcon icon={addCircleOutline} />
             <IonLabel>Sell</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tabs/tab3">
+          <IonTabButton tab="tab3" href="/home/profile">
             <IonIcon icon={personCircleOutline} />
             <IonLabel>Profile</IonLabel>
           </IonTabButton>

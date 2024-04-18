@@ -1,9 +1,20 @@
-import { IonContent, IonPage, IonText } from "@ionic/react";
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonPage,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 
-import Header from "../../component/Header";
 import ListProduct from "./ListProduct";
 
 import product from "../../assets/product.png";
+import { Link } from "react-router-dom";
+import { personCircleOutline } from "ionicons/icons";
 
 // API DEMO
 const products = [
@@ -19,15 +30,28 @@ const products = [
 export default function Sell() {
   return (
     <IonPage>
-      <Header title="Post Product ad"></Header>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/"></IonBackButton>
+          </IonButtons>
 
-      <IonContent className="ion-padding">
-        <IonText className="ion-padding">Find anything in store.</IonText>
+          <IonTitle>
+            <div className="flex justify-center items-center">
+              <div className="grow text-center">Post new advert</div>
+              <Link to="/login">
+                <IonIcon icon={personCircleOutline} />
+              </Link>
+            </div>
+          </IonTitle>
+        </IonToolbar>
+      </IonHeader>
 
-        <>
-          <ListProduct products={products} />
-        </>
-      </IonContent>
+      <IonContent className="ion-padding"></IonContent>
     </IonPage>
   );
+}
+
+{
+  /* <ListProduct products={products} /> */
 }
