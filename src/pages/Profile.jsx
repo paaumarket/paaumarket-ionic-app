@@ -1,6 +1,7 @@
 import Header from "@/component/Header";
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCol,
   IonContent,
@@ -40,20 +41,24 @@ export default function Profile() {
         </div>
       </Header>
       <IonContent className="ion-padding-start ion-padding-end">
-        <div className="flex">
+        <div className="flex items-center">
           <IonIcon
             icon={walletOutline}
             size="large"
             className="ion-padding"
           ></IonIcon>
 
-          <div>
+          <div className="pr-5">
             <IonText>
               <h3>₦ {0}</h3>
             </IonText>
             <p className="text-xs">
               <IonText color="medium">MY BALANCE</IonText>
             </p>
+          </div>
+
+          <div>
+            <IonButton size="small">Add Fund</IonButton>
           </div>
         </div>
 
