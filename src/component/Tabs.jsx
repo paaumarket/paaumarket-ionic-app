@@ -17,6 +17,7 @@ import Home from "../pages/Home";
 import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
+import Category from "@/pages/Category";
 
 export default function Tabs() {
   return (
@@ -32,9 +33,12 @@ export default function Tabs() {
           <Route path="/home/post">
             <Sell></Sell>
           </Route>
-
           <Route path="/home/profile">
             <Profile></Profile>
+          </Route>
+
+          <Route path="/home/category">
+            <Category></Category>
           </Route>
         </IonRouterOutlet>
 

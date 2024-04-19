@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -8,15 +7,12 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
-  IonIcon,
   IonPage,
   IonRouterLink,
   IonRow,
   IonSearchbar,
   IonSkeletonText,
   IonText,
-  IonTitle,
 } from "@ionic/react";
 import Header from "../component/Header";
 import { useInfiniteQuery } from "@tanstack/react-query";
