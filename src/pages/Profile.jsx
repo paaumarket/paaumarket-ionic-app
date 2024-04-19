@@ -31,7 +31,7 @@ export default function Profile() {
         <IonButtons slot="start">
           <IonBackButton defaultHref="/"></IonBackButton>
         </IonButtons>
-        <div className="grow ion-padding-start">
+        <div className="grow">
           <img
             src="https://w7.pngwing.com/pngs/722/101/png-transparent-computer-icons-user-profile-circle-abstract-miscellaneous-rim-account-thumbnail.png"
             alt=""

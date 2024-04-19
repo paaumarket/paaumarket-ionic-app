@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -10,6 +11,7 @@ import {
   IonHeader,
   IonIcon,
   IonPage,
+  IonRouterLink,
   IonRow,
   IonSearchbar,
   IonSkeletonText,
@@ -21,8 +23,17 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+
 import logo from "../assets/paaumarket.svg";
-import { personCircleOutline } from "ionicons/icons";
+import gasCylinder from "../assets/category/gas.png";
+import fan from "../assets/category/fan.png";
+import table from "../assets/category/table.png";
+import beauty from "../assets/category/beauty.png";
+import lodge from "../assets/category/lodge.png";
+import fashion from "../assets/category/fashion.png";
+import laptop from "../assets/category/laptop.png";
+import mobile from "../assets/category/mobile.png";
+import food from "../assets/category/food.png";
 
 export default function Home() {
   const { data, isPending, hasNextPage } = useInfiniteQuery({
@@ -57,7 +68,13 @@ export default function Home() {
       </Header>
 
       <IonContent className="ion-padding">
-        <IonText className="ion-padding">Find anything in store.</IonText>
+        <IonText className="ion-padding">All category</IonText>
+
+        <Category />
+
+        <IonText className="ion-padding">
+          <b>Trending ad</b>
+        </IonText>
 
         <IonGrid>
           <IonRow>
@@ -120,3 +137,108 @@ const AdvertPlaceholder = () => (
     </IonCard>
   </IonCol>
 );
+
+const Category = () => {
+  return (
+    <IonGrid className="ion-margin-bottom">
+      <IonRow>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={lodge} alt="" />
+            <p className="inline-block">Lodge</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={mobile} alt="" />
+            <p className="inline-block">Phone</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={laptop} alt="" />
+            <p className="inline-block">Laptop</p>
+          </IonRouterLink>
+        </IonCol>
+      </IonRow>
+
+      <IonRow>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={beauty} alt="" />
+            <p className="inline-block">Beauty</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={fashion} alt="" />
+            <p className="inline-block">Fashion</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={food} alt="" />
+            <p className="inline-block">Food & Snacks</p>
+          </IonRouterLink>
+        </IonCol>
+      </IonRow>
+
+      <IonRow>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={gasCylinder} alt="" />
+            <p className="inline-block">Gas Cylinder</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={fan} alt="" />
+            <p className="inline-block">Fan</p>
+          </IonRouterLink>
+        </IonCol>
+        <IonCol>
+          <IonRouterLink
+            href="#"
+            className="text-center flex flex-col"
+            color="dark"
+          >
+            <img className="m-auto" src={table} alt="" />
+            <p className="inline-block">Table & Chair</p>
+          </IonRouterLink>
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  );
+};

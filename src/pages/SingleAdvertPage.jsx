@@ -1,4 +1,12 @@
-import { IonCol, IonContent, IonGrid, IonPage, IonRow } from "@ionic/react";
+import {
+  IonBackButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonPage,
+  IonRow,
+} from "@ionic/react";
 import Header from "../component/Header";
 import { useParams } from "react-router";
 import api from "@/lib/api";
@@ -13,9 +21,15 @@ export default function SingleAdvertPage() {
       api.get(`/adverts/${id}`, { signal }).then((response) => response.data),
   });
 
+  console.log(data);
   return (
     <IonPage>
-      <Header></Header>
+      <Header>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="/"></IonBackButton>
+        </IonButtons>
+        <div className="grow">{isPending ? null : data["title"]}</div>
+      </Header>
 
       <IonContent className="ion-padding">
         <IonGrid>
