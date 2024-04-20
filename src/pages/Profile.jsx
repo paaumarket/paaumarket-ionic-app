@@ -14,6 +14,7 @@ import {
 import {
   callOutline,
   clipboardOutline,
+  lockClosedOutline,
   mailOutline,
   pencilOutline,
   personCircleOutline,
@@ -76,7 +77,7 @@ export default function Profile() {
               </IonText>
 
               <p className="text-xs">
-                <IonText color="medium">SEE YOUR ADS</IonText>
+                <IonText color="medium">SEE ADS</IonText>
               </p>
             </div>
           </Link>
@@ -98,13 +99,13 @@ export default function Profile() {
               className="ion-padding-end ion-no-padding"
             ></IonIcon>
             <p className=" grow">mannydev02@gmail.com</p>
-            <IonIcon icon={pencilOutline}></IonIcon>
+            <IonIcon color="medium" icon={lockClosedOutline}></IonIcon>
           </section>
 
           <section className="flex py-2 items-center">
             <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
             <p className="grow">+234 09025534431</p>
-            <IonIcon icon={pencilOutline}></IonIcon>
+            <IonIcon icon={lockClosedOutline} color="medium"></IonIcon>
           </section>
         </main>
       </IonContent>
