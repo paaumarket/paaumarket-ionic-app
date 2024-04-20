@@ -52,11 +52,8 @@ const SignIn = ({ history }) => {
 
   const onLogIn = (data) => {
     logInMutation.mutate(data, {
-      onSuccess({ user, token }) {
-        login({
-          user,
-          token,
-        });
+      onSuccess(auth) {
+        login(auth);
 
         history.replace("/home");
       },
@@ -81,7 +78,7 @@ const SignIn = ({ history }) => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="text-center text-md font-bold">
+            <h2 className="font-bold text-center text-md">
               Welcome back to PAAU Market
             </h2>
           </IonText>
@@ -134,7 +131,7 @@ const SignIn = ({ history }) => {
                 )}
               />
 
-              <Link className="text-right block text-sm" to="/forget_password">
+              <Link className="block text-sm text-right" to="/forget_password">
                 Forget Passowrd?
               </Link>
             </IonList>
