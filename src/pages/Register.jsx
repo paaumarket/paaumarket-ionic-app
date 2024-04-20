@@ -23,6 +23,7 @@ import api from "../lib/api";
 import logo from "../assets/paaumarket.svg";
 import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
+import { useHistory } from "react-router-dom";
 
 // Schema for form validation
 const schema = yup
@@ -35,6 +36,7 @@ const schema = yup
   .required();
 
 const Register = () => {
+  const history = useHistory();
   const { login } = useAuth();
   const form = useForm({
     resolver: yupResolver(schema),
@@ -55,11 +57,10 @@ const Register = () => {
 
   const onSubmit = (data) => {
     registrationMutation.mutate(data, {
-      onSuccess({ user, token }) {
-        login({
-          user,
-          token,
-        });
+      onSuccess(auth) {
+        login(auth);
+
+        history.replace("/home");
       },
     });
   };
@@ -82,7 +83,7 @@ const Register = () => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="text-center text-md font-bold">
+            <h2 className="font-bold text-center text-md">
               Sign up to PAAU Market
             </h2>
           </IonText>
@@ -195,7 +196,7 @@ const Register = () => {
         </FormProvider>
 
         <IonText className="ion-padding">
-          <p className="text-center text-xs mb-5">
+          <p className="mb-5 text-xs text-center">
             By creating an account you agree with our Terms of Service, Privacy
             Policy, and our default Notification Settings. By creating an
             account you agree with our{" "}

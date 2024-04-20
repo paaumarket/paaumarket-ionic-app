@@ -19,7 +19,7 @@ const AdminDashboard = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/profile" />
+            <IonBackButton defaultHref="/home/profile" />
           </IonButtons>
           <IonTitle>Admin</IonTitle>
         </IonToolbar>

@@ -1,31 +1,29 @@
 import Header from "@/component/Header";
+import useAuth from "@/hooks/useAuth";
 import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonCol,
   IonContent,
-  IonGrid,
   IonIcon,
+  IonItem,
+  IonLabel,
   IonPage,
-  IonRow,
   IonText,
 } from "@ionic/react";
 import {
   callOutline,
-  clipboardOutline,
   lockClosedOutline,
   mailOutline,
   pencilOutline,
-  personCircleOutline,
   personOutline,
   storefrontOutline,
   walletOutline,
 } from "ionicons/icons";
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
+  const { user, permissions } = useAuth();
   return (
     <IonPage>
       <Header>
@@ -36,9 +34,9 @@ export default function Profile() {
           <img
             src="https://w7.pngwing.com/pngs/722/101/png-transparent-computer-icons-user-profile-circle-abstract-miscellaneous-rim-account-thumbnail.png"
             alt=""
-            className="max-w-7 max-h-7 inline-block rounded-full"
+            className="inline-block rounded-full max-w-7 max-h-7"
           />{" "}
-          Abel Emmanuel
+          {user["name"]}
         </div>
       </Header>
       <IonContent className="ion-padding-start ion-padding-end">
@@ -51,7 +49,7 @@ export default function Profile() {
 
           <div className="pr-5">
             <IonText>
-              <h3>₦ {0}</h3>
+              <h3>₦ {user["wallet_balance"]}</h3>
             </IonText>
             <p className="text-xs">
               <IonText color="medium">MY BALANCE</IonText>
@@ -84,30 +82,36 @@ export default function Profile() {
         </div>
 
         <main className="pt-5">
-          <section className="flex py-2 items-center">
+          <section className="flex items-center py-2">
             <IonIcon
               icon={personOutline}
               className="ion-padding-end ion-no-padding"
             ></IonIcon>
-            <p className=" grow">Abel Emmanuel</p>
+            <p className=" grow">{user["name"]}</p>
             <IonIcon icon={pencilOutline}></IonIcon>
           </section>
 
-          <section className="flex py-2 items-center">
+          <section className="flex items-center py-2">
             <IonIcon
               icon={mailOutline}
               className="ion-padding-end ion-no-padding"
             ></IonIcon>
-            <p className=" grow">mannydev02@gmail.com</p>
+            <p className=" grow">{user["email"]}</p>
             <IonIcon color="medium" icon={lockClosedOutline}></IonIcon>
           </section>
 
-          <section className="flex py-2 items-center">
+          <section className="flex items-center py-2">
             <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
-            <p className="grow">+234 09025534431</p>
+            <p className="grow">{user["mobile_number"]}</p>
             <IonIcon icon={lockClosedOutline} color="medium"></IonIcon>
           </section>
         </main>
+
+        {permissions.includes("access-dashboard") ? (
+          <IonItem routerLink="/admin">
+            <IonLabel>Admin Panel</IonLabel>
+          </IonItem>
+        ) : null}
       </IonContent>
     </IonPage>
   );

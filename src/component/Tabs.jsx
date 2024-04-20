@@ -11,15 +11,18 @@ import {
   personCircleOutline,
   addCircleOutline,
 } from "ionicons/icons";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
 import Home from "../pages/Home";
 import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
 import Category from "@/pages/Category";
+import useAuth from "@/hooks/useAuth";
 
 export default function Tabs() {
+  const { user } = useAuth();
+
   return (
     <>
       <IonTabs>
@@ -33,9 +36,12 @@ export default function Tabs() {
           <Route path="/home/post">
             <Sell></Sell>
           </Route>
-          <Route path="/home/profile">
-            <Profile></Profile>
-          </Route>
+          <Route
+            path="/home/profile"
+            render={() =>
+              user ? <Profile></Profile> : <Redirect to="/login" />
+            }
+          />
 
           <Route path="/home/category">
             <Category></Category>
