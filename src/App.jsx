@@ -23,14 +23,27 @@ import { Redirect, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import Tabs from "./component/Tabs";
+import useAuth from "./hooks/useAuth";
+import AdminRouterOutlet from "./outlets/AdminRouterOutlet";
 
 setupIonicReact();
 
 const App = () => {
+  const { user, permissions } = useAuth();
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
+          <Route
+            path="/admin"
+            render={() =>
+              permissions.includes("access-dashboard") ? (
+                <AdminRouterOutlet />
+              ) : (
+                <Redirect to={"/"} />
+              )
+            }
+          />
           <Route path="/home">
             <Tabs />
           </Route>
