@@ -30,4 +30,5 @@ export const { login, logout } = authSlice.actions;
 
 // Selectors
 export const selectUser = (state) => state[authSlice.name].user;
+export const selectPermissions = (state) => state[authSlice.name].permissions;
 export const selectToken = (state) => state[authSlice.name].token;
