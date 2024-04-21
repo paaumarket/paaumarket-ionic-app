@@ -23,36 +23,55 @@ import { Redirect, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import Tabs from "./component/Tabs";
-import useAuth from "./hooks/useAuth";
-import AdminRouterOutlet from "./outlets/AdminRouterOutlet";
 import Logout from "./pages/Logout";
+
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminCategories from "@/pages/admin/AdminCategories";
+import AdminCategoriesAdd from "@/pages/admin/AdminCategoriesAdd";
+import AdminSubCategories from "@/pages/admin/AdminSubCategories";
+import AdminProtectedRoute from "./component/AdminProtectedRoute";
 
 setupIonicReact();
 
 const App = () => {
-  const { user, permissions } = useAuth();
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route
-            path="/admin"
-            render={() =>
-              permissions.includes("access-dashboard") ? (
-                <AdminRouterOutlet />
-              ) : (
-                <Redirect to={"/"} />
-              )
-            }
-          />
+          {/* Admin Categories */}
+          <Route exact path="/admin/categories">
+            <AdminProtectedRoute>
+              <AdminCategories />
+            </AdminProtectedRoute>
+          </Route>
+          <Route exact path="/admin/categories/:category">
+            <AdminProtectedRoute>
+              <AdminSubCategories />
+            </AdminProtectedRoute>
+          </Route>
+          <Route exact path="/admin/categories/new">
+            <AdminProtectedRoute>
+              <AdminCategoriesAdd />
+            </AdminProtectedRoute>
+          </Route>
+
+          {/* Admin Dashboard */}
+          <Route exact path="/admin">
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          </Route>
+
           <Route path="/home">
             <Tabs />
           </Route>
+
           <Route exact path="/register">
             <Register />
           </Route>
           <Route exact path="/login" component={SignIn} />
           <Route exact path="/logout" component={Logout} />
+
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>

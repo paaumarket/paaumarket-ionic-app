@@ -18,51 +18,60 @@ import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
 import Category from "@/pages/Category";
-import useAuth from "@/hooks/useAuth";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function Tabs() {
-  const { user } = useAuth();
-
   return (
-    <>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <Home></Home>
-          </Route>
-          <Route path="/home/:id">
-            <SingleAdvertPage></SingleAdvertPage>
-          </Route>
-          <Route path="/home/post">
-            <Sell></Sell>
-          </Route>
-          <Route
-            path="/home/profile"
-            render={() =>
-              user ? <Profile></Profile> : <Redirect to="/login" />
-            }
-          />
+    <IonTabs>
+      <IonRouterOutlet>
+        <Redirect exact path="/home" to="/home/adverts" />
 
-          <Route path="/home/category">
-            <Category></Category>
-          </Route>
-        </IonRouterOutlet>
+        {/* Adverts */}
+        <Route exact path="/home/adverts/:id">
+          <SingleAdvertPage></SingleAdvertPage>
+        </Route>
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/home">
-            <IonIcon icon={homeOutline} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/home/post">
-            <IonIcon icon={addCircleOutline} />
-            <IonLabel>Sell</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/home/profile">
-            <IonIcon icon={personCircleOutline} />
-            <IonLabel>Profile</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </>
+        <Route exact path="/home/adverts/category">
+          <Category></Category>
+        </Route>
+
+        <Route exact path="/home/adverts">
+          <Home></Home>
+        </Route>
+
+        {/* Posts */}
+        <Route exact path="/home/post">
+          <ProtectedRoute>
+            <Sell />
+          </ProtectedRoute>
+        </Route>
+
+        {/* Profile */}
+        <Route exact path="/home/profile">
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        </Route>
+
+        <Route exact path="/home">
+          <Redirect to="/home/adverts" />
+        </Route>
+      </IonRouterOutlet>
+
+      <IonTabBar slot="bottom">
+        <IonTabButton tab="tab1" href="/home/adverts">
+          <IonIcon icon={homeOutline} />
+          <IonLabel>Home</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab2" href="/home/post">
+          <IonIcon icon={addCircleOutline} />
+          <IonLabel>Sell</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab3" href="/home/profile">
+          <IonIcon icon={personCircleOutline} />
+          <IonLabel>Profile</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   );
 }
