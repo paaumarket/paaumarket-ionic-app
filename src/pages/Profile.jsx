@@ -8,6 +8,7 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
+  IonList,
   IonPage,
   IonText,
 } from "@ionic/react";
@@ -107,11 +108,17 @@ export default function Profile() {
           </section>
         </main>
 
-        {permissions.includes("access-dashboard") ? (
-          <IonItem routerLink="/admin">
-            <IonLabel>Admin Panel</IonLabel>
+        <IonList>
+          {permissions.includes("access-dashboard") ? (
+            <IonItem routerLink="/admin">
+              <IonLabel>Admin Panel</IonLabel>
+            </IonItem>
+          ) : null}
+
+          <IonItem routerLink="/logout">
+            <IonLabel>Logout</IonLabel>
           </IonItem>
-        ) : null}
+        </IonList>
       </IonContent>
     </IonPage>
   );

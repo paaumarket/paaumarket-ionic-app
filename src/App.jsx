@@ -25,6 +25,7 @@ import SignIn from "./pages/SignIn";
 import Tabs from "./component/Tabs";
 import useAuth from "./hooks/useAuth";
 import AdminRouterOutlet from "./outlets/AdminRouterOutlet";
+import Logout from "./pages/Logout";
 
 setupIonicReact();
 
@@ -47,10 +48,11 @@ const App = () => {
           <Route path="/home">
             <Tabs />
           </Route>
-          <Route path="/register">
+          <Route exact path="/register">
             <Register />
           </Route>
-          <Route path="/login" component={SignIn} />
+          <Route exact path="/login" component={SignIn} />
+          <Route exact path="/logout" component={Logout} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
