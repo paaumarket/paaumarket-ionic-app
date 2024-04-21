@@ -1,4 +1,4 @@
-import { selectToken } from "@/app/features/auth/authSlice";
+import { logout, selectToken } from "@/app/features/auth/authSlice";
 import { store } from "@/app/store";
 import axios from "axios";
 
@@ -17,5 +17,16 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+/** Logout when unauthenticated */
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      store.dispatch(logout());
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;
