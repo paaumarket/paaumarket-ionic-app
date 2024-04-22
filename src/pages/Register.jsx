@@ -197,9 +197,7 @@ const Register = () => {
 
         <IonText className="ion-padding">
           <p className="mb-5 text-xs text-center">
-            By creating an account you agree with our Terms of Service, Privacy
-            Policy, and our default Notification Settings. By creating an
-            account you agree with our{" "}
+            By creating an account you agree with our{" "}
             <Link to="/">Terms of Service, Privacy Policy</Link>, and our
             default <Link to="/">Notification Settings</Link>.
           </p>
