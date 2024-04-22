@@ -1,6 +1,7 @@
 import api from "@/lib/api";
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonFab,
@@ -16,17 +17,32 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
+  useIonAlert,
+  useIonLoading,
   useIonModal,
+  useIonToast,
 } from "@ionic/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { add } from "ionicons/icons";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  add,
+  create,
+  ellipsisHorizontal,
+  ellipsisVertical,
+  trashBin,
+} from "ionicons/icons";
 import { useRouteMatch } from "react-router-dom";
 import AdminCategoriesAddModal from "./AdminCategoriesAddModal";
+import { useHistory } from "react-router";
+import clsx from "clsx";
 
 const AdminSubCategories = () => {
-  const match = useRouteMatch();
+  const queryClient = useQueryClient();
+  const history = useHistory();
 
+  const match = useRouteMatch();
   const queryKey = ["category", match.params.category];
+
   const {
     isPending,
     isSuccess,
@@ -39,33 +55,26 @@ const AdminSubCategories = () => {
         .then((response) => response.data),
   });
 
-  const queryClient = useQueryClient();
+  const categoryDeleteMutation = useCategoryDeleteMutation(category?.["slug"]);
 
-  const {
-    isPending: isPendingChildren,
-    isSuccess: isSuccessChildren,
-    data: subCategories,
-  } = useQuery({
-    enabled: isSuccess,
-    queryKey: ["category", match.params.category, "children"],
-    queryFn: ({ signal }) =>
-      api
-        .get(`/categories/${match.params.category}/children`, { signal })
-        .then((response) => response.data),
+  const openDeleteAlert = useDeleteAlert({
+    header: category?.["name"],
+    onDelete: () => categoryDeleteMutation.mutateAsync(),
+    onSuccess: () => history.replace("/admin/categories"),
   });
 
-  const [present, dismiss] = useIonModal(AdminCategoriesAddModal, {
+  const [presentModal, dismissModal] = useIonModal(AdminCategoriesAddModal, {
     parent: category,
-    onCancelled: () => dismiss(),
+    onCancelled: () => dismissModal(),
     onSuccess: (subCategory) => {
-      dismiss();
+      dismissModal();
       queryClient.refetchQueries({
         queryKey,
       });
     },
   });
 
-  const openAddSubCategoryModal = () => present();
+  const openAddSubCategoryModal = () => presentModal();
 
   return (
     <IonPage>
@@ -78,7 +87,13 @@ const AdminSubCategories = () => {
           <IonTitle>
             {isPending ? "Loading..." : category["name"]}
             {isSuccess ? (
-              <IonThumbnail className="[--size:theme(spacing.9)] inline-block align-middle ion-margin-start">
+              <IonThumbnail
+                className={clsx(
+                  "[--size:theme(spacing.9)]",
+                  "inline-block align-middle",
+                  "ion-margin-start"
+                )}
+              >
                 <img
                   alt={category["name"]}
                   src={category["image"] ? category["image"]["src"] : null}
@@ -86,34 +101,29 @@ const AdminSubCategories = () => {
               </IonThumbnail>
             ) : null}
           </IonTitle>
+
+          {isSuccess ? (
+            <IonButtons slot="primary">
+              <IonButton>
+                <IonIcon slot="icon-only" icon={create}></IonIcon>
+              </IonButton>
+              <IonButton onClick={openDeleteAlert}>
+                <IonIcon slot="icon-only" icon={trashBin}></IonIcon>
+              </IonButton>
+            </IonButtons>
+          ) : null}
         </IonToolbar>
         <IonToolbar>
           <IonSearchbar></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {isPending || isPendingChildren ? <IonSpinner /> : null}
-
-        {isSuccessChildren ? (
-          <IonList>
-            {subCategories.map((category) => (
-              <IonItem key={category["id"]}>
-                <IonThumbnail
-                  slot="start"
-                  className="[--size:theme(spacing.10)]"
-                >
-                  <img
-                    alt={category["name"]}
-                    src={category["image"] ? category["image"]["src"] : null}
-                  />
-                </IonThumbnail>
-                <IonLabel>
-                  <h4>{category["name"]}</h4>
-                  <p>₦{category["cost"]}</p>
-                </IonLabel>
-              </IonItem>
-            ))}
-          </IonList>
+        {isPending ? (
+          <div className="ion-padding ion-text-center">
+            <IonSpinner />
+          </div>
+        ) : isSuccess ? (
+          <SubCategoryList category={category} />
         ) : null}
       </IonContent>
 
@@ -130,6 +140,153 @@ const AdminSubCategories = () => {
       ) : null}
     </IonPage>
   );
+};
+
+const SubCategoryList = ({ category }) => {
+  const queryClient = useQueryClient();
+  const queryKey = ["category", category["slug"], "children"];
+  const {
+    isPending,
+    isSuccess,
+    data: subCategories,
+  } = useQuery({
+    queryKey,
+    queryFn: ({ signal }) =>
+      api
+        .get(`/categories/${category["slug"]}/children`, { signal })
+        .then((response) => response.data),
+  });
+
+  return isPending ? (
+    <div className="ion-padding ion-text-center">
+      <IonSpinner />
+    </div>
+  ) : isSuccess ? (
+    <IonList>
+      {subCategories.map((category) => (
+        <SubCategoryItem
+          key={category["id"]}
+          category={category}
+          onDelete={() =>
+            queryClient.refetchQueries({
+              queryKey,
+            })
+          }
+        />
+      ))}
+    </IonList>
+  ) : null;
+};
+
+const SubCategoryItem = ({ category, onDelete }) => {
+  const deleteMutation = useCategoryDeleteMutation(category["slug"]);
+
+  const deleteAlert = useDeleteAlert({
+    header: category["name"],
+    onDelete: () => deleteMutation.mutateAsync(),
+    onSuccess: onDelete,
+  });
+
+  const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+
+  const openActions = () =>
+    presentActionSheet({
+      buttons: [
+        {
+          text: "Edit",
+          data: {
+            action: "edit",
+          },
+        },
+        {
+          text: "Delete",
+          role: "destructive",
+          data: {
+            action: "delete",
+          },
+          handler: () => {
+            deleteAlert();
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+
+  return (
+    <IonItem>
+      <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
+        <img
+          alt={category["name"]}
+          src={category["image"] ? category["image"]["src"] : null}
+        />
+      </IonThumbnail>
+      <IonLabel>
+        <h4>{category["name"]}</h4>
+        <p>₦{category["cost"]}</p>
+      </IonLabel>
+
+      <IonButton onClick={openActions}>
+        <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
+      </IonButton>
+    </IonItem>
+  );
+};
+
+const useCategoryDeleteMutation = (category) =>
+  useMutation({
+    mutationKey: ["category", category, "delete"],
+    mutationFn: () =>
+      api.delete(`/categories/${category}`).then((response) => response.data),
+  });
+
+const useDeleteAlert = ({ header = "", message = "", onDelete, onSuccess }) => {
+  const [presentToast, dismissToast] = useIonToast();
+  const [presentAlert, dismissAlert] = useIonAlert();
+  const [presentLoading, dismissLoading] = useIonLoading();
+
+  return () =>
+    presentAlert({
+      header: header,
+      subHeader: "Delete",
+      message: message || "Are you sure you want to delete this item?",
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+        },
+        {
+          text: "OK",
+          role: "confirm",
+          handler: () => {
+            presentLoading("Deleting....")
+              .then(onDelete)
+              .then(() => {
+                presentToast({
+                  message: "Successfully deleted.",
+                  color: "success",
+                  duration: 2000,
+                });
+              })
+              .then(onSuccess)
+              .catch(() =>
+                presentToast({
+                  message: "Failed to delete...",
+                  color: "danger",
+                  duration: 2000,
+                })
+              )
+
+              .finally(() => dismissLoading());
+          },
+        },
+      ],
+    });
 };
 
 export default AdminSubCategories;

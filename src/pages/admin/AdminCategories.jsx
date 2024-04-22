@@ -57,7 +57,11 @@ const AdminCategories = () => {
 
       {/* Page content */}
       <IonContent fullscreen>
-        {isPending ? <IonSpinner /> : null}
+        {isPending ? (
+          <div className="ion-padding ion-text-center">
+            <IonSpinner />
+          </div>
+        ) : null}
         {isSuccess ? (
           <IonList>
             {data.map((category) => (
