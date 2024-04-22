@@ -17,7 +17,7 @@ import Home from "../pages/Home";
 import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
-import Category from "@/pages/Category";
+// import Category from "@/pages/Category";
 import ProtectedRoute from "./ProtectedRoute";
 import SubCategories from "@/pages/SubCategories";
 
@@ -31,9 +31,9 @@ export default function Tabs() {
           <SubCategories />
         </Route>
 
-        <Route exact path="/home/adverts/category">
+        {/* <Route exact path="/home/adverts/category">
           <Category></Category>
-        </Route>
+        </Route> */}
 
         {/* Adverts */}
         <Route exact path="/home/adverts/ad/:id">

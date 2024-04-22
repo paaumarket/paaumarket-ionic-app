@@ -30,6 +30,10 @@ import AdminCategories from "@/pages/admin/AdminCategories";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
 import AdminProtectedRoute from "./component/AdminProtectedRoute";
 
+import ForgetPassword from "./pages/ForgetPassword";
+import NewPassword from "./pages/NewPassword";
+import OTP from "./pages/OTP";
+
 setupIonicReact();
 
 const App = () => {
@@ -58,6 +62,18 @@ const App = () => {
 
           <Route path="/home">
             <Tabs />
+          </Route>
+
+          <Route path="/forget_password">
+            <ForgetPassword />
+          </Route>
+
+          <Route path="/new_password">
+            <NewPassword />
+          </Route>
+
+          <Route path="/otp_verification">
+            <OTP />
           </Route>
 
           <Route exact path="/register">
