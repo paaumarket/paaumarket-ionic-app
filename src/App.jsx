@@ -27,7 +27,6 @@ import Logout from "./pages/Logout";
 
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminCategories from "@/pages/admin/AdminCategories";
-import AdminCategoriesAdd from "@/pages/admin/AdminCategoriesAdd";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
 import AdminProtectedRoute from "./component/AdminProtectedRoute";
 
@@ -47,11 +46,6 @@ const App = () => {
           <Route exact path="/admin/categories/:category">
             <AdminProtectedRoute>
               <AdminSubCategories />
-            </AdminProtectedRoute>
-          </Route>
-          <Route exact path="/admin/categories/new">
-            <AdminProtectedRoute>
-              <AdminCategoriesAdd />
             </AdminProtectedRoute>
           </Route>
 
