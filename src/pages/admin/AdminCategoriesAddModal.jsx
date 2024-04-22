@@ -5,7 +5,6 @@ import useFormMutation from "@/hooks/useFormMutation";
 import useHookForm from "@/hooks/useHookForm";
 import { Controller, FormProvider } from "react-hook-form";
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -21,11 +20,9 @@ import {
 } from "@ionic/react";
 import { useRef } from "react";
 import { serialize } from "object-to-formdata";
-import { useHistory } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
-const AdminCategoriesAdd = () => {
-  const history = useHistory();
+const AdminCategoriesAddModal = ({ parent, onCancelled, onSuccess }) => {
   const queryClient = useQueryClient();
 
   const [present, dismiss] = useIonLoading();
@@ -34,31 +31,41 @@ const AdminCategoriesAdd = () => {
     defaultValues: {
       name: "",
       image: null,
+      ...(parent ? { cost: 0 } : null),
     },
     schema: yup
       .object({
         name: yup.string().required().label("Category Name"),
+        ...(parent ? { cost: yup.number().required().label("Cost") } : null),
       })
       .required(),
   });
 
   const mutation = useFormMutation({
     form,
-    mutationKey: ["categories", "create"],
+    mutationKey: parent
+      ? ["categories", parent["id"], "children", "create"]
+      : ["categories", "create"],
     mutationFn: (data) =>
       api
-        .post("/categories", serialize(data))
+        .post(
+          "/categories",
+          serialize({
+            ...data,
+            ...(parent ? { parent_id: parent["id"] } : null),
+          })
+        )
         .then((response) => response.data),
   });
 
   const handleFormSubmit = (data) => {
     present({
-      message: "Creating category...",
+      message: parent ? "Creating subcategory..." : "Creating category...",
     })
       .then(() => mutation.mutateAsync(data))
       .then((category) => {
         queryClient.setQueryData(["category", category.slug], category);
-        history.replace(`/admin/categories/${category.slug}`);
+        onSuccess(category);
       })
       .finally(() => dismiss());
   };
@@ -68,9 +75,9 @@ const AdminCategoriesAdd = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/admin/categories" />
+            <IonButton onClick={() => onCancelled()}>Cancel</IonButton>
           </IonButtons>
-          <IonTitle>Add Category</IonTitle>
+          <IonTitle>{parent ? "Add Sub Category" : "Add Category"}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -101,6 +108,33 @@ const AdminCategoriesAdd = () => {
                   </IonItem>
                 )}
               />
+              {/* Cost */}
+              {parent ? (
+                <Controller
+                  name="cost"
+                  render={({ field, fieldState }) => (
+                    <IonItem>
+                      <IonInput
+                        type="number"
+                        autofocus
+                        min={0}
+                        label="Cost"
+                        labelPlacement="stacked"
+                        ref={field.ref}
+                        value={field.value}
+                        onIonInput={(ev) =>
+                          field.onChange(ev.target.value || 0)
+                        }
+                        onIonBlur={field.onBlur}
+                        errorText={fieldState.error?.message}
+                        className={clsx(
+                          fieldState.invalid && "ion-invalid ion-touched"
+                        )}
+                      />
+                    </IonItem>
+                  )}
+                />
+              ) : null}
 
               {/* Image */}
               <Controller
@@ -145,4 +179,4 @@ const AdminCategoriesAdd = () => {
   );
 };
 
-export default AdminCategoriesAdd;
+export default AdminCategoriesAddModal;

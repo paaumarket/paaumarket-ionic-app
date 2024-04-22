@@ -16,24 +16,30 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from "@ionic/react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { add } from "ionicons/icons";
 import { useRouteMatch } from "react-router-dom";
+import AdminCategoriesAddModal from "./AdminCategoriesAddModal";
 
 const AdminSubCategories = () => {
   const match = useRouteMatch();
+
+  const queryKey = ["category", match.params.category];
   const {
     isPending,
     isSuccess,
     data: category,
   } = useQuery({
-    queryKey: ["category", match.params.category],
+    queryKey,
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${match.params.category}`, { signal })
         .then((response) => response.data),
   });
+
+  const queryClient = useQueryClient();
 
   const {
     isPending: isPendingChildren,
@@ -48,6 +54,19 @@ const AdminSubCategories = () => {
         .then((response) => response.data),
   });
 
+  const [present, dismiss] = useIonModal(AdminCategoriesAddModal, {
+    parent: category,
+    onCancelled: () => dismiss(),
+    onSuccess: (subCategory) => {
+      dismiss();
+      queryClient.refetchQueries({
+        queryKey,
+      });
+    },
+  });
+
+  const openAddSubCategoryModal = () => present();
+
   return (
     <IonPage>
       <IonHeader>
@@ -56,18 +75,17 @@ const AdminSubCategories = () => {
             <IonBackButton defaultHref="/admin/categories" />
           </IonButtons>
 
-          <IonTitle>{isPending ? "Loading..." : category["name"]}</IonTitle>
-          {isSuccess ? (
-            <IonThumbnail
-              className="[--size:theme(spacing.10)] inline-block"
-              slot="end"
-            >
-              <img
-                alt={category["name"]}
-                src={category["image"] ? category["image"]["src"] : null}
-              />
-            </IonThumbnail>
-          ) : null}
+          <IonTitle>
+            {isPending ? "Loading..." : category["name"]}
+            {isSuccess ? (
+              <IonThumbnail className="[--size:theme(spacing.9)] inline-block align-middle ion-margin-start">
+                <img
+                  alt={category["name"]}
+                  src={category["image"] ? category["image"]["src"] : null}
+                />
+              </IonThumbnail>
+            ) : null}
+          </IonTitle>
         </IonToolbar>
         <IonToolbar>
           <IonSearchbar></IonSearchbar>
@@ -89,7 +107,10 @@ const AdminSubCategories = () => {
                     src={category["image"] ? category["image"]["src"] : null}
                   />
                 </IonThumbnail>
-                <IonLabel>{category["name"]}</IonLabel>
+                <IonLabel>
+                  <h4>{category["name"]}</h4>
+                  <p>₦{category["cost"]}</p>
+                </IonLabel>
               </IonItem>
             ))}
           </IonList>
@@ -97,14 +118,16 @@ const AdminSubCategories = () => {
       </IonContent>
 
       {/* Add */}
-      <IonFab slot="fixed" vertical="bottom" horizontal="end">
-        <IonFabButton
-          aria-label="Add Category"
-          routerLink="/admin/categories/new"
-        >
-          <IonIcon icon={add}></IonIcon>
-        </IonFabButton>
-      </IonFab>
+      {isSuccess ? (
+        <IonFab slot="fixed" vertical="bottom" horizontal="end">
+          <IonFabButton
+            aria-label="Add Category"
+            onClick={openAddSubCategoryModal}
+          >
+            <IonIcon icon={add}></IonIcon>
+          </IonFabButton>
+        </IonFab>
+      ) : null}
     </IonPage>
   );
 };

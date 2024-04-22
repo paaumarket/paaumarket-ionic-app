@@ -16,16 +16,30 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import { add } from "ionicons/icons";
+import AdminCategoriesAddModal from "./AdminCategoriesAddModal";
+import { useHistory } from "react-router-dom";
 
 const AdminCategories = () => {
+  const history = useHistory();
+  const [present, dismiss] = useIonModal(AdminCategoriesAddModal, {
+    onCancelled: () => dismiss(),
+    onSuccess: (category) => {
+      dismiss();
+      history.push(`/admin/categories/${category.slug}`);
+    },
+  });
+
   const { isPending, isSuccess, data } = useQuery({
     queryKey: ["categories", "index"],
     queryFn: ({ signal }) =>
       api.get("/categories", { signal }).then((response) => response.data),
   });
+
+  const openAddCategoryModal = () => present();
 
   return (
     <IonPage>
@@ -69,10 +83,7 @@ const AdminCategories = () => {
 
       {/* Add Button */}
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
-        <IonFabButton
-          aria-label="Add Category"
-          routerLink="/admin/categories/new"
-        >
+        <IonFabButton aria-label="Add Category" onClick={openAddCategoryModal}>
           <IonIcon icon={add}></IonIcon>
         </IonFabButton>
       </IonFab>
