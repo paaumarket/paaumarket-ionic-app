@@ -1,35 +1,22 @@
 import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
   IonCol,
   IonContent,
   IonGrid,
   IonPage,
-  IonRouterLink,
   IonRow,
   IonSearchbar,
-  IonSkeletonText,
+  IonSpinner,
   IonText,
+  IonThumbnail,
 } from "@ionic/react";
 import Header from "../component/Header";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
-import gasCylinder from "../assets/category/gas.png";
-import fan from "../assets/category/fan.png";
-import table from "../assets/category/table.png";
-import beauty from "../assets/category/beauty.png";
-import lodge from "../assets/category/lodge.png";
-import fashion from "../assets/category/fashion.png";
-import laptop from "../assets/category/laptop.png";
-import mobile from "../assets/category/mobile.png";
-import food from "../assets/category/food.png";
+import Advert, { AdvertPlaceholder } from "@/component/Advert";
 
 export default function Home() {
   const { data, isPending, hasNextPage } = useInfiniteQuery({
@@ -64,7 +51,11 @@ export default function Home() {
       </Header>
 
       <IonContent className="ion-padding">
-        <IonText className="ion-padding">All category</IonText>
+        <IonText>
+          <h4 className="ion-text-center ion-no-margin">
+            <b>All category</b>
+          </h4>
+        </IonText>
 
         <Category />
 
@@ -75,10 +66,16 @@ export default function Home() {
         <IonGrid>
           <IonRow>
             {isPending ? (
-              <AdvertPlaceholder />
+              <IonCol size="12" sizeMd="6" sizeLg="2">
+                <AdvertPlaceholder />
+              </IonCol>
             ) : (
               adverts.map((advert) => {
-                return <Advert key={advert.id} advert={advert} />;
+                return (
+                  <IonCol key={advert["id"]} size="12" sizeMd="6" sizeLg="2">
+                    <Advert advert={advert} />
+                  </IonCol>
+                );
               })
             )}
           </IonRow>
@@ -88,153 +85,33 @@ export default function Home() {
   );
 }
 
-const Advert = ({ advert }) => {
-  return (
-    <IonCol size="12" sizeMd="6" sizeLg="2">
-      <IonCard routerLink={"/home/" + advert["id"]}>
-        {advert["preview_image"] ? (
-          <img alt={advert["title"]} src={advert["preview_image"]["path"]} />
-        ) : null}
-        <IonCardHeader>
-          <IonCardTitle>{advert["title"]}</IonCardTitle>
-          <IonCardSubtitle>{advert.description}</IonCardSubtitle>
-        </IonCardHeader>
-        <IonCardContent>
-          ₦{Intl.NumberFormat().format(advert["price"])}
-        </IonCardContent>
-      </IonCard>
-    </IonCol>
-  );
-};
-
-const AdvertPlaceholder = () => (
-  <IonCol size="12" sizeMd="6" sizeLg="2">
-    <IonCard>
-      <IonSkeletonText
-        animated={true}
-        className="ion-no-margin aspect-square max-h-60"
-      ></IonSkeletonText>
-      <IonCardHeader>
-        <IonCardTitle>
-          <IonSkeletonText
-            animated={true}
-            style={{ width: "80%" }}
-            className="ion-no-margin"
-          ></IonSkeletonText>
-        </IonCardTitle>
-        <IonCardSubtitle>
-          <IonSkeletonText
-            animated={true}
-            style={{ width: "60%" }}
-            className="ion-no-margin"
-          ></IonSkeletonText>
-        </IonCardSubtitle>
-      </IonCardHeader>
-    </IonCard>
-  </IonCol>
-);
-
 const Category = () => {
-  return (
+  const { isPending, isSuccess, data } = useQuery({
+    queryKey: ["categories", "index"],
+    queryFn: ({ signal }) =>
+      api.get("/categories", { signal }).then((response) => response.data),
+  });
+
+  return isPending ? (
+    <div className="ion-text-center">
+      <IonSpinner />
+    </div>
+  ) : isSuccess ? (
     <IonGrid className="ion-margin-bottom">
       <IonRow>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={lodge} alt="" />
-            <p className="inline-block">Lodge</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={mobile} alt="" />
-            <p className="inline-block">Phone</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={laptop} alt="" />
-            <p className="inline-block">Laptop</p>
-          </IonRouterLink>
-        </IonCol>
-      </IonRow>
-
-      <IonRow>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={beauty} alt="" />
-            <p className="inline-block">Beauty</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={fashion} alt="" />
-            <p className="inline-block">Fashion</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={food} alt="" />
-            <p className="inline-block">Food & Snacks</p>
-          </IonRouterLink>
-        </IonCol>
-      </IonRow>
-
-      <IonRow>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={gasCylinder} alt="" />
-            <p className="inline-block">Gas Cylinder</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={fan} alt="" />
-            <p className="inline-block">Fan</p>
-          </IonRouterLink>
-        </IonCol>
-        <IonCol>
-          <IonRouterLink
-            href="#"
-            className="text-center flex flex-col"
-            color="dark"
-          >
-            <img className="m-auto" src={table} alt="" />
-            <p className="inline-block">Table & Chair</p>
-          </IonRouterLink>
-        </IonCol>
+        {data.map((category) => (
+          <IonCol key={category["id"]} size="6" sizeSm="4" sizeMd="3">
+            <Link to="#" className="flex flex-col items-center text-center">
+              <IonThumbnail className="[--size:theme(spacing.16)]">
+                <img src={category["image"]["src"]} alt="" />
+              </IonThumbnail>
+              <IonText color={"dark"}>
+                <p className="inline-block">{category["name"]}</p>
+              </IonText>
+            </Link>
+          </IonCol>
+        ))}
       </IonRow>
     </IonGrid>
-  );
+  ) : null;
 };
