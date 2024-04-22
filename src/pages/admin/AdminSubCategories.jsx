@@ -32,12 +32,11 @@ import {
   trashBin,
 } from "ionicons/icons";
 import { useRouteMatch } from "react-router-dom";
-import AdminCategoriesAddModal from "./AdminCategoriesAddModal";
 import { useHistory } from "react-router";
 import clsx from "clsx";
+import AdminCategoryFormModal from "./AdminCategoryFormModal";
 
 const AdminSubCategories = () => {
-  const queryClient = useQueryClient();
   const history = useHistory();
 
   const match = useRouteMatch();
@@ -63,18 +62,20 @@ const AdminSubCategories = () => {
     onSuccess: () => history.replace("/admin/categories"),
   });
 
-  const [presentModal, dismissModal] = useIonModal(AdminCategoriesAddModal, {
-    parent: category,
-    onCancelled: () => dismissModal(),
-    onSuccess: (subCategory) => {
-      dismissModal();
-      queryClient.refetchQueries({
-        queryKey,
-      });
-    },
-  });
+  const [presentEditCategoryModal, dismissEditCategoryModal] = useIonModal(
+    AdminCategoryFormModal,
+    {
+      edit: true,
+      category,
+      onCancelled: () => dismissEditCategoryModal(),
+      onSuccess: (category) => {
+        dismissEditCategoryModal();
+        history.replace("/admin/categories/" + category["slug"]);
+      },
+    }
+  );
 
-  const openAddSubCategoryModal = () => presentModal();
+  const openEditCategoryModal = () => presentEditCategoryModal();
 
   return (
     <IonPage>
@@ -104,7 +105,7 @@ const AdminSubCategories = () => {
 
           {isSuccess ? (
             <IonButtons slot="primary">
-              <IonButton>
+              <IonButton onClick={openEditCategoryModal}>
                 <IonIcon slot="icon-only" icon={create}></IonIcon>
               </IonButton>
               <IonButton onClick={openDeleteAlert}>
@@ -126,25 +127,15 @@ const AdminSubCategories = () => {
           <SubCategoryList category={category} />
         ) : null}
       </IonContent>
-
-      {/* Add */}
-      {isSuccess ? (
-        <IonFab slot="fixed" vertical="bottom" horizontal="end">
-          <IonFabButton
-            aria-label="Add Category"
-            onClick={openAddSubCategoryModal}
-          >
-            <IonIcon icon={add}></IonIcon>
-          </IonFabButton>
-        </IonFab>
-      ) : null}
     </IonPage>
   );
 };
 
 const SubCategoryList = ({ category }) => {
   const queryClient = useQueryClient();
+
   const queryKey = ["category", category["slug"], "children"];
+
   const {
     isPending,
     isSuccess,
@@ -157,25 +148,54 @@ const SubCategoryList = ({ category }) => {
         .then((response) => response.data),
   });
 
-  return isPending ? (
-    <div className="ion-padding ion-text-center">
-      <IonSpinner />
-    </div>
-  ) : isSuccess ? (
-    <IonList>
-      {subCategories.map((category) => (
-        <SubCategoryItem
-          key={category["id"]}
-          category={category}
-          onDelete={() =>
-            queryClient.refetchQueries({
-              queryKey,
-            })
-          }
-        />
-      ))}
-    </IonList>
-  ) : null;
+  const [presentAddSubCategoryModal, dismissAddSubCategoryModal] = useIonModal(
+    AdminCategoryFormModal,
+    {
+      parent: category["id"],
+      onCancelled: () => dismissAddSubCategoryModal(),
+      onSuccess: () => {
+        dismissAddSubCategoryModal();
+        queryClient.refetchQueries({
+          queryKey,
+        });
+      },
+    }
+  );
+
+  const openAddSubCategoryModal = () => presentAddSubCategoryModal();
+
+  return (
+    <>
+      {isPending ? (
+        <div className="ion-padding ion-text-center">
+          <IonSpinner />
+        </div>
+      ) : isSuccess ? (
+        <IonList>
+          {subCategories.map((category) => (
+            <SubCategoryItem
+              key={category["id"]}
+              category={category}
+              onDelete={() =>
+                queryClient.refetchQueries({
+                  queryKey,
+                })
+              }
+            />
+          ))}
+        </IonList>
+      ) : null}
+
+      <IonFab slot="fixed" vertical="bottom" horizontal="end">
+        <IonFabButton
+          aria-label="Add Category"
+          onClick={openAddSubCategoryModal}
+        >
+          <IonIcon icon={add}></IonIcon>
+        </IonFabButton>
+      </IonFab>
+    </>
+  );
 };
 
 const SubCategoryItem = ({ category, onDelete }) => {

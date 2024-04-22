@@ -20,12 +20,12 @@ import {
 } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import { add } from "ionicons/icons";
-import AdminCategoriesAddModal from "./AdminCategoriesAddModal";
+import AdminCategoryFormModal from "./AdminCategoryFormModal";
 import { useHistory } from "react-router-dom";
 
 const AdminCategories = () => {
   const history = useHistory();
-  const [present, dismiss] = useIonModal(AdminCategoriesAddModal, {
+  const [present, dismiss] = useIonModal(AdminCategoryFormModal, {
     onCancelled: () => dismiss(),
     onSuccess: (category) => {
       dismiss();
