@@ -19,6 +19,7 @@ import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
 import Category from "@/pages/Category";
 import ProtectedRoute from "./ProtectedRoute";
+import SubCategories from "@/pages/SubCategories";
 
 export default function Tabs() {
   return (
@@ -26,13 +27,17 @@ export default function Tabs() {
       <IonRouterOutlet>
         <Redirect exact path="/home" to="/home/adverts" />
 
-        {/* Adverts */}
-        <Route exact path="/home/adverts/:id">
-          <SingleAdvertPage></SingleAdvertPage>
+        <Route exact path="/home/adverts/categories/:category">
+          <SubCategories />
         </Route>
 
         <Route exact path="/home/adverts/category">
           <Category></Category>
+        </Route>
+
+        {/* Adverts */}
+        <Route exact path="/home/adverts/:id">
+          <SingleAdvertPage></SingleAdvertPage>
         </Route>
 
         <Route exact path="/home/adverts">

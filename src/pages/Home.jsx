@@ -13,7 +13,7 @@ import Header from "../component/Header";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, generatePath } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
 import Advert, { AdvertPlaceholder } from "@/component/Advert";
@@ -101,7 +101,12 @@ const Category = () => {
       <IonRow>
         {data.map((category) => (
           <IonCol key={category["id"]} size="6" sizeSm="4" sizeMd="3">
-            <Link to="#" className="flex flex-col items-center text-center">
+            <Link
+              to={generatePath("/home/adverts/categories/:category", {
+                category: category["slug"],
+              })}
+              className="flex flex-col items-center text-center"
+            >
               <IonThumbnail className="[--size:theme(spacing.16)]">
                 <img src={category["image"]["src"]} alt="" />
               </IonThumbnail>
