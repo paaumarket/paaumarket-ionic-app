@@ -1,11 +1,14 @@
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCol,
   IonContent,
   IonGrid,
+  IonIcon,
   IonPage,
   IonRow,
+  IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -14,6 +17,7 @@ import { useParams } from "react-router";
 import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import Advert, { AdvertPlaceholder } from "@/component/Advert";
+import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
 
 export default function SingleAdvertPage() {
   const { id } = useParams();
@@ -48,7 +52,60 @@ export default function SingleAdvertPage() {
             </IonCol>
           </IonRow>
         </IonGrid>
+        <div>
+          {isPending ? (
+            <AdvertPlaceholder />
+          ) : (
+            <AdvertDescription advert={advert} />
+          )}
+        </div>
       </IonContent>
     </IonPage>
   );
 }
+
+const AdvertDescription = ({ advert }) => {
+  return (
+    <div>
+      <IonText>
+        <h4>
+          <strong>Description</strong>
+        </h4>
+      </IonText>
+      <p>
+        <IonText>{advert["description"]}</IonText>
+      </p>
+      {/* Contact Request Buttons */}
+      <>
+        <IonButton
+          className="ion-margin-top"
+          expand="full"
+          shape="round"
+          fill="solid"
+          color="primary"
+        >
+          <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
+          Request Call
+        </IonButton>
+        <IonButton
+          expand="full"
+          shape="round"
+          className="ion-margin-top"
+          fill="outline"
+        >
+          <IonIcon icon={logoWhatsapp} className="ion-padding-end"></IonIcon>
+          WhatsApp Message
+        </IonButton>
+
+        <p className="text-sm mt-2 dark:bg-slate-300 bg-slate-200 text-slate-700 rounded-md p-2 ">
+          <IonIcon
+            color="warning"
+            // className="ion-margin-end"
+            icon={warningOutline}
+          ></IonIcon>
+          Do not pay in advance even for the delivery!
+        </p>
+      </>
+    </div>
+  );
+};
