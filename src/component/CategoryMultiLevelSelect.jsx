@@ -4,6 +4,7 @@ import {
   IonItem,
   IonLabel,
   IonModal,
+  IonNote,
   IonSpinner,
   IonThumbnail,
 } from "@ionic/react";
@@ -43,14 +44,28 @@ const CategoryMultiLevelSelect = ({ value = null, onSelect }) => {
   return (
     <>
       <IonItem id={id}>
-        <IonLabel position="stacked">Category</IonLabel>
-        {isPending ? (
+        {selected ? (
           <>
-            <IonSpinner slot="end" /> Loading...
+            <IonNote slot="end">Category</IonNote>
+            <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
+              <img
+                alt={selected["name"]}
+                src={selected["image"] ? selected["image"]["src"] : null}
+              />
+            </IonThumbnail>
+            <IonLabel>
+              <h3 className="ion-text-wrap">{selected["name"]}</h3>
+              <p>₦{selected["cost"]}</p>
+            </IonLabel>
           </>
         ) : (
-          selected?.["name"] || "Select Category"
+          <IonLabel>
+            <h3>Category</h3>
+            <p>{isPending ? "Loading..." : "Select Category"}</p>
+          </IonLabel>
         )}
+
+        {isPending ? <IonSpinner slot="end" /> : null}
       </IonItem>
       <IonModal trigger={id} ref={modalRef}>
         <MultiLevelSelect
