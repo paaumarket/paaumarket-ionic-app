@@ -133,7 +133,6 @@ const AdminSubCategories = () => {
 
 const SubCategoryList = ({ category }) => {
   const queryClient = useQueryClient();
-
   const queryKey = ["category", category["slug"], "children"];
 
   const {
@@ -148,6 +147,11 @@ const SubCategoryList = ({ category }) => {
         .then((response) => response.data),
   });
 
+  const refetchQueries = () =>
+    queryClient.refetchQueries({
+      queryKey,
+    });
+
   const [presentAddSubCategoryModal, dismissAddSubCategoryModal] = useIonModal(
     AdminCategoryFormModal,
     {
@@ -155,9 +159,7 @@ const SubCategoryList = ({ category }) => {
       onCancelled: () => dismissAddSubCategoryModal(),
       onSuccess: () => {
         dismissAddSubCategoryModal();
-        queryClient.refetchQueries({
-          queryKey,
-        });
+        refetchQueries();
       },
     }
   );
@@ -176,11 +178,8 @@ const SubCategoryList = ({ category }) => {
             <SubCategoryItem
               key={category["id"]}
               category={category}
-              onDelete={() =>
-                queryClient.refetchQueries({
-                  queryKey,
-                })
-              }
+              onEdit={refetchQueries}
+              onDelete={refetchQueries}
             />
           ))}
         </IonList>
@@ -198,7 +197,8 @@ const SubCategoryList = ({ category }) => {
   );
 };
 
-const SubCategoryItem = ({ category, onDelete }) => {
+const SubCategoryItem = ({ category, onEdit, onDelete }) => {
+  // Delete subcategory
   const deleteMutation = useCategoryDeleteMutation(category["slug"]);
 
   const deleteAlert = useDeleteAlert({
@@ -207,6 +207,21 @@ const SubCategoryItem = ({ category, onDelete }) => {
     onSuccess: onDelete,
   });
 
+  // Edit subcategory
+  const [presentEditSubCategoryModal, dismissEditSubCategoryModal] =
+    useIonModal(AdminCategoryFormModal, {
+      edit: true,
+      category,
+      onCancelled: () => dismissEditSubCategoryModal(),
+      onSuccess: (category) => {
+        dismissEditSubCategoryModal();
+        onEdit(category);
+      },
+    });
+
+  const openEditSubCategoryModal = () => presentEditSubCategoryModal();
+
+  // Action sheet
   const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
 
   const openActions = () =>
@@ -216,6 +231,9 @@ const SubCategoryItem = ({ category, onDelete }) => {
           text: "Edit",
           data: {
             action: "edit",
+          },
+          handler: () => {
+            openEditSubCategoryModal();
           },
         },
         {
