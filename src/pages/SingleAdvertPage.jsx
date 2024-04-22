@@ -6,6 +6,8 @@ import {
   IonGrid,
   IonPage,
   IonRow,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
 import Header from "../component/Header";
 import { useParams } from "react-router";
@@ -15,27 +17,34 @@ import Advert, { AdvertPlaceholder } from "@/component/Advert";
 
 export default function SingleAdvertPage() {
   const { id } = useParams();
-  const { isPending, data } = useQuery({
+  const {
+    isPending,
+    isSuccess,
+    data: advert,
+  } = useQuery({
     queryKey: ["advert", id],
     queryFn: ({ signal }) =>
       api.get(`/adverts/${id}`, { signal }).then((response) => response.data),
   });
 
-  console.log(data);
   return (
     <IonPage>
       <Header>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="/"></IonBackButton>
-        </IonButtons>
-        <div className="grow">{isPending ? null : data["title"]}</div>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/"></IonBackButton>
+          </IonButtons>
+          <IonTitle>
+            {isPending ? "Loading..." : isSuccess ? advert["title"] : "Error!"}
+          </IonTitle>
+        </IonToolbar>
       </Header>
 
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding" fullscreen>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              {isPending ? <AdvertPlaceholder /> : <Advert advert={data} />}
+          <IonRow className="ion-justify-start">
+            <IonCol sizeXl="6">
+              {isPending ? <AdvertPlaceholder /> : <Advert advert={advert} />}
             </IonCol>
           </IonRow>
         </IonGrid>

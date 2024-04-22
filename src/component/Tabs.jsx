@@ -36,7 +36,7 @@ export default function Tabs() {
         </Route>
 
         {/* Adverts */}
-        <Route exact path="/home/adverts/:id">
+        <Route exact path="/home/adverts/ad/:id">
           <SingleAdvertPage></SingleAdvertPage>
         </Route>
 
