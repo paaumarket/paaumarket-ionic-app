@@ -4,15 +4,14 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonCol,
   IonSkeletonText,
 } from "@ionic/react";
 
 const Advert = ({ advert }) => {
   return (
-    <IonCard routerLink={"/home/" + advert["id"]}>
+    <IonCard routerLink={"/home/adverts/ad/" + advert["id"]}>
       {advert["preview_image"] ? (
-        <img alt={advert["title"]} src={advert["preview_image"]["path"]} />
+        <img alt={advert["title"]} src={advert["preview_image"]["src"]} />
       ) : null}
 
       {advert["images"]
@@ -20,7 +19,7 @@ const Advert = ({ advert }) => {
             <img
               key={advertImage["id"]}
               alt={advert["title"]}
-              src={advertImage["image"]["path"]}
+              src={advertImage["image"]["src"]}
             />
           ))
         : null}

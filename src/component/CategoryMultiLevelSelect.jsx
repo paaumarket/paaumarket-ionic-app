@@ -15,7 +15,7 @@ import { useId } from "react";
 import MultiLevelSelect from "./MultiLevelSelect";
 import { checkmark } from "ionicons/icons";
 
-const CategoryMultiLevelSelect = ({ value = null, onSelect }) => {
+const CategoryMultiLevelSelect = ({ children, value = null, onSelect }) => {
   const id = "category-multilevel-select-" + useId();
   const modalRef = useRef();
 
@@ -66,6 +66,8 @@ const CategoryMultiLevelSelect = ({ value = null, onSelect }) => {
         )}
 
         {isPending ? <IonSpinner slot="end" /> : null}
+
+        {children}
       </IonItem>
       <IonModal trigger={id} ref={modalRef}>
         <MultiLevelSelect
