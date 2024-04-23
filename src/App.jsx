@@ -33,6 +33,7 @@ import AdminProtectedRoute from "./component/AdminProtectedRoute";
 import ForgetPassword from "./pages/ForgetPassword";
 import NewPassword from "./pages/NewPassword";
 import OTP from "./pages/OTP";
+import AdminAdverts from "./pages/admin/AdminAdverts";
 
 setupIonicReact();
 
@@ -41,6 +42,13 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
+          {/* Admin Adverts */}
+          <Route exact path="/admin/adverts">
+            <AdminProtectedRoute>
+              <AdminAdverts />
+            </AdminProtectedRoute>
+          </Route>
+
           {/* Admin Categories */}
           <Route exact path="/admin/categories">
             <AdminProtectedRoute>

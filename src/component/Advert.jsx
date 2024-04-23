@@ -7,14 +7,10 @@ import {
 } from "@ionic/react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/keyboard";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/zoom";
+import "swiper/css/bundle";
+
 import "@ionic/react/css/ionic-swiper.css";
 import { IonicSlides } from "@ionic/react";
 
@@ -30,20 +26,7 @@ const Advert = ({ advert }) => {
         />
       ) : null}
 
-      {advert["images"] ? (
-        <Swiper modules={[Pagination, IonicSlides]} pagination={true}>
-          {advert["images"].map((advertImage) => (
-            <SwiperSlide key={advertImage["id"]}>
-              <img
-                alt={advert["title"]}
-                src={advertImage["image"]["src"]}
-                width={advertImage["image"]["width"]}
-                height={advertImage["image"]["height"]}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ) : null}
+      {advert["images"] ? <AdvertImages advert={advert} /> : null}
       <IonCardHeader>
         <IonCardTitle>{advert["title"]}</IonCardTitle>
         <IonCardSubtitle>
@@ -53,6 +36,21 @@ const Advert = ({ advert }) => {
     </IonCard>
   );
 };
+
+export const AdvertImages = ({ advert }) => (
+  <Swiper modules={[Navigation, IonicSlides]} navigation={true}>
+    {advert["images"].map((advertImage) => (
+      <SwiperSlide key={advertImage["id"]}>
+        <img
+          alt={advert["title"]}
+          src={advertImage["image"]["src"]}
+          width={advertImage["image"]["width"]}
+          height={advertImage["image"]["height"]}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
+);
 
 export const AdvertPlaceholder = () => (
   <IonCard>

@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { folderOutline } from "ionicons/icons";
+import { folderOutline, megaphoneOutline } from "ionicons/icons";
 
 const AdminDashboard = () => {
   return (
@@ -26,6 +26,7 @@ const AdminDashboard = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonList>
+          {/* Categories */}
           <IonItem routerLink="/admin/categories">
             <IonIcon
               aria-hidden="true"
@@ -34,6 +35,17 @@ const AdminDashboard = () => {
               color="primary"
             ></IonIcon>
             <IonLabel>Categories</IonLabel>
+          </IonItem>
+
+          {/* Adverts */}
+          <IonItem routerLink="/admin/adverts">
+            <IonIcon
+              aria-hidden="true"
+              icon={megaphoneOutline}
+              slot="start"
+              color="primary"
+            ></IonIcon>
+            <IonLabel>Adverts</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>
