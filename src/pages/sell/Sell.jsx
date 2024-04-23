@@ -37,17 +37,6 @@ import { walletOutline } from "ionicons/icons";
 import { useHistory } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
-// API DEMO
-const products = [
-  {
-    _id: 1,
-    description: "Apple iPhone X 64 GB White",
-    price: "35000",
-    createdAt: "15th Dec, 2023",
-    thumbnail: product,
-  },
-];
-
 const MAX_IMAGE_UPLOAD = 5;
 export default function Sell() {
   const queryClient = useQueryClient();

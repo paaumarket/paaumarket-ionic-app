@@ -63,7 +63,7 @@ export default function Profile() {
         </div>
 
         <div>
-          <Link to="#" className="flex">
+          <Link to="/home/myads" className="flex">
             <IonIcon
               icon={storefrontOutline}
               size="large"

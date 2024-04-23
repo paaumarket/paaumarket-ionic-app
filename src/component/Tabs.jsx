@@ -20,6 +20,7 @@ import Profile from "@/pages/Profile";
 // import Category from "@/pages/Category";
 import ProtectedRoute from "./ProtectedRoute";
 import SubCategories from "@/pages/SubCategories";
+import MyAds from "@/pages/MyAds";
 
 export default function Tabs() {
   return (
@@ -58,6 +59,12 @@ export default function Tabs() {
           </ProtectedRoute>
         </Route>
 
+        {/* My Ads */}
+        <Route exact path="/home/myads">
+          <ProtectedRoute>
+            <MyAds />
+          </ProtectedRoute>
+        </Route>
         <Route exact path="/home">
           <Redirect to="/home/adverts" />
         </Route>

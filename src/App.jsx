@@ -34,6 +34,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import NewPassword from "./pages/NewPassword";
 import OTP from "./pages/OTP";
 import AdminAdverts from "./pages/admin/AdminAdverts";
+import MyAds from "./pages/MyAds";
 
 setupIonicReact();
 
