@@ -34,69 +34,72 @@ import ForgetPassword from "./pages/ForgetPassword";
 import NewPassword from "./pages/NewPassword";
 import OTP from "./pages/OTP";
 import AdminAdverts from "./pages/admin/AdminAdverts";
-import MyAds from "./pages/MyAds";
+import { ProfileUpdater } from "./ProfileUpdater";
 
 setupIonicReact();
 
 const App = () => {
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          {/* Admin Adverts */}
-          <Route exact path="/admin/adverts">
-            <AdminProtectedRoute>
-              <AdminAdverts />
-            </AdminProtectedRoute>
-          </Route>
+    <>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            {/* Admin Adverts */}
+            <Route exact path="/admin/adverts">
+              <AdminProtectedRoute>
+                <AdminAdverts />
+              </AdminProtectedRoute>
+            </Route>
 
-          {/* Admin Categories */}
-          <Route exact path="/admin/categories">
-            <AdminProtectedRoute>
-              <AdminCategories />
-            </AdminProtectedRoute>
-          </Route>
-          <Route exact path="/admin/categories/:category">
-            <AdminProtectedRoute>
-              <AdminSubCategories />
-            </AdminProtectedRoute>
-          </Route>
+            {/* Admin Categories */}
+            <Route exact path="/admin/categories">
+              <AdminProtectedRoute>
+                <AdminCategories />
+              </AdminProtectedRoute>
+            </Route>
+            <Route exact path="/admin/categories/:category">
+              <AdminProtectedRoute>
+                <AdminSubCategories />
+              </AdminProtectedRoute>
+            </Route>
 
-          {/* Admin Dashboard */}
-          <Route exact path="/admin">
-            <AdminProtectedRoute>
-              <AdminDashboard />
-            </AdminProtectedRoute>
-          </Route>
+            {/* Admin Dashboard */}
+            <Route exact path="/admin">
+              <AdminProtectedRoute>
+                <AdminDashboard />
+              </AdminProtectedRoute>
+            </Route>
 
-          <Route path="/home">
-            <Tabs />
-          </Route>
+            <Route path="/home">
+              <Tabs />
+            </Route>
 
-          <Route path="/forget_password">
-            <ForgetPassword />
-          </Route>
+            <Route path="/forget_password">
+              <ForgetPassword />
+            </Route>
 
-          <Route path="/new_password">
-            <NewPassword />
-          </Route>
+            <Route path="/new_password">
+              <NewPassword />
+            </Route>
 
-          <Route path="/otp_verification">
-            <OTP />
-          </Route>
+            <Route path="/otp_verification">
+              <OTP />
+            </Route>
 
-          <Route exact path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/login" component={SignIn} />
-          <Route exact path="/logout" component={Logout} />
+            <Route exact path="/register">
+              <Register />
+            </Route>
+            <Route exact path="/login" component={SignIn} />
+            <Route exact path="/logout" component={Logout} />
 
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+      <ProfileUpdater />
+    </>
   );
 };
 
