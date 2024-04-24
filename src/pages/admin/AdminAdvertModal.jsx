@@ -1,16 +1,11 @@
-import { AdvertImages } from "@/component/Advert";
+import AdvertDetails from "@/component/AdvertDetails";
 import api from "@/lib/api";
 import {
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
   IonPage,
-  IonText,
-  IonThumbnail,
   IonTitle,
   IonToolbar,
   useIonLoading,
@@ -73,91 +68,7 @@ const AdminAdvertModal = ({ advert, onCancelled, onSuccess }) => {
 
       {/* Content */}
       <IonContent fullscreen>
-        <IonList>
-          {/* User */}
-          <IonItem>
-            <IonLabel>
-              <h4>User</h4>
-              <p>{advert["user_name"]}</p>
-            </IonLabel>
-          </IonItem>
-
-          {/* Title */}
-          <IonItem>
-            <IonLabel>
-              <h4>Title</h4>
-              <p>{advert["title"]}</p>
-            </IonLabel>
-          </IonItem>
-
-          {/* Category */}
-          <IonItem>
-            <IonLabel>
-              <h4>Category</h4>
-              <p className="flex flex-wrap items-center gap-2">
-                <IonThumbnail
-                  slot="start"
-                  className="[--size:theme(spacing.8)]"
-                >
-                  <img
-                    alt={advert["category_name"]}
-                    src={
-                      advert["category_image"]
-                        ? advert["category_image"]["src"]
-                        : null
-                    }
-                  />
-                </IonThumbnail>{" "}
-                {advert["category_name"]}
-              </p>
-            </IonLabel>
-          </IonItem>
-          {/* Price */}
-          <IonItem>
-            <IonLabel>
-              <h4>Price</h4>
-              <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
-            </IonLabel>
-          </IonItem>
-
-          {/* Description */}
-          <IonItem>
-            <IonLabel>
-              <h4>Description</h4>
-              <p>{advert["description"]}</p>
-            </IonLabel>
-          </IonItem>
-
-          {/* Images */}
-          <IonItem>
-            <IonLabel>
-              <h4>Images</h4>
-              <p>{advert["images"]["length"]}</p>
-            </IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <AdvertImages advert={advert} />
-          </IonItem>
-
-          {/* Approval */}
-          <IonItem>
-            <IonLabel>
-              <h4>Approval</h4>
-              <IonText
-                color={
-                  advert["status"] === "approved"
-                    ? "success"
-                    : advert["status"] === "declined"
-                    ? "danger"
-                    : "warning"
-                }
-              >
-                <p>{advert["status"].toUpperCase()}</p>
-              </IonText>
-            </IonLabel>
-          </IonItem>
-        </IonList>
+        <AdvertDetails advert={advert} />
 
         <div className="ion-padding">
           {advert["status"] !== "approved" ? (

@@ -21,7 +21,6 @@ import {
 
 import * as yup from "yup";
 
-import product from "../../assets/product.png";
 import CategoryMultiLevelSelect from "@/component/CategoryMultiLevelSelect";
 import useHookForm from "@/hooks/useHookForm";
 import { Controller, FormProvider, useFieldArray } from "react-hook-form";
@@ -126,7 +125,7 @@ export default function Sell() {
           },
         });
 
-        history.push("/");
+        history.push("/home/profile/my-adverts");
       })
 
       /** Dismiss Loading */
