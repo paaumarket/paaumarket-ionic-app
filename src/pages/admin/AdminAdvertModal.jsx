@@ -20,11 +20,19 @@ import { useMutation } from "@tanstack/react-query";
 const AdminAdvertModal = ({ advert, onCancelled, onSuccess }) => {
   const [presentLoading, dismissLoading] = useIonLoading();
 
-  const mutation = useMutation({
-    mutationKey: ["advert", advert["id"], "approval"],
+  const approveMutation = useMutation({
+    mutationKey: ["advert", advert["id"], "approve"],
     mutationFn: () =>
       api
         .post(`/adverts/${advert["id"]}/approve`)
+        .then((response) => response.data),
+  });
+
+  const declineMutation = useMutation({
+    mutationKey: ["advert", advert["id"], "decline"],
+    mutationFn: () =>
+      api
+        .post(`/adverts/${advert["id"]}/decline`)
         .then((response) => response.data),
   });
 
@@ -34,7 +42,19 @@ const AdminAdvertModal = ({ advert, onCancelled, onSuccess }) => {
       message: "Approving...",
     })
       /** Mutate */
-      .then(() => mutation.mutateAsync(null, { onSuccess }))
+      .then(() => approveMutation.mutateAsync(null, { onSuccess }))
+
+      /** Dismiss Loading */
+      .finally(() => dismissLoading());
+  };
+
+  const declineAdvert = () => {
+    /** Show Loading */
+    presentLoading({
+      message: "Declining...",
+    })
+      /** Mutate */
+      .then(() => declineMutation.mutateAsync(null, { onSuccess }))
 
       /** Dismiss Loading */
       .finally(() => dismissLoading());
@@ -124,17 +144,31 @@ const AdminAdvertModal = ({ advert, onCancelled, onSuccess }) => {
           <IonItem>
             <IonLabel>
               <h4>Approval</h4>
-              <IonText color={advert["approved"] ? "success" : "warning"}>
-                <p>{advert["approved"] ? "Approved" : "Pending"}</p>
+              <IonText
+                color={
+                  advert["status"] === "approved"
+                    ? "success"
+                    : advert["status"] === "declined"
+                    ? "danger"
+                    : "warning"
+                }
+              >
+                <p>{advert["status"].toUpperCase()}</p>
               </IonText>
             </IonLabel>
           </IonItem>
         </IonList>
 
         <div className="ion-padding">
-          {!advert["approved"] ? (
+          {advert["status"] !== "approved" ? (
             <IonButton expand="block" color={"success"} onClick={approveAdvert}>
               Approve
+            </IonButton>
+          ) : null}
+
+          {advert["status"] !== "declined" ? (
+            <IonButton expand="block" color={"danger"} onClick={declineAdvert}>
+              Decline
             </IonButton>
           ) : null}
         </div>

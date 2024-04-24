@@ -24,7 +24,7 @@ import { useMemo } from "react";
 import AdminAdvertModal from "./AdminAdvertModal";
 
 const AdminAdverts = () => {
-  const [segment, setSegment] = useState("pending");
+  const [segment, setSegment] = useState("reviewing");
 
   const queryClient = useQueryClient();
   const queryKey = ["adverts", "approval", segment];
@@ -34,10 +34,7 @@ const AdminAdverts = () => {
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
     queryFn: ({ signal, pageParam }) =>
       api
-        .get(
-          `/adverts?approval=${segment === "approved"}&cursor=${pageParam}`,
-          { signal }
-        )
+        .get(`/adverts?approval=${segment}&cursor=${pageParam}`, { signal })
         .then((response) => response.data),
   });
 
@@ -66,11 +63,14 @@ const AdminAdverts = () => {
             value={segment}
             onIonChange={(ev) => setSegment(ev.detail.value)}
           >
-            <IonSegmentButton value="pending">
+            <IonSegmentButton value="reviewing">
               <IonLabel>Pending</IonLabel>
             </IonSegmentButton>
             <IonSegmentButton value="approved">
               <IonLabel>Approved</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="declined">
+              <IonLabel>Declined</IonLabel>
             </IonSegmentButton>
           </IonSegment>
         </IonToolbar>
