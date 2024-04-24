@@ -21,6 +21,7 @@ import Profile from "@/pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import SubCategories from "@/pages/SubCategories";
 import MyAdverts from "@/pages/MyAdverts";
+import TopUp from "@/pages/TopUp";
 
 export default function Tabs() {
   return (
@@ -56,6 +57,13 @@ export default function Tabs() {
         <Route exact path="/home/profile/my-adverts">
           <ProtectedRoute>
             <MyAdverts />
+          </ProtectedRoute>
+        </Route>
+
+        {/* Top up */}
+        <Route exact path="/home/profile/top-up">
+          <ProtectedRoute>
+            <TopUp />
           </ProtectedRoute>
         </Route>
 

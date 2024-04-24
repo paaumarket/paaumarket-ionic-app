@@ -58,7 +58,9 @@ export default function Profile() {
           </div>
 
           <div>
-            <IonButton size="small">Add Fund</IonButton>
+            <IonButton size="small" routerLink="/home/profile/top-up">
+              Add Fund
+            </IonButton>
           </div>
         </div>
 
