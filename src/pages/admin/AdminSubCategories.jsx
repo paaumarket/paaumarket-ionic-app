@@ -18,10 +18,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonActionSheet,
-  useIonAlert,
-  useIonLoading,
   useIonModal,
-  useIonToast,
 } from "@ionic/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -35,6 +32,7 @@ import { useRouteMatch } from "react-router-dom";
 import { useHistory } from "react-router";
 import clsx from "clsx";
 import AdminCategoryFormModal from "./AdminCategoryFormModal";
+import useDeleteAlert from "@/hooks/useDeleteAlert";
 
 const AdminSubCategories = () => {
   const history = useHistory();
@@ -57,7 +55,7 @@ const AdminSubCategories = () => {
   const categoryDeleteMutation = useCategoryDeleteMutation(category?.["slug"]);
 
   const openDeleteAlert = useDeleteAlert({
-    header: category?.["name"],
+    title: category?.["name"],
     onDelete: () => categoryDeleteMutation.mutateAsync(),
     onSuccess: () => history.replace("/admin/categories"),
   });
@@ -282,49 +280,5 @@ const useCategoryDeleteMutation = (category) =>
     mutationFn: () =>
       api.delete(`/categories/${category}`).then((response) => response.data),
   });
-
-const useDeleteAlert = ({ header = "", message = "", onDelete, onSuccess }) => {
-  const [presentToast, dismissToast] = useIonToast();
-  const [presentAlert, dismissAlert] = useIonAlert();
-  const [presentLoading, dismissLoading] = useIonLoading();
-
-  return () =>
-    presentAlert({
-      header: header,
-      subHeader: "Delete",
-      message: message || "Are you sure you want to delete this item?",
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
-        },
-        {
-          text: "OK",
-          role: "confirm",
-          handler: () => {
-            presentLoading("Deleting....")
-              .then(onDelete)
-              .then(() => {
-                presentToast({
-                  message: "Successfully deleted.",
-                  color: "success",
-                  duration: 2000,
-                });
-              })
-              .then(onSuccess)
-              .catch(() =>
-                presentToast({
-                  message: "Failed to delete...",
-                  color: "danger",
-                  duration: 2000,
-                })
-              )
-
-              .finally(() => dismissLoading());
-          },
-        },
-      ],
-    });
-};
 
 export default AdminSubCategories;

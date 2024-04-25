@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "./hooks/useAuth";
 import api from "./lib/api";
 import { useEffect } from "react";
+import deepEqual from "deep-equal";
 
 const REFETCH_INTERVAL =
   1000 * (import.meta.env.NODE_ENV === "production" ? 60 : 5);
 
 export const ProfileUpdater = () => {
   const { user, login } = useAuth();
-  const { data, dataUpdatedAt } = useQuery({
+  const { data } = useQuery({
     queryKey: ["auth", "user", Boolean(user)],
     queryFn: ({ signal }) =>
       api.get("/user", { signal }).then((response) => response.data),
@@ -18,7 +19,7 @@ export const ProfileUpdater = () => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (data && !deepEqual(user, data)) {
       login({ user: data });
     }
   }, [data]);

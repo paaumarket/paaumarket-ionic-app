@@ -5,6 +5,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonItem,
@@ -18,12 +19,19 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
   useIonModal,
 } from "@ionic/react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import AdvertDetails from "@/component/AdvertDetails";
+import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
+import useDeleteAlert from "@/hooks/useDeleteAlert";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -46,6 +54,12 @@ const MyAdverts = () => {
   );
 
   const handleApproved = () => {
+    queryClient.refetchQueries({
+      queryKey,
+    });
+  };
+
+  const handleDeleted = () => {
     queryClient.refetchQueries({
       queryKey,
     });
@@ -103,6 +117,7 @@ const MyAdverts = () => {
                 key={advert["id"]}
                 advert={advert}
                 onApproved={handleApproved}
+                onDelete={handleDeleted}
               />
             ))}
           </IonList>
@@ -118,7 +133,7 @@ const MyAdverts = () => {
   );
 };
 
-const MyAdvertItem = ({ advert, onApproved }) => {
+const MyAdvertItem = ({ advert, onDelete }) => {
   const [present, dismiss] = useIonModal(MyAdvertModal, {
     advert,
     onCancelled() {
@@ -128,6 +143,53 @@ const MyAdvertItem = ({ advert, onApproved }) => {
 
   const openAdvertModal = () => present();
 
+  const deleteMutation = useAdvertDeleteMutation(advert["id"]);
+
+  // Delete Alert
+  const deleteAlert = useDeleteAlert({
+    title: advert["title"],
+    onDelete: () => deleteMutation.mutateAsync(),
+    onSuccess: onDelete,
+  });
+
+  // Action sheet
+  const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+
+  const openActions = (ev) => {
+    ev.stopPropagation();
+
+    presentActionSheet({
+      buttons: [
+        {
+          text: "Edit",
+          data: {
+            action: "edit",
+          },
+          handler: () => {
+            openEditSubCategoryModal();
+          },
+        },
+        {
+          text: "Delete",
+          role: "destructive",
+          data: {
+            action: "delete",
+          },
+          handler: () => {
+            deleteAlert();
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <IonItem key={advert["id"]} onClick={() => openAdvertModal(advert)}>
       <IonThumbnail slot="start" className="[--size:theme(spacing.20)]">
@@ -136,18 +198,21 @@ const MyAdvertItem = ({ advert, onApproved }) => {
       <IonLabel>
         <h4>{advert["title"]}</h4>
         <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
+        <IonNote
+          color={
+            advert["status"] === "approved"
+              ? "success"
+              : advert["status"] === "declined"
+              ? "danger"
+              : "warning"
+          }
+        >
+          {advert["status"].toUpperCase()}
+        </IonNote>
       </IonLabel>
-      <IonNote
-        color={
-          advert["status"] === "approved"
-            ? "success"
-            : advert["status"] === "declined"
-            ? "danger"
-            : "warning"
-        }
-      >
-        {advert["status"].toUpperCase()}
-      </IonNote>
+      <IonButton onClick={openActions}>
+        <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
+      </IonButton>
     </IonItem>
   );
 };
@@ -171,5 +236,12 @@ const MyAdvertModal = ({ advert, onCancelled }) => {
     </IonPage>
   );
 };
+
+const useAdvertDeleteMutation = (advert) =>
+  useMutation({
+    mutationKey: ["adverts", advert, "delete"],
+    mutationFn: () =>
+      api.delete(`/adverts/${advert}`).then((response) => response.data),
+  });
 
 export default MyAdverts;

@@ -126,6 +126,7 @@ export default function Sell() {
         });
 
         history.push("/home/profile/my-adverts");
+        form.reset();
       })
 
       /** Dismiss Loading */
