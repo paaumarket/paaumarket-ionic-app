@@ -1,9 +1,12 @@
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonFooter,
   IonHeader,
+  IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
   IonList,
@@ -17,12 +20,15 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
+
 import useAuth from "@/hooks/useAuth";
 
 import WemaLogo from "@/assets/banks/wema.png";
 import MoniepointLogo from "@/assets/banks/moniepoint.png";
 import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
+import { copyOutline } from "ionicons/icons";
+import { useRef } from "react";
 
 const BANKS_LOGO = {
   "035": WemaLogo,
@@ -74,6 +80,23 @@ const TopUp = () => {
 };
 
 const AccountsTopUp = () => {
+  const acccountNumberRef = useRef(null);
+  const toolTipRef = useRef(null);
+
+  // Copy Account Number
+  function copyAccount() {
+    const copyText = acccountNumberRef.current;
+    navigator.clipboard.writeText(copyText.value);
+
+    const tooltip = toolTipRef.current;
+    tooltip.innerHTML = "Copied: " + copyText.value;
+  }
+
+  function resetAccount() {
+    const tooltip = toolTipRef.current;
+    tooltip.innerHTML = "Copy to clipboard";
+  }
+
   const {
     isPending,
     isSuccess,
@@ -103,7 +126,29 @@ const AccountsTopUp = () => {
           </IonThumbnail>
           <IonLabel>
             <h4>{account["account_name"]}</h4>
-            <p>{account["account_number"]}</p>
+            <input
+              id="account_number"
+              type="text"
+              value={account["account_number"]}
+              readOnly
+              disabled
+              ref={acccountNumberRef}
+              className="bg-transparent w-24"
+            />
+            <br />
+            <div className="tooltip">
+              <span className="tooltiptext" id="myTooltip" ref={toolTipRef}>
+                Copy to clipboard
+              </span>
+              <IonButton
+                size="small"
+                onClick={copyAccount}
+                onMouseOut={resetAccount}
+                color="dark"
+              >
+                <IonIcon icon={copyOutline}></IonIcon>
+              </IonButton>
+            </div>
           </IonLabel>
           <IonNote>{account["bank_name"]}</IonNote>
         </IonItem>
