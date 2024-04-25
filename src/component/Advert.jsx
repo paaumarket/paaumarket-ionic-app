@@ -16,7 +16,9 @@ import { IonicSlides } from "@ionic/react";
 
 const Advert = ({ advert, full = false }) => {
   return (
-    <IonCard routerLink={!full ? "/home/adverts/ad/" + advert["id"] : null}>
+    <IonCard
+      routerLink={!full ? "/home/adverts/ad/" + advert["id"] : undefined}
+    >
       {advert["preview_image"] ? (
         <img
           alt={advert["title"]}
