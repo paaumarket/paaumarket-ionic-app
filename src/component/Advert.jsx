@@ -1,5 +1,6 @@
 import {
   IonCard,
+  IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
@@ -35,6 +36,10 @@ const Advert = ({ advert, full = false }) => {
           ₦{Intl.NumberFormat().format(advert["price"])}
         </IonCardSubtitle>
       </IonCardHeader>
+
+      {advert["description"] ? (
+        <IonCardContent>{advert["description"]}</IonCardContent>
+      ) : null}
     </IonCard>
   );
 };
