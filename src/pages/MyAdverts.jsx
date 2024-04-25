@@ -32,6 +32,7 @@ import { useMemo } from "react";
 import AdvertDetails from "@/component/AdvertDetails";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
+import EditAdvertFormModal from "@/component/EditAdvertFormModal";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -133,7 +134,8 @@ const MyAdverts = () => {
   );
 };
 
-const MyAdvertItem = ({ advert, onDelete }) => {
+const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
+  // Show Advert
   const [present, dismiss] = useIonModal(MyAdvertModal, {
     advert,
     onCancelled() {
@@ -143,9 +145,21 @@ const MyAdvertItem = ({ advert, onDelete }) => {
 
   const openAdvertModal = () => present();
 
-  const deleteMutation = useAdvertDeleteMutation(advert["id"]);
+  // Edit Advert
+  const [presentEditAdvertModal, dismissEditAdvertModal] = useIonModal(
+    EditAdvertFormModal,
+    {
+      advert,
+      onCancelled: () => dismissEditAdvertModal(),
+      onSuccess: (category) => {
+        dismissEditAdvertModal();
+        onEdit(category);
+      },
+    }
+  );
 
   // Delete Alert
+  const deleteMutation = useAdvertDeleteMutation(advert["id"]);
   const deleteAlert = useDeleteAlert({
     title: advert["title"],
     onDelete: () => deleteMutation.mutateAsync(),
@@ -166,7 +180,7 @@ const MyAdvertItem = ({ advert, onDelete }) => {
             action: "edit",
           },
           handler: () => {
-            openEditSubCategoryModal();
+            presentEditAdvertModal();
           },
         },
         {
