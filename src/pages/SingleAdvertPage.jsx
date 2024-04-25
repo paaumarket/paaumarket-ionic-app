@@ -48,7 +48,11 @@ export default function SingleAdvertPage() {
         <IonGrid>
           <IonRow className="ion-justify-start">
             <IonCol sizeXl="6">
-              {isPending ? <AdvertPlaceholder /> : <Advert advert={advert} />}
+              {isPending ? (
+                <AdvertPlaceholder />
+              ) : (
+                <Advert full advert={advert} />
+              )}
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -97,7 +101,7 @@ const AdvertDescription = ({ advert }) => {
           WhatsApp Message
         </IonButton>
 
-        <p className="text-sm mt-2 dark:bg-slate-300 bg-slate-200 text-slate-700 rounded-md p-2 ">
+        <p className="p-2 mt-2 text-sm rounded-md dark:bg-slate-300 bg-slate-200 text-slate-700 ">
           <IonIcon
             color="warning"
             // className="ion-margin-end"

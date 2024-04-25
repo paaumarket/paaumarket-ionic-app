@@ -14,9 +14,9 @@ import "swiper/css/bundle";
 import "@ionic/react/css/ionic-swiper.css";
 import { IonicSlides } from "@ionic/react";
 
-const Advert = ({ advert }) => {
+const Advert = ({ advert, full = false }) => {
   return (
-    <IonCard routerLink={"/home/adverts/ad/" + advert["id"]}>
+    <IonCard routerLink={!full ? "/home/adverts/ad/" + advert["id"] : null}>
       {advert["preview_image"] ? (
         <img
           alt={advert["title"]}
