@@ -54,17 +54,14 @@ const MyAdverts = () => {
     [data]
   );
 
-  const handleApproved = () => {
+  const refetchQueries = () => {
     queryClient.refetchQueries({
       queryKey,
     });
   };
 
-  const handleDeleted = () => {
-    queryClient.refetchQueries({
-      queryKey,
-    });
-  };
+  const handleEdited = refetchQueries;
+  const handleDeleted = refetchQueries;
 
   return (
     <IonPage>
@@ -117,7 +114,7 @@ const MyAdverts = () => {
               <MyAdvertItem
                 key={advert["id"]}
                 advert={advert}
-                onApproved={handleApproved}
+                onEdit={handleEdited}
                 onDelete={handleDeleted}
               />
             ))}
@@ -151,9 +148,9 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
     {
       advert,
       onCancelled: () => dismissEditAdvertModal(),
-      onSuccess: (category) => {
+      onSuccess: (advert) => {
         dismissEditAdvertModal();
-        onEdit(category);
+        onEdit(advert);
       },
     }
   );

@@ -25,39 +25,35 @@ import { useRef } from "react";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
 import { serialize } from "object-to-formdata";
-import useAuth from "@/hooks/useAuth";
-import { useHistory } from "react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 
 const MAX_IMAGE_UPLOAD = 5;
 
-export default function AdvertForm({ edit = false, advert }) {
-  const queryClient = useQueryClient();
-  const history = useHistory();
-  const { user, login } = useAuth();
+export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
   const imageInputRef = useRef();
-  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const form = useHookForm({
     defaultValues: {
+      /** Category ID */
       ...(!edit
         ? {
             category_id: null,
           }
         : null),
+      /** Other attributes */
       title: edit ? advert["title"] : "",
       description: edit ? advert["description"] : "",
       price: edit ? advert["price"] : 0,
-      images: [],
+      images: edit ? advert["images"] : [],
     },
     schema: yup
       .object({
+        /** Category ID */
         ...(!edit
           ? {
               category_id: yup.number().required().label("Category"),
             }
           : null),
+        /** Other attributes */
         title: yup.string().required().label("Title"),
         description: yup.string().required().label("Description"),
         price: yup.number().required().label("Price"),
@@ -79,7 +75,7 @@ export default function AdvertForm({ edit = false, advert }) {
   const [presentLoading, dismissLoading] = useIonLoading();
   // Action sheet
   const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
-  const openImageActions = (index, uploaded = false) =>
+  const openImageActions = (index) =>
     presentActionSheet({
       buttons: [
         {
@@ -89,11 +85,7 @@ export default function AdvertForm({ edit = false, advert }) {
             action: "delete",
           },
           handler: () => {
-            if (uploaded) {
-              setImagesToDelete((previous) => [...previous, index]);
-            } else {
-              removeImage(index);
-            }
+            removeImage(index);
           },
         },
         {
@@ -111,14 +103,35 @@ export default function AdvertForm({ edit = false, advert }) {
     mutationKey: edit
       ? ["adverts", advert["id"], "edit"]
       : ["adverts", "create"],
-    mutationFn: (data) =>
-      api.post(
-        "/adverts",
+    mutationFn: (data) => {
+      return api.post(
+        edit ? `/adverts/${advert["id"]}` : "/adverts",
         serialize({
           _method: edit ? "put" : "post",
           ...data,
+
+          /** Images */
+          images: edit
+            ? data["images"].filter((image) => image instanceof File)
+            : images,
+
+          /** Deleted images */
+          ...(edit
+            ? {
+                deleted_images: advert["images"]
+                  .filter(
+                    (image) =>
+                      !data["images"].find(
+                        (item) =>
+                          !(item instanceof File) && item["id"] === image["id"]
+                      )
+                  )
+                  .map((image) => image["id"]),
+              }
+            : null),
         })
-      ),
+      );
+    },
   });
 
   const handleFormSubmit = (data) => {
@@ -127,16 +140,10 @@ export default function AdvertForm({ edit = false, advert }) {
     })
       /** Mutate */
       .then(() =>
-        advertMutation.mutateAsync(data).then((response) => response.data)
+        advertMutation
+          .mutateAsync(data, { onSuccess })
+          .then((response) => response.data)
       )
-
-      /** Set advert data */
-      .then((data) => {
-        queryClient.setQueryData(
-          ["advert", data["advert"]["id"]],
-          data["advert"]
-        );
-      })
 
       /** Dismiss Loading */
       .finally(() => dismissLoading());
@@ -262,34 +269,17 @@ export default function AdvertForm({ edit = false, advert }) {
                   }}
                 />
                 <div className="ion-margin-top">
-                  {field.value.length + (edit ? advert["images"].length : 0) <
-                  MAX_IMAGE_UPLOAD ? (
-                    <IonButton
-                      type="button"
-                      onClick={() => imageInputRef.current?.click()}
-                    >
-                      Choose Images
-                    </IonButton>
-                  ) : null}
+                  <IonButton
+                    type="button"
+                    onClick={() => imageInputRef.current?.click()}
+                    disabled={field.value.length === MAX_IMAGE_UPLOAD}
+                  >
+                    Choose Images
+                  </IonButton>
                 </div>
                 <IonGrid>
                   <IonRow>
-                    {/* Uploaded Images */}
-                    {advert?.["images"]
-                      .filter((image) => !imagesToDelete.includes(image["id"]))
-                      .map((image) => (
-                        <IonCol
-                          key={image["id"]}
-                          size="6"
-                          onClick={() => openImageActions(image["id"], true)}
-                        >
-                          <IonItem>
-                            <img src={image["image"]["src"]} />
-                          </IonItem>
-                        </IonCol>
-                      ))}
-
-                    {/* Image to Upload */}
+                    {/* Images */}
                     {field.value.map((image, i) => (
                       <IonCol
                         key={i}
@@ -298,8 +288,16 @@ export default function AdvertForm({ edit = false, advert }) {
                       >
                         <IonItem>
                           <img
-                            src={URL.createObjectURL(image)}
-                            onLoad={(ev) => URL.revokeObjectURL(ev.target.src)}
+                            src={
+                              image instanceof File
+                                ? URL.createObjectURL(image)
+                                : image["image"]["src"]
+                            }
+                            onLoad={
+                              image instanceof File
+                                ? (ev) => URL.revokeObjectURL(ev.target.src)
+                                : null
+                            }
                           />
                         </IonItem>
                       </IonCol>
@@ -312,7 +310,7 @@ export default function AdvertForm({ edit = false, advert }) {
         </IonList>
 
         {/* Submit Button */}
-        <IonButton type="submit" expand="block" className="ion-margin-top">
+        <IonButton type="submit" expand="block" className="ion-margin">
           {edit ? "Save" : "Post Advert"}
         </IonButton>
       </form>

@@ -15,7 +15,9 @@ const EditAdvertFormModal = ({ advert, onCancelled, onSuccess }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton onClick={onCancelled}>Cancel</IonButton>
+            <IonButton color="danger" onClick={onCancelled}>
+              Cancel
+            </IonButton>
           </IonButtons>
           <IonTitle>Edit Advert</IonTitle>
         </IonToolbar>
