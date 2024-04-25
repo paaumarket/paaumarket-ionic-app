@@ -50,7 +50,7 @@ export default function Profile() {
 
           <div className="pr-5">
             <IonText>
-              <h3>₦ {user["wallet_balance"]}</h3>
+              <h3>₦ {Intl.NumberFormat().format(user["wallet_balance"])}</h3>
             </IonText>
             <p className="text-xs">
               <IonText color="medium">MY BALANCE</IonText>
