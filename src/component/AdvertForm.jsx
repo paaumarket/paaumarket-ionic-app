@@ -4,6 +4,7 @@ import {
   IonGrid,
   IonInput,
   IonItem,
+  IonItemGroup,
   IonLabel,
   IonList,
   IonNote,
@@ -153,160 +154,162 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit)}>
-        <IonList>
+        <IonList inset>
           {/* Category */}
           {!edit ? (
             <Controller
               name="category_id"
               render={({ field, fieldState }) => (
-                <CategoryMultiLevelSelect
-                  value={field.value}
-                  onSelect={field.onChange}
-                >
+                <IonItemGroup>
+                  <CategoryMultiLevelSelect
+                    value={field.value}
+                    onSelect={field.onChange}
+                    errorText={fieldState.error?.message}
+                  />
+                </IonItemGroup>
+              )}
+            />
+          ) : null}
+
+          <IonItemGroup>
+            {/* Title */}
+            <Controller
+              name="title"
+              render={({ field, fieldState }) => (
+                <IonItem>
+                  <IonInput
+                    label="Title"
+                    labelPlacement="stacked"
+                    ref={field.ref}
+                    value={field.value}
+                    onIonInput={field.onChange}
+                    onIonBlur={field.onBlur}
+                    errorText={fieldState.error?.message}
+                    className={clsx(
+                      fieldState.invalid && "ion-invalid ion-touched"
+                    )}
+                  />
+                </IonItem>
+              )}
+            />
+
+            {/* Description */}
+            <Controller
+              name="description"
+              render={({ field, fieldState }) => (
+                <IonItem>
+                  <IonTextarea
+                    label="Description"
+                    labelPlacement="stacked"
+                    ref={field.ref}
+                    value={field.value}
+                    onIonInput={field.onChange}
+                    onIonBlur={field.onBlur}
+                    errorText={fieldState.error?.message}
+                    className={clsx(
+                      fieldState.invalid && "ion-invalid ion-touched"
+                    )}
+                  />
+                </IonItem>
+              )}
+            />
+
+            {/* Price */}
+            <Controller
+              name="price"
+              render={({ field, fieldState }) => (
+                <IonItem>
+                  <CurrencyInput
+                    customInput={CurrencyIonInput}
+                    label="Price"
+                    labelPlacement="stacked"
+                    step={1}
+                    placeholder={0}
+                    ref={field.ref}
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                    errorText={fieldState.error?.message}
+                    className={clsx(
+                      fieldState.invalid && "ion-invalid ion-touched"
+                    )}
+                  />
+                </IonItem>
+              )}
+            />
+
+            {/* Images */}
+            <Controller
+              name="images"
+              render={({ field, fieldState }) => (
+                <IonItem>
+                  <IonLabel position="stacked">Images</IonLabel>
+                  <IonNote className="ion-margin-top">
+                    Upload Images - Minimum of 1 and Maximum of{" "}
+                    {MAX_IMAGE_UPLOAD}
+                  </IonNote>
+
                   {fieldState.invalid ? (
                     <IonNote color={"danger"}>
                       {fieldState.error.message}
                     </IonNote>
                   ) : null}
-                </CategoryMultiLevelSelect>
+
+                  {/* Hidden Input file */}
+                  <input
+                    type="file"
+                    ref={imageInputRef}
+                    accept=".jpg, .jpeg, .png, .gif"
+                    multiple
+                    hidden
+                    onChange={(ev) => {
+                      appendImage(
+                        Array.from(ev.target.files).slice(
+                          0,
+                          MAX_IMAGE_UPLOAD - field.value.length
+                        )
+                      );
+                    }}
+                  />
+                  <div className="ion-margin-top">
+                    <IonButton
+                      type="button"
+                      onClick={() => imageInputRef.current?.click()}
+                      disabled={field.value.length === MAX_IMAGE_UPLOAD}
+                    >
+                      Choose Images
+                    </IonButton>
+                  </div>
+                  <IonGrid>
+                    <IonRow>
+                      {/* Images */}
+                      {field.value.map((image, i) => (
+                        <IonCol
+                          key={i}
+                          size="6"
+                          onClick={() => openImageActions(i)}
+                        >
+                          <IonItem>
+                            <img
+                              src={
+                                image instanceof File
+                                  ? URL.createObjectURL(image)
+                                  : image["image"]["src"]
+                              }
+                              onLoad={
+                                image instanceof File
+                                  ? (ev) => URL.revokeObjectURL(ev.target.src)
+                                  : null
+                              }
+                            />
+                          </IonItem>
+                        </IonCol>
+                      ))}
+                    </IonRow>
+                  </IonGrid>
+                </IonItem>
               )}
             />
-          ) : null}
-
-          {/* Title */}
-          <Controller
-            name="title"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  label="Title"
-                  labelPlacement="floating"
-                  ref={field.ref}
-                  value={field.value}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                />
-              </IonItem>
-            )}
-          />
-
-          {/* Description */}
-          <Controller
-            name="description"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonTextarea
-                  label="Description"
-                  labelPlacement="floating"
-                  ref={field.ref}
-                  value={field.value}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                />
-              </IonItem>
-            )}
-          />
-
-          {/* Price */}
-          <Controller
-            name="price"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <CurrencyInput
-                  customInput={CurrencyIonInput}
-                  label="Price"
-                  labelPlacement="floating"
-                  step={1}
-                  placeholder={0}
-                  ref={field.ref}
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                />
-              </IonItem>
-            )}
-          />
-
-          {/* Images */}
-          <Controller
-            name="images"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonLabel position="stacked">Images</IonLabel>
-                <IonNote className="ion-margin-top">
-                  Upload Images - Minimum of 1 and Maximum of {MAX_IMAGE_UPLOAD}
-                </IonNote>
-
-                {fieldState.invalid ? (
-                  <IonNote color={"danger"}>{fieldState.error.message}</IonNote>
-                ) : null}
-
-                {/* Hidden Input file */}
-                <input
-                  type="file"
-                  ref={imageInputRef}
-                  accept=".jpg, .jpeg, .png, .gif"
-                  multiple
-                  hidden
-                  onChange={(ev) => {
-                    appendImage(
-                      Array.from(ev.target.files).slice(
-                        0,
-                        MAX_IMAGE_UPLOAD - field.value.length
-                      )
-                    );
-                  }}
-                />
-                <div className="ion-margin-top">
-                  <IonButton
-                    type="button"
-                    onClick={() => imageInputRef.current?.click()}
-                    disabled={field.value.length === MAX_IMAGE_UPLOAD}
-                  >
-                    Choose Images
-                  </IonButton>
-                </div>
-                <IonGrid>
-                  <IonRow>
-                    {/* Images */}
-                    {field.value.map((image, i) => (
-                      <IonCol
-                        key={i}
-                        size="6"
-                        onClick={() => openImageActions(i)}
-                      >
-                        <IonItem>
-                          <img
-                            src={
-                              image instanceof File
-                                ? URL.createObjectURL(image)
-                                : image["image"]["src"]
-                            }
-                            onLoad={
-                              image instanceof File
-                                ? (ev) => URL.revokeObjectURL(ev.target.src)
-                                : null
-                            }
-                          />
-                        </IonItem>
-                      </IonCol>
-                    ))}
-                  </IonRow>
-                </IonGrid>
-              </IonItem>
-            )}
-          />
+          </IonItemGroup>
         </IonList>
 
         {/* Submit Button */}

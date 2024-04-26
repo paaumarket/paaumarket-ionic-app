@@ -6,6 +6,7 @@ import {
   IonModal,
   IonNote,
   IonSpinner,
+  IonText,
   IonThumbnail,
 } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
@@ -15,7 +16,7 @@ import { useId } from "react";
 import MultiLevelSelect from "./MultiLevelSelect";
 import { checkmark } from "ionicons/icons";
 
-const CategoryMultiLevelSelect = ({ children, value = null, onSelect }) => {
+const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
   const id = "category-multilevel-select-" + useId();
   const modalRef = useRef();
 
@@ -43,10 +44,9 @@ const CategoryMultiLevelSelect = ({ children, value = null, onSelect }) => {
 
   return (
     <>
-      <IonItem id={id}>
+      <IonItem button id={id}>
         {selected ? (
           <>
-            <IonNote slot="end">Category</IonNote>
             <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
               <img
                 alt={selected["name"]}
@@ -54,20 +54,31 @@ const CategoryMultiLevelSelect = ({ children, value = null, onSelect }) => {
               />
             </IonThumbnail>
             <IonLabel>
-              <h3 className="ion-text-wrap">{selected["name"]}</h3>
+              <h3>
+                <IonText color={errorText ? "danger" : "primary"}>
+                  Category
+                </IonText>
+              </h3>
+              <h4 className="ion-text-wrap">{selected["name"]}</h4>
               <p>₦{selected["cost"]}</p>
             </IonLabel>
           </>
         ) : (
-          <IonLabel>
-            <h3>Category</h3>
-            <p>{isPending ? "Loading..." : "Select Category"}</p>
-          </IonLabel>
+          <>
+            <IonLabel>
+              <h3>
+                <IonText color={errorText ? "danger" : "primary"}>
+                  Category
+                </IonText>
+              </h3>
+              <p>{isPending ? "Loading..." : "Select Category"}</p>
+            </IonLabel>
+          </>
         )}
 
         {isPending ? <IonSpinner slot="end" /> : null}
 
-        {children}
+        {errorText ? <IonNote color={"danger"}>{errorText}</IonNote> : null}
       </IonItem>
       <IonModal trigger={id} ref={modalRef}>
         <MultiLevelSelect

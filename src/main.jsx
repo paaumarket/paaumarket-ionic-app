@@ -1,6 +1,3 @@
-import "./index.css";
-import "./pages/utils.css";
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 

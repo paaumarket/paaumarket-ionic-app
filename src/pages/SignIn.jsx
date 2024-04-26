@@ -24,14 +24,14 @@ const SignIn = ({ history }) => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-        <div>
+        <div className="flex flex-col items-center justify-center gap-4 p-4">
           <img
             src={logo}
             alt="Paau Market Logo"
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="font-bold text-center text-md">
+            <h2 className="m-0 font-bold text-center text-md">
               Welcome back to PAAU Market
             </h2>
           </IonText>
