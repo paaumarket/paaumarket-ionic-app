@@ -50,29 +50,29 @@ export default function Home() {
         </div>
       </Header>
 
-      <IonContent className="ion-padding">
+      <IonContent>
         <IonText>
-          <h4 className="ion-text-center ion-no-margin">
+          <h4 className="ion-text-center ion-padding">
             <b>All category</b>
           </h4>
         </IonText>
 
         <Category />
 
-        <IonText className="ion-padding">
-          <b>Trending ad</b>
+        <IonText>
+          <h4 className="ion-text-center ion-padding">Trending Ads</h4>
         </IonText>
 
         <IonGrid>
           <IonRow>
             {isPending ? (
-              <IonCol size="12" sizeMd="6" sizeLg="2">
+              <IonCol size="6" sizeMd="4">
                 <AdvertPlaceholder />
               </IonCol>
             ) : (
               adverts.map((advert) => {
                 return (
-                  <IonCol key={advert["id"]} size="12" sizeMd="6" sizeLg="2">
+                  <IonCol key={advert["id"]} size="6" sizeSm="4" sizeMd="3">
                     <Advert advert={advert} />
                   </IonCol>
                 );

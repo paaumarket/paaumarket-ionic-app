@@ -105,33 +105,37 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
       ? ["adverts", advert["id"], "edit"]
       : ["adverts", "create"],
     mutationFn: (data) => {
-      return api.post(
-        edit ? `/adverts/${advert["id"]}` : "/adverts",
-        serialize({
-          _method: edit ? "put" : "post",
-          ...data,
+      return api
+        .post(
+          edit ? `/adverts/${advert["id"]}` : "/adverts",
+          serialize({
+            _method: edit ? "put" : "post",
+            ...data,
 
-          /** Images */
-          images: edit
-            ? data["images"].filter((image) => image instanceof File)
-            : images,
+            /** Images */
+            images: edit
+              ? data["images"].filter((image) => image instanceof File)
+              : data["images"],
 
-          /** Deleted images */
-          ...(edit
-            ? {
-                deleted_images: advert["images"]
-                  .filter(
-                    (image) =>
-                      !data["images"].find(
-                        (item) =>
-                          !(item instanceof File) && item["id"] === image["id"]
-                      )
-                  )
-                  .map((image) => image["id"]),
-              }
-            : null),
-        })
-      );
+            /** Deleted images */
+            ...(edit
+              ? {
+                  /** Images that doesn't exist in the data array */
+                  deleted_images: advert["images"]
+                    .filter(
+                      (image) =>
+                        !data["images"].find(
+                          (item) =>
+                            !(item instanceof File) &&
+                            item["id"] === image["id"]
+                        )
+                    )
+                    .map((image) => image["id"]),
+                }
+              : null),
+          })
+        )
+        .then((response) => response.data);
     },
   });
 
@@ -140,15 +144,10 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
       message: edit ? "Editing..." : "Creating...",
     })
       /** Mutate */
-      .then(() =>
-        advertMutation
-          .mutateAsync(data, { onSuccess })
-          .then((response) => response.data)
-      )
+      .then(() => advertMutation.mutateAsync(data, { onSuccess }))
 
       /** Dismiss Loading */
       .finally(() => dismissLoading());
-    advertMutation.mutate;
   };
 
   return (

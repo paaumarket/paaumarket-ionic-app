@@ -13,6 +13,7 @@ import {
   IonSegment,
   IonSegmentButton,
   IonSpinner,
+  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -125,6 +126,19 @@ const AdminAdvertItem = ({ advert, onApproved }) => {
       <IonLabel>
         <h4>{advert["title"]}</h4>
         <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
+        <p>
+          <IonText
+            color={
+              advert["status"] === "approved"
+                ? "success"
+                : advert["status"] === "declined"
+                ? "danger"
+                : "warning"
+            }
+          >
+            {advert["status"].toUpperCase()}
+          </IonText>
+        </p>
       </IonLabel>
     </IonItem>
   );

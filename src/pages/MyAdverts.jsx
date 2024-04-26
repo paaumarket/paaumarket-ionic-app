@@ -11,11 +11,11 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonNote,
   IonPage,
   IonSegment,
   IonSegmentButton,
   IonSpinner,
+  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -209,17 +209,19 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
       <IonLabel>
         <h4>{advert["title"]}</h4>
         <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
-        <IonNote
-          color={
-            advert["status"] === "approved"
-              ? "success"
-              : advert["status"] === "declined"
-              ? "danger"
-              : "warning"
-          }
-        >
-          {advert["status"].toUpperCase()}
-        </IonNote>
+        <p>
+          <IonText
+            color={
+              advert["status"] === "approved"
+                ? "success"
+                : advert["status"] === "declined"
+                ? "danger"
+                : "warning"
+            }
+          >
+            {advert["status"].toUpperCase()}
+          </IonText>
+        </p>
       </IonLabel>
       <IonButton onClick={openActions}>
         <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
