@@ -2,6 +2,8 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
   IonPage,
   IonRow,
   IonSearchbar,
@@ -19,7 +21,7 @@ import logo from "../assets/paaumarket.svg";
 import Advert, { AdvertPlaceholder } from "@/component/Advert";
 
 export default function Home() {
-  const { data, isPending, hasNextPage } = useInfiniteQuery({
+  const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
     initialPageParam: "",
     queryKey: ["adverts", "list"],
     queryFn: ({ signal, pageParam }) =>
@@ -66,9 +68,20 @@ export default function Home() {
         <IonGrid>
           <IonRow>
             {isPending ? (
-              <IonCol size="6" sizeMd="4">
-                <AdvertPlaceholder />
-              </IonCol>
+              <>
+                <IonCol size="6" sizeSm="4" sizeMd="3">
+                  <AdvertPlaceholder />
+                </IonCol>
+                <IonCol size="6" sizeSm="4" sizeMd="3">
+                  <AdvertPlaceholder />
+                </IonCol>
+                <IonCol size="6" sizeSm="4" sizeMd="3">
+                  <AdvertPlaceholder />
+                </IonCol>
+                <IonCol size="6" sizeSm="4" sizeMd="3">
+                  <AdvertPlaceholder />
+                </IonCol>
+              </>
             ) : (
               adverts.map((advert) => {
                 return (
@@ -80,6 +93,12 @@ export default function Home() {
             )}
           </IonRow>
         </IonGrid>
+
+        <IonInfiniteScroll
+          onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
+        >
+          <IonInfiniteScrollContent></IonInfiniteScrollContent>
+        </IonInfiniteScroll>
       </IonContent>
     </IonPage>
   );
@@ -100,18 +119,20 @@ const Category = () => {
     <IonGrid className="ion-margin-bottom">
       <IonRow>
         {data.map((category) => (
-          <IonCol key={category["id"]} size="6" sizeSm="4" sizeMd="3">
+          <IonCol key={category["id"]} size="4" sizeSm="3" sizeMd="2">
             <Link
               to={generatePath("/home/adverts/categories/:category", {
                 category: category["slug"],
               })}
               className="flex flex-col items-center text-center"
             >
-              <IonThumbnail className="[--size:theme(spacing.16)]">
-                <img src={category["image"]["src"]} alt="" />
-              </IonThumbnail>
+              {category["image"] ? (
+                <IonThumbnail className="[--size:theme(spacing.12)]">
+                  <img src={category["image"]["src"]} alt="" />
+                </IonThumbnail>
+              ) : null}
               <IonText color={"dark"}>
-                <p className="inline-block">{category["name"]}</p>
+                <small className="inline-block">{category["name"]}</small>
               </IonText>
             </Link>
           </IonCol>
