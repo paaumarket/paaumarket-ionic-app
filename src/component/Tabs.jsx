@@ -22,6 +22,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import SubCategories from "@/pages/SubCategories";
 import MyAdverts from "@/pages/MyAdverts";
 import TopUp from "@/pages/TopUp";
+import CategoryAdverts from "@/pages/CategoryAdverts";
 
 export default function Tabs() {
   return (
@@ -31,6 +32,10 @@ export default function Tabs() {
 
         <Route exact path="/home/adverts/categories/:category">
           <SubCategories />
+        </Route>
+
+        <Route exact path="/home/adverts/categories/:category/:sub">
+          <CategoryAdverts />
         </Route>
 
         {/* <Route exact path="/home/adverts/category">

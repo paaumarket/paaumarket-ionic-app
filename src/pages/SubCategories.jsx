@@ -15,7 +15,7 @@ import {
 } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, generatePath } from "react-router-dom";
 
 export default () => {
   const match = useRouteMatch();
@@ -92,7 +92,16 @@ const SubCategoryList = ({ category }) => {
       ) : isSuccess ? (
         <IonList>
           {subCategories.map((sub) => (
-            <IonItem key={sub["id"]}>
+            <IonItem
+              key={sub["id"]}
+              routerLink={generatePath(
+                "/home/adverts/categories/:category/:sub",
+                {
+                  category: category["slug"],
+                  sub: sub["slug"],
+                }
+              )}
+            >
               <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
                 <img
                   alt={sub["name"]}
