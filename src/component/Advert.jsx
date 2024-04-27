@@ -62,7 +62,7 @@ export const AdvertImages = ({ advert }) => (
 );
 
 export const AdvertPlaceholder = () => (
-  <IonCard>
+  <IonCard className="ion-no-margin">
     <IonSkeletonText
       animated={true}
       className="ion-no-margin aspect-square max-h-60"
