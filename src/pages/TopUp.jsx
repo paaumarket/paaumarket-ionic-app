@@ -5,12 +5,9 @@ import {
   IonContent,
   IonFooter,
   IonHeader,
-  IonIcon,
-  IonInput,
   IonItem,
   IonLabel,
   IonList,
-  IonNote,
   IonPage,
   IonSegment,
   IonSegmentButton,
@@ -18,17 +15,16 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonToast,
 } from "@ionic/react";
 import { useState } from "react";
-
+import copy from "copy-to-clipboard";
 import useAuth from "@/hooks/useAuth";
 
 import WemaLogo from "@/assets/banks/wema.png";
 import MoniepointLogo from "@/assets/banks/moniepoint.png";
 import api from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
-import { copyOutline } from "ionicons/icons";
-import { useRef } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const BANKS_LOGO = {
   "035": WemaLogo,
@@ -80,81 +76,83 @@ const TopUp = () => {
 };
 
 const AccountsTopUp = () => {
-  const acccountNumberRef = useRef(null);
-  const toolTipRef = useRef(null);
-
-  // Copy Account Number
-  function copyAccount() {
-    const copyText = acccountNumberRef.current;
-    navigator.clipboard.writeText(copyText.value);
-
-    const tooltip = toolTipRef.current;
-    tooltip.innerHTML = "Copied: " + copyText.value;
-  }
-
-  function resetAccount() {
-    const tooltip = toolTipRef.current;
-    tooltip.innerHTML = "Copy to clipboard";
-  }
-
+  const queryClient = useQueryClient();
+  const queryKey = ["my-top-up-accounts"];
   const {
     isPending,
     isSuccess,
     data: accounts,
   } = useQuery({
-    queryKey: ["my-top-up-accounts"],
+    queryKey,
     queryFn: ({ signal }) =>
       api
         .get("/my-top-up-accounts", { signal })
         .then((response) => response.data),
   });
 
+  const [toast] = useIonToast();
+
+  const copyAccountNumber = (number) => {
+    copy(number);
+    toast({
+      message: "Account Number Copied - " + number,
+      duration: 1000,
+      color: "success",
+    });
+  };
+
   return isPending ? (
     <div className="ion-text-center ion-padding">
       <IonSpinner />
     </div>
   ) : isSuccess ? (
-    <IonList>
-      {accounts.map((account, i) => (
-        <IonItem key={i}>
-          {/* Bank */}
-          <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-            <img
-              src={BANKS_LOGO[account["bank_code"]]}
-              className="object-cover object-center"
-            />
-          </IonThumbnail>
-          <IonLabel>
-            <h4>{account["account_name"]}</h4>
-            <input
-              id="account_number"
-              type="text"
-              value={account["account_number"]}
-              readOnly
-              disabled
-              ref={acccountNumberRef}
-              className="bg-transparent w-24"
-            />
-            <br />
-            <div className="tooltip">
-              <span className="tooltiptext" id="myTooltip" ref={toolTipRef}>
-                Copy to clipboard
-              </span>
-              <IonButton
-                size="small"
-                onClick={copyAccount}
-                onMouseOut={resetAccount}
-                color="dark"
-              >
-                <IonIcon icon={copyOutline}></IonIcon>
-              </IonButton>
-            </div>
-          </IonLabel>
-          <IonNote>{account["bank_name"]}</IonNote>
-        </IonItem>
-      ))}
-    </IonList>
+    accounts.length ? (
+      <IonList>
+        {accounts.map((account, i) => (
+          <IonItem
+            key={i}
+            button
+            onClick={() => copyAccountNumber(account["account_number"])}
+          >
+            {/* Bank */}
+            <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
+              <img
+                src={BANKS_LOGO[account["bank_code"]]}
+                className="object-cover object-center"
+              />
+            </IonThumbnail>
+            <IonLabel>
+              <h4>{account["account_name"]}</h4>
+              <p>{account["account_number"]}</p>
+              <p>{account["bank_name"]}</p>
+            </IonLabel>
+          </IonItem>
+        ))}
+      </IonList>
+    ) : (
+      <RequestAccounts onSuccess={() => queryClient.refetchQueries(queryKey)} />
+    )
   ) : null;
+};
+
+const RequestAccounts = ({ onSuccess }) => {
+  const mutation = useMutation({
+    mutationKey: ["my-top-up-accounts", "request"],
+    mutationFn: () =>
+      api.post("/my-top-up-accounts/request").then((response) => response.data),
+  });
+
+  const requestAccounts = () => {
+    mutation.mutate(null, { onSuccess });
+  };
+
+  return (
+    <div className="ion-padding">
+      <IonButton expand="block" onClick={requestAccounts}>
+        {mutation.isPending ? <IonSpinner /> : "Request Accounts"}
+      </IonButton>
+    </div>
+  );
 };
 
 export default TopUp;
