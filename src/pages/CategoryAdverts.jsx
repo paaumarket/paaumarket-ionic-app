@@ -1,23 +1,19 @@
-import Advert, { AdvertPlaceholder } from "@/component/Advert";
+import AdvertList from "@/component/AdvertList";
 import api from "@/lib/api";
 import {
   IonBackButton,
   IonButtons,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonPage,
-  IonRow,
   IonThumbnail,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useMemo } from "react";
 import { generatePath, useRouteMatch } from "react-router-dom";
 
 export default () => {
@@ -66,13 +62,13 @@ export default () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {isSuccess ? <AdvertList category={category} /> : null}
+        {isSuccess ? <CategoryAdvertList category={category} /> : null}
       </IonContent>
     </IonPage>
   );
 };
 
-const AdvertList = ({ category }) => {
+const CategoryAdvertList = ({ category }) => {
   const queryKey = ["adverts", "category", category["id"]];
 
   const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
@@ -87,41 +83,9 @@ const AdvertList = ({ category }) => {
     getNextPageParam: (lastPage) => lastPage["next_cursor"],
   });
 
-  const adverts = useMemo(
-    () => data?.pages.reduce((carry, page) => carry.concat(page.data), []),
-    [data]
-  );
-
   return (
     <>
-      <IonGrid>
-        <IonRow>
-          {isPending ? (
-            <>
-              <IonCol size="6" sizeSm="4" sizeMd="3">
-                <AdvertPlaceholder />
-              </IonCol>
-              <IonCol size="6" sizeSm="4" sizeMd="3">
-                <AdvertPlaceholder />
-              </IonCol>
-              <IonCol size="6" sizeSm="4" sizeMd="3">
-                <AdvertPlaceholder />
-              </IonCol>
-              <IonCol size="6" sizeSm="4" sizeMd="3">
-                <AdvertPlaceholder />
-              </IonCol>
-            </>
-          ) : (
-            adverts.map((advert) => {
-              return (
-                <IonCol key={advert["id"]} size="6" sizeSm="4" sizeMd="3">
-                  <Advert advert={advert} />
-                </IonCol>
-              );
-            })
-          )}
-        </IonRow>
-      </IonGrid>
+      <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
       <IonInfiniteScroll
         onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
       >

@@ -14,34 +14,29 @@ import {
 import Header from "../component/Header";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
-import { useMemo } from "react";
 import { Link, generatePath } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
-import Advert, { AdvertPlaceholder } from "@/component/Advert";
 import { useState } from "react";
+import AdvertList from "@/component/AdvertList";
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    initialPageParam: "",
-    queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
-    queryFn: ({ signal, pageParam }) =>
-      api
-        .get(
-          `/adverts?cursor=${pageParam}${
-            search ? `&search=${encodeURIComponent(search)}` : ""
-          }`,
-          { signal }
-        )
-        .then((response) => response.data),
-    getNextPageParam: (lastPage) => lastPage["next_cursor"],
-  });
-
-  const adverts = useMemo(
-    () => data?.pages.reduce((carry, page) => carry.concat(page.data), []),
-    [data]
-  );
+  const { data, isPending, isSuccess, hasNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      initialPageParam: "",
+      queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
+      queryFn: ({ signal, pageParam }) =>
+        api
+          .get(
+            `/adverts?cursor=${pageParam}${
+              search ? `&search=${encodeURIComponent(search)}` : ""
+            }`,
+            { signal }
+          )
+          .then((response) => response.data),
+      getNextPageParam: (lastPage) => lastPage["next_cursor"],
+    });
 
   return (
     <IonPage>
@@ -81,34 +76,7 @@ export default function Home() {
           </h4>
         </IonText>
 
-        <IonGrid>
-          <IonRow>
-            {isPending ? (
-              <>
-                <IonCol size="6" sizeSm="4" sizeMd="3">
-                  <AdvertPlaceholder />
-                </IonCol>
-                <IonCol size="6" sizeSm="4" sizeMd="3">
-                  <AdvertPlaceholder />
-                </IonCol>
-                <IonCol size="6" sizeSm="4" sizeMd="3">
-                  <AdvertPlaceholder />
-                </IonCol>
-                <IonCol size="6" sizeSm="4" sizeMd="3">
-                  <AdvertPlaceholder />
-                </IonCol>
-              </>
-            ) : (
-              adverts.map((advert) => {
-                return (
-                  <IonCol key={advert["id"]} size="6" sizeSm="4" sizeMd="3">
-                    <Advert advert={advert} />
-                  </IonCol>
-                );
-              })
-            )}
-          </IonRow>
-        </IonGrid>
+        <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
 
         <IonInfiniteScroll
           onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
