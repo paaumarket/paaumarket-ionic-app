@@ -26,6 +26,7 @@ const Advert = ({ advert, full = false }) => {
           src={advert["preview_image"]["src"]}
           width={advert["preview_image"]["width"]}
           height={advert["preview_image"]["height"]}
+          className="object-cover object-center w-full max-h-60"
         />
       ) : null}
 
