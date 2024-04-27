@@ -19,14 +19,21 @@ import { Link, generatePath } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
 import Advert, { AdvertPlaceholder } from "@/component/Advert";
+import { useState } from "react";
 
 export default function Home() {
+  const [search, setSearch] = useState("");
   const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
     initialPageParam: "",
-    queryKey: ["adverts", "list"],
+    queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
     queryFn: ({ signal, pageParam }) =>
       api
-        .get(`/adverts?cursor=${pageParam}`, { signal })
+        .get(
+          `/adverts?cursor=${pageParam}${
+            search ? `&search=${encodeURIComponent(search)}` : ""
+          }`,
+          { signal }
+        )
         .then((response) => response.data),
     getNextPageParam: (lastPage) => lastPage["next_cursor"],
   });
@@ -46,23 +53,32 @@ export default function Home() {
           <IonSearchbar
             className="ion-searchbar"
             showClearButton="focus"
-            value=""
+            value={search}
+            debounce={500}
+            onIonInput={(ev) => setSearch(ev.target.value)}
             placeholder="Search Paau Market"
+            maxlength={30}
           ></IonSearchbar>
         </div>
       </Header>
 
       <IonContent>
+        {!search ? (
+          <>
+            <IonText>
+              <h4 className="ion-text-center ion-padding">
+                <b>All category</b>
+              </h4>
+            </IonText>
+
+            <Category />
+          </>
+        ) : null}
+
         <IonText>
           <h4 className="ion-text-center ion-padding">
-            <b>All category</b>
+            {search ? `Search: ${search}` : "Trending Ads"}
           </h4>
-        </IonText>
-
-        <Category />
-
-        <IonText>
-          <h4 className="ion-text-center ion-padding">Trending Ads</h4>
         </IonText>
 
         <IonGrid>
