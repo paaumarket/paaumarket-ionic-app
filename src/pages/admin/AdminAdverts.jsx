@@ -64,6 +64,9 @@ const AdminAdverts = () => {
             value={segment}
             onIonChange={(ev) => setSegment(ev.detail.value)}
           >
+            <IonSegmentButton value="all">
+              <IonLabel>All</IonLabel>
+            </IonSegmentButton>
             <IonSegmentButton value="reviewing">
               <IonLabel>Pending</IonLabel>
             </IonSegmentButton>
