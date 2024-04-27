@@ -7,6 +7,8 @@ import {
   IonSkeletonText,
 } from "@ionic/react";
 
+import { formatDistanceToNow } from "date-fns";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
@@ -14,6 +16,7 @@ import "swiper/css/bundle";
 
 import "@ionic/react/css/ionic-swiper.css";
 import { IonicSlides } from "@ionic/react";
+import { Link, generatePath } from "react-router-dom";
 
 const Advert = ({ advert, full = false }) => {
   return (
@@ -33,15 +36,26 @@ const Advert = ({ advert, full = false }) => {
 
       {advert["images"] ? <AdvertImages advert={advert} /> : null}
       <IonCardHeader>
-        <IonCardTitle>{advert["title"]}</IonCardTitle>
+        <IonCardTitle className="text-lg font-bold">
+          {advert["title"]}
+        </IonCardTitle>
         <IonCardSubtitle>
           ₦{Intl.NumberFormat().format(advert["price"])}
         </IonCardSubtitle>
       </IonCardHeader>
-
-      {advert["description"] ? (
-        <IonCardContent>{advert["description"]}</IonCardContent>
-      ) : null}
+      <IonCardContent>
+        {advert["user"] ? (
+          <Link
+            to={generatePath("/home/adverts/user/:id", {
+              id: advert["user"]["id"],
+            })}
+          >
+            {advert["user"]["name"]}
+          </Link>
+        ) : null}
+        {full ? <p>{formatDistanceToNow(advert["created_at"])}</p> : null}
+        {advert["description"] ? <p>{advert["description"]}</p> : null}
+      </IonCardContent>
     </IonCard>
   );
 };

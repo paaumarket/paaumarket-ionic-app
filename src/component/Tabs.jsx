@@ -23,6 +23,7 @@ import SubCategories from "@/pages/SubCategories";
 import MyAdverts from "@/pages/MyAdverts";
 import TopUp from "@/pages/TopUp";
 import CategoryAdverts from "@/pages/CategoryAdverts";
+import UserAdverts from "@/pages/UserAdverts";
 
 export default function Tabs() {
   return (
@@ -38,9 +39,9 @@ export default function Tabs() {
           <CategoryAdverts />
         </Route>
 
-        {/* <Route exact path="/home/adverts/category">
-          <Category></Category>
-        </Route> */}
+        <Route exact path="/home/adverts/user/:user">
+          <UserAdverts />
+        </Route>
 
         {/* Adverts */}
         <Route exact path="/home/adverts/ad/:id">
