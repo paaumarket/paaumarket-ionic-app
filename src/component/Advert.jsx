@@ -19,6 +19,7 @@ const Advert = ({ advert, full = false }) => {
   return (
     <IonCard
       routerLink={!full ? "/home/adverts/ad/" + advert["id"] : undefined}
+      className="ion-no-margin"
     >
       {advert["preview_image"] ? (
         <img
