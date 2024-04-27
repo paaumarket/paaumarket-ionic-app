@@ -15,6 +15,7 @@ import {
 import { useRef } from "react";
 import { serialize } from "object-to-formdata";
 import { useQueryClient } from "@tanstack/react-query";
+import resizeImage from "@/utils/resizeImage";
 
 const AdminCategoryForm = ({
   edit = false,
@@ -154,7 +155,11 @@ const AdminCategoryForm = ({
                   ref={imageInputRef}
                   accept=".jpg, .jpeg, .png, .gif"
                   hidden
-                  onChange={(ev) => field.onChange(ev.target.files[0])}
+                  onChange={(ev) =>
+                    resizeImage(ev.target.files[0], 200).then((image) =>
+                      field.onChange(image)
+                    )
+                  }
                 />
                 <div className="ion-margin-top">
                   <IonButton onClick={() => imageInputRef.current?.click()}>

@@ -26,8 +26,10 @@ import { useRef } from "react";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
 import { serialize } from "object-to-formdata";
+import resizeImage from "@/utils/resizeImage";
 
 const MAX_IMAGE_UPLOAD = 5;
+const MAX_IMAGE_DIMENSION = 768;
 
 export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
   const imageInputRef = useRef();
@@ -261,12 +263,11 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
                     multiple
                     hidden
                     onChange={(ev) => {
-                      appendImage(
-                        Array.from(ev.target.files).slice(
-                          0,
-                          MAX_IMAGE_UPLOAD - field.value.length
-                        )
-                      );
+                      Promise.all(
+                        Array.from(ev.target.files)
+                          .slice(0, MAX_IMAGE_UPLOAD - field.value.length)
+                          .map((file) => resizeImage(file, MAX_IMAGE_DIMENSION))
+                      ).then((images) => appendImage(images));
                     }}
                   />
                   <div className="ion-margin-top">
