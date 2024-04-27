@@ -48,10 +48,7 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
         {selected ? (
           <>
             <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-              <img
-                alt={selected["name"]}
-                src={selected["image"] ? selected["image"]["src"] : null}
-              />
+              <img alt={selected["name"]} src={selected["image"]?.["src"]} />
             </IonThumbnail>
             <IonLabel>
               <h3>

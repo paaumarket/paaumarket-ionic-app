@@ -35,11 +35,7 @@ const AdvertDetails = ({ advert }) => {
             <IonThumbnail slot="start" className="[--size:theme(spacing.8)]">
               <img
                 alt={advert["category_name"]}
-                src={
-                  advert["category_image"]
-                    ? advert["category_image"]["src"]
-                    : null
-                }
+                src={advert["category_image"]?.["src"]}
               />
             </IonThumbnail>{" "}
             {advert["category_name"]}

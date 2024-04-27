@@ -59,10 +59,7 @@ export default () => {
                   "ion-margin-start"
                 )}
               >
-                <img
-                  alt={category["name"]}
-                  src={category["image"] ? category["image"]["src"] : null}
-                />
+                <img alt={category["name"]} src={category["image"]?.["src"]} />
               </IonThumbnail>
             ) : null}
           </IonTitle>

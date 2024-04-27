@@ -204,10 +204,7 @@ const SelectPage = ({ active = false, title = "", parentId = null }) => {
 const SelectItem = ({ item, active, ...props }) => (
   <IonItem {...props}>
     <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-      <img
-        alt={item["name"]}
-        src={item["image"] ? item["image"]["src"] : null}
-      />
+      <img alt={item["name"]} src={item["image"]?.["src"]} />
     </IonThumbnail>
     <IonLabel>{item["name"]}</IonLabel>
     {active ? <IonIcon icon={checkmark} color="primary" /> : null}

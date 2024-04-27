@@ -126,11 +126,9 @@ const Category = () => {
               })}
               className="flex flex-col items-center text-center"
             >
-              {category["image"] ? (
-                <IonThumbnail className="[--size:theme(spacing.12)]">
-                  <img src={category["image"]["src"]} alt="" />
-                </IonThumbnail>
-              ) : null}
+              <IonThumbnail className="[--size:theme(spacing.12)]">
+                <img src={category["image"]?.["src"]} alt="" />
+              </IonThumbnail>
               <IonText color={"dark"}>
                 <small className="inline-block">{category["name"]}</small>
               </IonText>

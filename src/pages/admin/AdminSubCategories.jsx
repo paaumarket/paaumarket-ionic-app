@@ -93,10 +93,7 @@ const AdminSubCategories = () => {
                   "ion-margin-start"
                 )}
               >
-                <img
-                  alt={category["name"]}
-                  src={category["image"] ? category["image"]["src"] : null}
-                />
+                <img alt={category["name"]} src={category["image"]?.["src"]} />
               </IonThumbnail>
             ) : null}
           </IonTitle>
@@ -257,10 +254,7 @@ const SubCategoryItem = ({ category, onEdit, onDelete }) => {
   return (
     <IonItem>
       <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-        <img
-          alt={category["name"]}
-          src={category["image"] ? category["image"]["src"] : null}
-        />
+        <img alt={category["name"]} src={category["image"]?.["src"]} />
       </IonThumbnail>
       <IonLabel>
         <h4>{category["name"]}</h4>
