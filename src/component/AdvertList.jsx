@@ -19,7 +19,7 @@ export default function AdvertList({
       <ResponsiveMasonry
         columnsCountBreakPoints={{ 425: 2, 576: 3, 768: 4, 992: 5 }}
       >
-        <Masonry gutter="8px">
+        <Masonry gutter="10px">
           {isPending
             ? repeatComponent(<AdvertPlaceholder />, 4)
             : isSuccess
