@@ -4,8 +4,7 @@ import api from "./lib/api";
 import { useEffect } from "react";
 import deepEqual from "deep-equal";
 
-const REFETCH_INTERVAL =
-  1000 * (import.meta.env.NODE_ENV === "production" ? 60 : 5);
+const REFETCH_INTERVAL = 1000 * (import.meta.env.PROD ? 30 : 5);
 
 export const ProfileUpdater = () => {
   const { user, login } = useAuth();
