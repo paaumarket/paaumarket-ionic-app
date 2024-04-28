@@ -1,7 +1,11 @@
 import {
+  IonButton,
+  IonButtons,
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
+  IonIcon,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonPage,
@@ -10,8 +14,9 @@ import {
   IonSpinner,
   IonText,
   IonThumbnail,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-import Header from "../component/Header";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Link, generatePath } from "react-router-dom";
@@ -19,6 +24,8 @@ import { Link, generatePath } from "react-router-dom";
 import logo from "../assets/paaumarket.svg";
 import { useState } from "react";
 import AdvertList from "@/component/AdvertList";
+import { isPlatform } from "@ionic/react";
+import { personCircleOutline } from "ionicons/icons";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -40,20 +47,49 @@ export default function Home() {
 
   return (
     <IonPage>
-      <Header>
-        <Link slot="start" to="/">
-          <img src={logo} alt="Paau Market Logo" className="w-10 h-10 px-1" />
-        </Link>
-        <IonSearchbar
-          className="ion-searchbar"
-          value={search}
-          debounce={500}
-          onIonInput={(ev) => setSearch(ev.target.value)}
-          showClearButton="always"
-          placeholder="Search Paau Market"
-          maxlength={30}
-        ></IonSearchbar>
-      </Header>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton routerLink="/" fill="clear">
+              <IonIcon icon={logo} size="large" />
+            </IonButton>
+          </IonButtons>
+          {isPlatform("ios") ? (
+            <IonTitle>Paau Market</IonTitle>
+          ) : (
+            <IonSearchbar
+              value={search}
+              debounce={500}
+              onIonInput={(ev) => setSearch(ev.target.value)}
+              showClearButton="always"
+              placeholder="Search Paau Market"
+              maxlength={30}
+            />
+          )}
+
+          <IonButtons slot="end">
+            <IonButton
+              routerLink="/home/profile"
+              fill="clear"
+              color={"primary"}
+            >
+              <IonIcon icon={personCircleOutline} size="large" />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+        {isPlatform("ios") ? (
+          <IonToolbar>
+            <IonSearchbar
+              value={search}
+              debounce={500}
+              onIonInput={(ev) => setSearch(ev.target.value)}
+              showClearButton="always"
+              placeholder="Search Paau Market"
+              maxlength={30}
+            />
+          </IonToolbar>
+        ) : null}
+      </IonHeader>
 
       <IonContent>
         {!search ? (

@@ -98,10 +98,10 @@ const AdvertContact = ({ advert }) => {
   return (
     <IonCard className="ion-no-margin">
       <IonCardHeader>
-        <IonCardTitle>Contact</IonCardTitle>
-        {isSuccess ? (
-          <IonCardSubtitle>{data["mobile_number"]}</IonCardSubtitle>
-        ) : null}
+        <IonCardTitle>
+          {isSuccess ? data["mobile_number"] : "Contact"}
+        </IonCardTitle>
+        {isSuccess ? <IonCardSubtitle>Contact</IonCardSubtitle> : null}
       </IonCardHeader>
       <IonCardContent>
         {!user ? (

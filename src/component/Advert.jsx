@@ -5,6 +5,7 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonSkeletonText,
+  IonThumbnail,
 } from "@ionic/react";
 
 import { formatDistanceToNow } from "date-fns";
@@ -17,6 +18,9 @@ import "swiper/css/bundle";
 import "@ionic/react/css/ionic-swiper.css";
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
+import clsx from "clsx";
+
+import DefaultUserImage from "@/assets/user@100.png";
 
 const Advert = ({ advert, full = false }) => {
   return (
@@ -25,13 +29,26 @@ const Advert = ({ advert, full = false }) => {
       className="ion-no-margin"
     >
       {advert["preview_image"] ? (
-        <img
-          alt={advert["title"]}
-          src={advert["preview_image"]["src"]}
-          width={advert["preview_image"]["width"]}
-          height={advert["preview_image"]["height"]}
-          className="object-cover object-center w-full"
-        />
+        <div className="relative">
+          <img
+            alt={advert["title"]}
+            src={advert["preview_image"]["src"]}
+            width={advert["preview_image"]["width"]}
+            height={advert["preview_image"]["height"]}
+            className="object-cover object-center w-full"
+          />
+          <span
+            className={clsx(
+              "absolute",
+              "bottom-0 right-1",
+              "bg-[var(--ion-color-light)] text-[var(--ion-color-light-contrast)]",
+              "text-xs",
+              "p-1 rounded-t"
+            )}
+          >
+            {advert["images_count"]}
+          </span>
+        </div>
       ) : null}
 
       {advert["images"] ? <AdvertImages advert={advert} /> : null}
@@ -50,6 +67,19 @@ const Advert = ({ advert, full = false }) => {
               id: advert["user"]["id"],
             })}
           >
+            <IonThumbnail
+              className={clsx(
+                "[--size:theme(spacing.6)]",
+                "inline-block align-middle"
+              )}
+            >
+              <img
+                alt={advert["user"]["name"]}
+                src={
+                  advert["user"]["profile_photo"]?.["src"] || DefaultUserImage
+                }
+              />
+            </IonThumbnail>{" "}
             {advert["user"]["name"]}
           </Link>
         ) : null}

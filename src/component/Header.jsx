@@ -1,16 +1,29 @@
-import { IonHeader, IonIcon, IonToolbar } from "@ionic/react";
-import { Link } from "react-router-dom";
+import {
+  IonButton,
+  IonButtons,
+  IonHeader,
+  IonIcon,
+  IonToolbar,
+} from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 
-export default function Header({ children }) {
-  // console.log();
+export default function Header({ children, showProfile = true }) {
   return (
     <IonHeader className="ion-no-border">
       <IonToolbar>
         {children}
-        <Link slot="end" to="/home/profile" className="px-1">
-          <IonIcon size="large" icon={personCircleOutline} />
-        </Link>
+
+        {showProfile ? (
+          <IonButtons slot="end">
+            <IonButton
+              routerLink="/home/profile"
+              fill="clear"
+              color={"primary"}
+            >
+              <IonIcon icon={personCircleOutline} size="large" />
+            </IonButton>
+          </IonButtons>
+        ) : null}
       </IonToolbar>
     </IonHeader>
   );

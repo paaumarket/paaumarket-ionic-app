@@ -37,10 +37,6 @@
   opacity: 1;
 }
 
-.ion-searchbar {
-  --box-shadow: none !important;
-}
-
 ion-backdrop {
   background: var(--ion-color-dark);
   opacity: 0.3;

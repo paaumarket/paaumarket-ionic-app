@@ -17,6 +17,7 @@ import clsx from "clsx";
 import { useRouteMatch } from "react-router-dom";
 
 import DefaultUserImage from "@/assets/user@100.png";
+import { isPlatform } from "@ionic/react";
 
 export default () => {
   const match = useRouteMatch();
@@ -44,13 +45,13 @@ export default () => {
           </IonButtons>
 
           <IonTitle>
-            {isPending ? "Loading..." : user["name"]}
             {isSuccess ? (
               <IonThumbnail
                 className={clsx(
-                  "[--size:theme(spacing.9)]",
+                  "[--size:theme(spacing.8)]",
                   "inline-block align-middle",
-                  "ion-margin-start"
+                  "ion-margin-end",
+                  isPlatform("ios") ? "ion-margin-start" : ""
                 )}
               >
                 <img
@@ -59,6 +60,7 @@ export default () => {
                 />
               </IonThumbnail>
             ) : null}
+            {isPending ? "Loading..." : user["name"]}
           </IonTitle>
         </IonToolbar>
       </IonHeader>

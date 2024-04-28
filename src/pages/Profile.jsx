@@ -35,7 +35,7 @@ export default function Profile() {
         <IonButtons slot="start">
           <IonBackButton defaultHref="/"></IonBackButton>
         </IonButtons>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ion-padding-start">
           <IonThumbnail className="[--size:theme(spacing.8)]">
             <img
               src={user["profile_photo"]?.["src"] || DefaultUserImage}
