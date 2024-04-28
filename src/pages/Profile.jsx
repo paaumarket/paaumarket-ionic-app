@@ -1,4 +1,3 @@
-import Header from "@/component/Header";
 import useAuth from "@/hooks/useAuth";
 import {
   IonBackButton,
@@ -6,24 +5,25 @@ import {
   IonButton,
   IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
   IonItem,
+  IonItemGroup,
   IonLabel,
   IonList,
+  IonListHeader,
   IonPage,
   IonText,
   IonThumbnail,
+  IonToolbar,
 } from "@ionic/react";
 import {
   callOutline,
-  lockClosedOutline,
   mailOutline,
-  pencilOutline,
   personOutline,
   storefrontOutline,
   walletOutline,
 } from "ionicons/icons";
-import { Link } from "react-router-dom";
 
 import DefaultUserImage from "@/assets/user@100.png";
 
@@ -31,105 +31,100 @@ export default function Profile() {
   const { user, permissions } = useAuth();
   return (
     <IonPage>
-      <Header>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="/"></IonBackButton>
-        </IonButtons>
-        <div className="flex items-center gap-2 ion-padding-start">
-          <IonThumbnail className="[--size:theme(spacing.8)]">
-            <img
-              src={user["profile_photo"]?.["src"] || DefaultUserImage}
-              alt={user["name"]}
-            />
-          </IonThumbnail>
-          {user["name"]}
-        </div>
-      </Header>
-      <IonContent className="ion-padding-start ion-padding-end">
-        <div className="flex items-center">
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/"></IonBackButton>
+          </IonButtons>
+          <div className="flex items-center gap-2 ion-padding-start">
+            <IonThumbnail className="[--size:theme(spacing.8)]">
+              <img
+                src={user["profile_photo"]?.["src"] || DefaultUserImage}
+                alt={user["name"]}
+              />
+            </IonThumbnail>
+            {user["name"]}
+          </div>
+        </IonToolbar>
+      </IonHeader>
+
+      <IonContent className="ion-padding">
+        <IonItem>
           <IonIcon
             icon={walletOutline}
             size="large"
-            className="ion-padding"
-          ></IonIcon>
+            slot="start"
+            color={"primary"}
+          />
 
-          <div className="pr-5">
-            <IonText>
-              <h3>₦ {Intl.NumberFormat().format(user["wallet_balance"])}</h3>
-            </IonText>
-            <p className="text-xs">
+          <IonLabel>
+            <h3>
+              <IonText>
+                ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+              </IonText>
+            </h3>
+            <p>
               <IonText color="medium">MY BALANCE</IonText>
             </p>
-          </div>
+          </IonLabel>
 
-          <div>
-            <IonButton size="small" routerLink="/home/profile/top-up">
-              Add Fund
-            </IonButton>
-          </div>
-        </div>
+          <IonButton slot="end" size="small" routerLink="/home/profile/top-up">
+            Add Fund
+          </IonButton>
+        </IonItem>
 
-        <div>
-          <Link to="/home/profile/my-adverts" className="flex">
-            <IonIcon
-              icon={storefrontOutline}
-              size="large"
-              className="ion-padding"
-            ></IonIcon>
+        <IonItem routerLink="/home/profile/my-adverts">
+          <IonIcon
+            icon={storefrontOutline}
+            size="large"
+            slot="start"
+            color={"primary"}
+          />
 
-            <div>
-              <IonText>
-                <h3>My ads</h3>
-              </IonText>
-
-              <p className="text-xs">
-                <IonText color="medium">SEE ADS</IonText>
-              </p>
-            </div>
-          </Link>
-        </div>
-
-        <main className="pt-5">
-          <section className="flex items-center py-2">
-            <IonIcon
-              icon={personOutline}
-              className="ion-padding-end ion-no-padding"
-            ></IonIcon>
-            <p className=" grow">{user["name"]}</p>
-            <IonIcon icon={pencilOutline}></IonIcon>
-          </section>
-
-          <section className="flex items-center py-2">
-            <IonIcon
-              icon={mailOutline}
-              className="ion-padding-end ion-no-padding"
-            ></IonIcon>
-            <p className=" grow">{user["email"]}</p>
-            <IonIcon color="medium" icon={lockClosedOutline}></IonIcon>
-          </section>
-
-          <section className="flex items-center py-2">
-            <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
-            <p className="grow">{user["mobile_number"]}</p>
-            <IonIcon icon={lockClosedOutline} color="medium"></IonIcon>
-          </section>
-        </main>
+          <IonLabel>
+            <h3>
+              <IonText color={"primary"}>My Ads</IonText>
+            </h3>
+            <p>SEE ADS</p>
+          </IonLabel>
+        </IonItem>
 
         <IonList>
-          {permissions.includes("access-dashboard") ? (
-            <IonItem routerLink="/admin">
-              <IonLabel>Admin Panel</IonLabel>
-              {user?.["admin"]?.["reviewing_adverts_count"] ? (
-                <IonBadge color={"warning"}>
-                  {user?.["admin"]?.["reviewing_adverts_count"]}
-                </IonBadge>
-              ) : null}
+          <IonListHeader>
+            <IonLabel>Profile</IonLabel>
+          </IonListHeader>
+          <IonItemGroup>
+            <IonItem>
+              <IonIcon slot="start" icon={personOutline} />
+              <IonLabel>{user["name"]}</IonLabel>
             </IonItem>
-          ) : null}
+            <IonItem>
+              <IonIcon slot="start" icon={mailOutline} />
+              <IonLabel>{user["email"]}</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonIcon slot="start" icon={callOutline} />
+              <IonLabel>{user["mobile_number"]}</IonLabel>
+            </IonItem>
+          </IonItemGroup>
+        </IonList>
 
-          <IonItem routerLink="/logout">
-            <IonLabel>Logout</IonLabel>
-          </IonItem>
+        <IonList className="ion-margin-top">
+          <IonItemGroup>
+            {permissions.includes("access-dashboard") ? (
+              <IonItem routerLink="/admin">
+                <IonLabel>Admin Panel</IonLabel>
+                {user?.["admin"]?.["reviewing_adverts_count"] ? (
+                  <IonBadge color={"warning"}>
+                    {user?.["admin"]?.["reviewing_adverts_count"]}
+                  </IonBadge>
+                ) : null}
+              </IonItem>
+            ) : null}
+            <IonItem routerLink="/logout">
+              <IonLabel>Logout</IonLabel>
+            </IonItem>
+          </IonItemGroup>
         </IonList>
       </IonContent>
     </IonPage>
