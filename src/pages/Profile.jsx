@@ -40,7 +40,10 @@ export default function Profile() {
           <div className="flex items-center gap-2 ion-padding-start">
             <IonAvatar className="w-8 h-8">
               <img
-                src={user["profile_photo_preview"]?.["src"] || DefaultUserImage}
+                src={
+                  user["profile_photo"]?.["cache"]?.["extra-small"] ||
+                  DefaultUserImage
+                }
                 alt={user["name"]}
               />
             </IonAvatar>

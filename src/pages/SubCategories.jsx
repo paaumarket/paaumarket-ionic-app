@@ -50,7 +50,10 @@ export default () => {
                   "ion-margin-start"
                 )}
               >
-                <img alt={category["name"]} src={category["image"]?.["src"]} />
+                <img
+                  alt={category["name"]}
+                  src={category["image"]?.["cache"]?.["extra-small"]}
+                />
               </IonThumbnail>
             ) : null}
           </IonTitle>
@@ -96,7 +99,10 @@ const SubCategoryList = ({ category }) => {
               )}
             >
               <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-                <img alt={sub["name"]} src={sub["image"]?.["src"]} />
+                <img
+                  alt={sub["name"]}
+                  src={sub["image"]?.["cache"]?.["extra-small"]}
+                />
               </IonThumbnail>
               <IonLabel>
                 <h3>{sub["name"]}</h3>

@@ -293,7 +293,7 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
                               src={
                                 image instanceof File
                                   ? URL.createObjectURL(image)
-                                  : image["image"]["src"]
+                                  : image["image"]["cache"]["medium"]
                               }
                               onLoad={
                                 image instanceof File

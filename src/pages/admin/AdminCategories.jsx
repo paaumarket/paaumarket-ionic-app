@@ -75,7 +75,7 @@ const AdminCategories = () => {
                 >
                   <img
                     alt={category["name"]}
-                    src={category["image"]?.["src"]}
+                    src={category["image"]?.["cache"]?.["extra-small"]}
                   />
                 </IonThumbnail>
                 <IonLabel>{category["name"]}</IonLabel>

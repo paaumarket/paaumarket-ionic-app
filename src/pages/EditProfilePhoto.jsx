@@ -83,7 +83,9 @@ const ProfilePhotoEdit = () => {
   return (
     <div className="flex flex-col items-start gap-2">
       <IonAvatar slot="start" className="w-24 h-24">
-        <img src={user["profile_photo_preview"]?.["src"] || DefaultUserImage} />
+        <img
+          src={user["profile_photo"]?.["cache"]?.["small"] || DefaultUserImage}
+        />
       </IonAvatar>
 
       {/* Button to upload photo */}

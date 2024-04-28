@@ -172,7 +172,7 @@ const AdminCategoryForm = ({
                       src={
                         field.value
                           ? URL.createObjectURL(field.value)
-                          : category?.["image"]["src"]
+                          : category?.["image"]?.["cache"]?.["small"]
                       }
                       onLoad={
                         field.value

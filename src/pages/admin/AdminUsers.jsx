@@ -143,7 +143,12 @@ const AdminUserItem = ({ user, onTopUp }) => {
   return (
     <IonItem key={user["id"]}>
       <IonAvatar slot="start" className="w-10 h-10]">
-        <img src={user["profile_photo_preview"]?.["src"] || DefaultUserImage} />
+        <img
+          src={
+            user["profile_photo"]?.["cache"]?.["extra-small"] ||
+            DefaultUserImage
+          }
+        />
       </IonAvatar>
       <IonLabel>
         <h4>{user["name"]}</h4>

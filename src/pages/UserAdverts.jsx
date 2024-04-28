@@ -55,7 +55,8 @@ export default ({ backButtonHref }) => {
                 <img
                   alt={user["name"]}
                   src={
-                    user["profile_photo_preview"]?.["src"] || DefaultUserImage
+                    user["profile_photo"]?.["cache"]?.["extra-small"] ||
+                    DefaultUserImage
                   }
                 />
               </IonAvatar>

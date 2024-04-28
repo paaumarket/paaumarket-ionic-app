@@ -4,18 +4,13 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
   IonList,
   IonNav,
   IonNavLink,
   IonSearchbar,
-  IonThumbnail,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { checkmark } from "ionicons/icons";
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -166,32 +161,18 @@ const SelectPage = ({ active = false, title = "", parentId = null }) => {
                     />
                   )}
                 >
-                  {renderItem ? (
-                    renderItem({
-                      item,
-                      active: selected === item["id"],
-                      onClick: clearSearch,
-                    })
-                  ) : (
-                    <SelectItem
-                      item={item}
-                      active={selected === item["id"]}
-                      onClick={clearSearch}
-                    ></SelectItem>
-                  )}
+                  {renderItem({
+                    item,
+                    active: selected === item["id"],
+                    onClick: clearSearch,
+                  })}
                 </IonNavLink>
-              ) : renderItem ? (
+              ) : (
                 renderItem({
                   item,
                   active: selected === item["id"],
                   onClick: () => handleSelect(item["id"]),
                 })
-              ) : (
-                <SelectItem
-                  item={item}
-                  active={selected === item["id"]}
-                  onClick={() => handleSelect(item["id"])}
-                ></SelectItem>
               )}
             </Fragment>
           ))}
@@ -200,15 +181,5 @@ const SelectPage = ({ active = false, title = "", parentId = null }) => {
     </>
   );
 };
-
-const SelectItem = ({ item, active, ...props }) => (
-  <IonItem {...props}>
-    <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-      <img alt={item["name"]} src={item["image"]?.["src"]} />
-    </IonThumbnail>
-    <IonLabel>{item["name"]}</IonLabel>
-    {active ? <IonIcon icon={checkmark} color="primary" /> : null}
-  </IonItem>
-);
 
 export default MultiLevelSelect;

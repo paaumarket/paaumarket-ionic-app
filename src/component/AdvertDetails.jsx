@@ -23,7 +23,8 @@ const AdvertDetails = ({ advert }) => {
                 <img
                   alt={advert["user_name"]}
                   src={
-                    advert["user_profile_photo"]?.["src"] || DefaultUserImage
+                    advert["user_profile_photo"]?.["cache"]?.["extra-small"] ||
+                    DefaultUserImage
                   }
                 />
               </IonAvatar>{" "}
@@ -49,7 +50,7 @@ const AdvertDetails = ({ advert }) => {
             <IonThumbnail slot="start" className="[--size:theme(spacing.8)]">
               <img
                 alt={advert["category_name"]}
-                src={advert["category_image"]?.["src"]}
+                src={advert["category_image"]?.["cache"]?.["extra-small"]}
               />
             </IonThumbnail>{" "}
             {advert["category_name"]}

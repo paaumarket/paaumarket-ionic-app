@@ -32,7 +32,7 @@ const Advert = ({ advert, full = false }) => {
         <div className="relative">
           <img
             alt={advert["title"]}
-            src={advert["preview_image"]["src"]}
+            src={advert["preview_image"]["cache"]["medium"]}
             width={advert["preview_image"]["width"]}
             height={advert["preview_image"]["height"]}
             className="object-cover object-center w-full"
@@ -73,7 +73,9 @@ const Advert = ({ advert, full = false }) => {
                 <img
                   alt={advert["user"]["name"]}
                   src={
-                    advert["user"]["profile_photo"]?.["src"] || DefaultUserImage
+                    advert["user"]["profile_photo"]?.["cache"]?.[
+                      "extra-small"
+                    ] || DefaultUserImage
                   }
                 />
               </IonAvatar>{" "}

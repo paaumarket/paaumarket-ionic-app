@@ -127,7 +127,7 @@ const AdminAdvertItem = ({ advert, onApproved }) => {
   return (
     <IonItem key={advert["id"]} onClick={() => openAdvertModal()}>
       <IonThumbnail slot="start" className="[--size:theme(spacing.20)]">
-        <img src={advert["images_preview"][0]?.["image"]["src"]} />
+        <img src={advert["images"][0]?.["image"]?.["cache"]?.["small"]} />
       </IonThumbnail>
       <IonLabel>
         <h4>{advert["title"]}</h4>
