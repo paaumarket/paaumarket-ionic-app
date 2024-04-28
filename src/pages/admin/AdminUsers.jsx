@@ -1,5 +1,6 @@
 import api from "@/lib/api";
 import {
+  IonAvatar,
   IonBackButton,
   IonButton,
   IonButtons,
@@ -13,7 +14,6 @@ import {
   IonSearchbar,
   IonSpinner,
   IonText,
-  IonThumbnail,
   IonTitle,
   IonToolbar,
   useIonActionSheet,
@@ -142,9 +142,9 @@ const AdminUserItem = ({ user, onTopUp }) => {
 
   return (
     <IonItem key={user["id"]}>
-      <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
+      <IonAvatar slot="start" className="w-10 h-10]">
         <img src={user["profile_photo_preview"]?.["src"] || DefaultUserImage} />
-      </IonThumbnail>
+      </IonAvatar>
       <IonLabel>
         <h4>{user["name"]}</h4>
         <p>{user["email"]}</p>

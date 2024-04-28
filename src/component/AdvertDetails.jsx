@@ -1,5 +1,6 @@
 import { AdvertImages } from "@/component/Advert";
 import {
+  IonAvatar,
   IonItem,
   IonLabel,
   IonList,
@@ -18,16 +19,14 @@ const AdvertDetails = ({ advert }) => {
           <IonLabel>
             <h4>User</h4>
             <p className="flex flex-wrap items-center gap-2">
-              <IonThumbnail
-                className={clsx("[--size:theme(spacing.5)]", "inline-block")}
-              >
+              <IonAvatar className={clsx("w-5 h-5", "inline-block")}>
                 <img
                   alt={advert["user_name"]}
                   src={
                     advert["user_profile_photo"]?.["src"] || DefaultUserImage
                   }
                 />
-              </IonThumbnail>{" "}
+              </IonAvatar>{" "}
               {advert["user_name"]}
             </p>
           </IonLabel>

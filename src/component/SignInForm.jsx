@@ -109,7 +109,12 @@ const SignInForm = ({ onSuccess }) => {
           </Link>
         </IonList>
 
-        <IonButton expand="full" shape="round" type="submit">
+        <IonButton
+          expand="full"
+          shape="round"
+          type="submit"
+          disabled={logInMutation.isPending}
+        >
           {logInMutation.isPending ? <IonSpinner /> : <>Sign In</>}
         </IonButton>
 

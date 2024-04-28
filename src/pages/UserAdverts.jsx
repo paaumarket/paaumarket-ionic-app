@@ -1,12 +1,12 @@
 import AdvertList from "@/component/AdvertList";
 import api from "@/lib/api";
 import {
+  IonAvatar,
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonPage,
-  IonThumbnail,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -44,9 +44,9 @@ export default ({ backButtonHref }) => {
 
           <IonTitle>
             {isSuccess ? (
-              <IonThumbnail
+              <IonAvatar
                 className={clsx(
-                  "[--size:theme(spacing.8)]",
+                  "w-8 h-8",
                   "inline-block align-middle",
                   "ion-margin-end",
                   isPlatform("ios") ? "ion-margin-start" : ""
@@ -56,7 +56,7 @@ export default ({ backButtonHref }) => {
                   alt={user["name"]}
                   src={user["profile_photo"]?.["src"] || DefaultUserImage}
                 />
-              </IonThumbnail>
+              </IonAvatar>
             ) : null}
             {isPending ? "Loading..." : user["name"]}
           </IonTitle>

@@ -1,11 +1,11 @@
 import {
+  IonAvatar,
   IonCard,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonSkeletonText,
-  IonThumbnail,
 } from "@ionic/react";
 
 import { formatDistanceToNow } from "date-fns";
@@ -69,14 +69,14 @@ const Advert = ({ advert, full = false }) => {
               })}
               className="flex flex-wrap items-center gap-2"
             >
-              <IonThumbnail className={clsx("[--size:theme(spacing.6)]")}>
+              <IonAvatar className={clsx("w-6 h-6")}>
                 <img
                   alt={advert["user"]["name"]}
                   src={
                     advert["user"]["profile_photo"]?.["src"] || DefaultUserImage
                   }
                 />
-              </IonThumbnail>{" "}
+              </IonAvatar>{" "}
               {advert["user"]["name"]}
             </Link>
           ) : null}

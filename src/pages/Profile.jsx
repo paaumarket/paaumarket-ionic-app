@@ -1,5 +1,6 @@
 import useAuth from "@/hooks/useAuth";
 import {
+  IonAvatar,
   IonBackButton,
   IonBadge,
   IonButton,
@@ -14,7 +15,6 @@ import {
   IonListHeader,
   IonPage,
   IonText,
-  IonThumbnail,
   IonToolbar,
 } from "@ionic/react";
 import {
@@ -38,12 +38,12 @@ export default function Profile() {
             <IonBackButton defaultHref="/"></IonBackButton>
           </IonButtons>
           <div className="flex items-center gap-2 ion-padding-start">
-            <IonThumbnail className="[--size:theme(spacing.8)]">
+            <IonAvatar className="w-8 h-8">
               <img
                 src={user["profile_photo"]?.["src"] || DefaultUserImage}
                 alt={user["name"]}
               />
-            </IonThumbnail>
+            </IonAvatar>
             {user["name"]}
           </div>
 
