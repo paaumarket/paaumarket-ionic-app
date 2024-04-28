@@ -54,14 +54,14 @@ export default function SingleAdvertPage() {
       <IonContent className="ion-padding" fullscreen>
         <IonGrid>
           <IonRow className="ion-justify-start">
-            <IonCol sizeXl="8">
+            <IonCol size="12" sizeXl="8">
               {isPending ? (
                 <AdvertPlaceholder />
               ) : (
                 <Advert full advert={advert} />
               )}
             </IonCol>
-            <IonCol sizeXl="4">
+            <IonCol size="12" sizeXl="4">
               {isSuccess ? <AdvertContact advert={advert} /> : null}
             </IonCol>
           </IonRow>
@@ -130,7 +130,7 @@ const AdvertContact = ({ advert }) => {
               href={`https://wa.me/${
                 data["mobile_number"]
               }?text=${encodeURIComponent(
-                `Hi, I'm interested in your advert - ${
+                `Hi, I'm interested in your advert on Paau Market - ${
                   advert["title"]
                 } - ₦${Intl.NumberFormat().format(advert["price"])}`
               )}`}

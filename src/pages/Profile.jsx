@@ -11,6 +11,7 @@ import {
   IonList,
   IonPage,
   IonText,
+  IonThumbnail,
 } from "@ionic/react";
 import {
   callOutline,
@@ -23,6 +24,8 @@ import {
 } from "ionicons/icons";
 import { Link } from "react-router-dom";
 
+import DefaultUserImage from "@/assets/user@100.png";
+
 export default function Profile() {
   const { user, permissions } = useAuth();
   return (
@@ -31,12 +34,13 @@ export default function Profile() {
         <IonButtons slot="start">
           <IonBackButton defaultHref="/"></IonBackButton>
         </IonButtons>
-        <div className="grow">
-          <img
-            src="https://w7.pngwing.com/pngs/722/101/png-transparent-computer-icons-user-profile-circle-abstract-miscellaneous-rim-account-thumbnail.png"
-            alt=""
-            className="inline-block rounded-full max-w-7 max-h-7"
-          />{" "}
+        <div className="flex items-center gap-2">
+          <IonThumbnail className="[--size:theme(spacing.8)]">
+            <img
+              src={user["profile_photo"]?.["src"] || DefaultUserImage}
+              alt={user["name"]}
+            />
+          </IonThumbnail>
           {user["name"]}
         </div>
       </Header>

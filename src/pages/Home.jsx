@@ -41,20 +41,18 @@ export default function Home() {
   return (
     <IonPage>
       <Header>
-        <Link to="/">
+        <Link slot="start" to="/">
           <img src={logo} alt="Paau Market Logo" className="w-10 h-10 px-1" />
         </Link>
-        <div className="grow">
-          <IonSearchbar
-            className="ion-searchbar"
-            showClearButton="focus"
-            value={search}
-            debounce={500}
-            onIonInput={(ev) => setSearch(ev.target.value)}
-            placeholder="Search Paau Market"
-            maxlength={30}
-          ></IonSearchbar>
-        </div>
+        <IonSearchbar
+          className="ion-searchbar"
+          value={search}
+          debounce={500}
+          onIonInput={(ev) => setSearch(ev.target.value)}
+          showClearButton="always"
+          placeholder="Search Paau Market"
+          maxlength={30}
+        ></IonSearchbar>
       </Header>
 
       <IonContent>

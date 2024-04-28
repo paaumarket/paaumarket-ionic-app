@@ -7,12 +7,10 @@ export default function Header({ children }) {
   return (
     <IonHeader className="ion-no-border">
       <IonToolbar>
-        <div className="flex items-center justify-center">
-          <>{children}</>
-          <Link to="/home/profile" className="px-1">
-            <IonIcon size="large" icon={personCircleOutline} />
-          </Link>
-        </div>
+        {children}
+        <Link slot="end" to="/home/profile" className="px-1">
+          <IonIcon size="large" icon={personCircleOutline} />
+        </Link>
       </IonToolbar>
     </IonHeader>
   );

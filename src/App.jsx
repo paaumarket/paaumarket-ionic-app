@@ -51,6 +51,7 @@ import NewPassword from "./pages/NewPassword";
 import OTP from "./pages/OTP";
 import AdminAdverts from "./pages/admin/AdminAdverts";
 import { ProfileUpdater } from "./ProfileUpdater";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 setupIonicReact();
 
@@ -60,6 +61,13 @@ const App = () => {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
+            {/* Admin Users */}
+            <Route exact path="/admin/users">
+              <AdminProtectedRoute>
+                <AdminUsers />
+              </AdminProtectedRoute>
+            </Route>
+
             {/* Admin Adverts */}
             <Route exact path="/admin/adverts">
               <AdminProtectedRoute>
