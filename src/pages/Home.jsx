@@ -57,7 +57,7 @@ export default function Home() {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonButton routerLink="/" fill="clear">
+            <IonButton fill="clear" onClick={() => refetch()}>
               <IonIcon icon={logo} size="large" />
             </IonButton>
           </IonButtons>
