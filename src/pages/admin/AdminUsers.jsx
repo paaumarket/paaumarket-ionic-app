@@ -29,6 +29,7 @@ import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
@@ -82,6 +83,7 @@ const AdminUsers = () => {
 
       {/* Page content */}
       <IonContent fullscreen>
+        <Refresher refresh={refetch} />
         {isPending ? (
           <div className="ion-padding ion-text-center">
             <IonSpinner />

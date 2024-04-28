@@ -17,6 +17,7 @@ import { useRouteMatch } from "react-router-dom";
 import DefaultUserImage from "@/assets/user@100.png";
 import { isPlatform } from "@ionic/react";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 
 export default ({ backButtonHref }) => {
   const match = useRouteMatch();
@@ -76,6 +77,7 @@ const UserAdvertList = ({ user }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["adverts", "user", user["id"]],
     initialPageParam: "",
@@ -95,6 +97,7 @@ const UserAdvertList = ({ user }) => {
           Adverts from {user["name"]}
         </h3>
       </div>
+      <Refresher refresh={refetch} />
       <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
       <InfiniteScroll
         hasNextPage={hasNextPage}

@@ -22,6 +22,7 @@ import { useState } from "react";
 import { useMemo } from "react";
 import AdminAdvertModal from "./AdminAdvertModal";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 
 const AdminAdverts = () => {
   const [segment, setSegment] = useState("reviewing");
@@ -83,6 +84,7 @@ const AdminAdverts = () => {
 
       {/* Page content */}
       <IonContent fullscreen>
+        <Refresher refresh={refetch} />
         {isPending ? (
           <div className="ion-padding ion-text-center">
             <IonSpinner />

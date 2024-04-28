@@ -28,6 +28,7 @@ import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
 import EditAdvertFormModal from "@/component/EditAdvertFormModal";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -99,6 +100,7 @@ const MyAdverts = () => {
 
       {/* Page content */}
       <IonContent fullscreen>
+        <Refresher refresh={refetch} />
         {isPending ? (
           <div className="ion-padding ion-text-center">
             <IonSpinner />

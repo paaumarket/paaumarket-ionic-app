@@ -1,5 +1,6 @@
 import AdvertList from "@/component/AdvertList";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 import api from "@/lib/api";
 import {
   IonBackButton,
@@ -73,6 +74,7 @@ const CategoryAdvertList = ({ category }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["adverts", "category", category["id"]],
     initialPageParam: "",
@@ -87,6 +89,7 @@ const CategoryAdvertList = ({ category }) => {
 
   return (
     <>
+      <Refresher refresh={refetch} />
       <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
       <InfiniteScroll
         hasNextPage={hasNextPage}

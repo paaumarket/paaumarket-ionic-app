@@ -25,6 +25,7 @@ import AdvertList from "@/component/AdvertList";
 import { isPlatform } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import InfiniteScroll from "@/component/InfiniteScroll";
+import Refresher from "@/component/Refresher";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -35,6 +36,7 @@ export default function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery({
     initialPageParam: "",
     queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
@@ -115,6 +117,7 @@ export default function Home() {
           </h4>
         </IonText>
 
+        <Refresher refresh={refetch} />
         <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
 
         <InfiniteScroll
