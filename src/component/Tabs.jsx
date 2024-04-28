@@ -100,9 +100,9 @@ export default function Tabs() {
         <IonTabButton tab="tab3" href="/home/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
-          {user?.["admin"]["reviewing_adverts_count"] ? (
+          {user?.["admin"]?.["reviewing_adverts_count"] ? (
             <IonBadge color={"warning"}>
-              {user?.["admin"]["reviewing_adverts_count"]}
+              {user?.["admin"]?.["reviewing_adverts_count"]}
             </IonBadge>
           ) : null}
         </IonTabButton>

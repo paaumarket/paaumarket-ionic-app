@@ -50,9 +50,9 @@ const AdminDashboard = () => {
             ></IonIcon>
             <IonLabel>Adverts</IonLabel>
 
-            {user?.["admin"]["reviewing_adverts_count"] ? (
+            {user?.["admin"]?.["reviewing_adverts_count"] ? (
               <IonBadge color={"warning"}>
-                {user?.["admin"]["reviewing_adverts_count"]}
+                {user?.["admin"]?.["reviewing_adverts_count"]}
               </IonBadge>
             ) : null}
           </IonItem>
