@@ -135,7 +135,7 @@ const AdminUserItem = ({ user, onTopUp }) => {
   return (
     <IonItem key={user["id"]}>
       <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
-        <img src={user["profile_photo"]?.["src"] || DefaultUserImage} />
+        <img src={user["profile_photo_preview"]?.["src"] || DefaultUserImage} />
       </IonThumbnail>
       <IonLabel>
         <h4>{user["name"]}</h4>
