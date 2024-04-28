@@ -19,7 +19,7 @@ import {
   IonToolbar,
   useIonModal,
 } from "@ionic/react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import AdminAdvertModal from "./AdminAdvertModal";
@@ -27,28 +27,23 @@ import AdminAdvertModal from "./AdminAdvertModal";
 const AdminAdverts = () => {
   const [segment, setSegment] = useState("reviewing");
 
-  const queryClient = useQueryClient();
-  const queryKey = ["adverts", "approval", segment];
-  const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
-    initialPageParam: "",
-    queryKey,
-    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
-    queryFn: ({ signal, pageParam }) =>
-      api
-        .get(`/adverts?approval=${segment}&cursor=${pageParam}`, { signal })
-        .then((response) => response.data),
-  });
+  const { isPending, isSuccess, data, fetchNextPage, refetch } =
+    useInfiniteQuery({
+      initialPageParam: "",
+      queryKey: ["adverts", "approval", segment],
+      getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+      queryFn: ({ signal, pageParam }) =>
+        api
+          .get(`/adverts?approval=${segment}&cursor=${pageParam}`, { signal })
+          .then((response) => response.data),
+    });
 
   const adverts = useMemo(
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
     [data]
   );
 
-  const handleApproved = () => {
-    queryClient.refetchQueries({
-      queryKey,
-    });
-  };
+  const handleApproved = () => refetch();
 
   return (
     <IonPage>

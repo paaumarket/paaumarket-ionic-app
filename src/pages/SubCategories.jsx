@@ -20,14 +20,12 @@ import { useRouteMatch, generatePath } from "react-router-dom";
 export default () => {
   const match = useRouteMatch();
 
-  const queryKey = ["category", match.params.category];
-
   const {
     isPending,
     isSuccess,
     data: category,
   } = useQuery({
-    queryKey,
+    queryKey: ["category", match.params.category],
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${match.params.category}`, { signal })
@@ -66,14 +64,12 @@ export default () => {
 };
 
 const SubCategoryList = ({ category }) => {
-  const queryKey = ["category", category["slug"], "children", { counts: true }];
-
   const {
     isPending,
     isSuccess,
     data: subCategories,
   } = useQuery({
-    queryKey,
+    queryKey: ["category", category["slug"], "children", { counts: true }],
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${category["slug"]}/children?counts=true`, { signal })

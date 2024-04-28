@@ -21,7 +21,7 @@ export default function AdvertList({
       >
         <Masonry gutter="10px">
           {isPending
-            ? repeatComponent(<AdvertPlaceholder />, 4)
+            ? repeatComponent(<AdvertPlaceholder />, 10)
             : isSuccess
             ? adverts.map((advert) => {
                 return <Advert key={advert["id"]} advert={advert} />;

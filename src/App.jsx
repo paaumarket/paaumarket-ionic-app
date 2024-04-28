@@ -52,6 +52,7 @@ import OTP from "./pages/OTP";
 import AdminAdverts from "./pages/admin/AdminAdverts";
 import { ProfileUpdater } from "./ProfileUpdater";
 import AdminUsers from "./pages/admin/AdminUsers";
+import UserAdverts from "./pages/UserAdverts";
 
 setupIonicReact();
 
@@ -65,6 +66,13 @@ const App = () => {
             <Route exact path="/admin/users">
               <AdminProtectedRoute>
                 <AdminUsers />
+              </AdminProtectedRoute>
+            </Route>
+
+            {/* Admin User Adverts */}
+            <Route exact path="/admin/adverts/user/:user">
+              <AdminProtectedRoute>
+                <UserAdverts backButtonHref="/admin/users" />
               </AdminProtectedRoute>
             </Route>
 

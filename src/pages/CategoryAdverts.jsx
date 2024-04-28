@@ -19,14 +19,12 @@ import { generatePath, useRouteMatch } from "react-router-dom";
 export default () => {
   const match = useRouteMatch();
 
-  const queryKey = ["category", match.params.category, "sub", match.params.sub];
-
   const {
     isPending,
     isSuccess,
     data: category,
   } = useQuery({
-    queryKey,
+    queryKey: ["category", match.params.category, "sub", match.params.sub],
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${match.params.sub}`, { signal })
@@ -69,10 +67,8 @@ export default () => {
 };
 
 const CategoryAdvertList = ({ category }) => {
-  const queryKey = ["adverts", "category", category["id"]];
-
   const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
-    queryKey,
+    queryKey: ["adverts", "category", category["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>
       api

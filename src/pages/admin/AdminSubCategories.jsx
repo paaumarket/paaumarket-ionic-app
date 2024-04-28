@@ -20,7 +20,7 @@ import {
   useIonActionSheet,
   useIonModal,
 } from "@ionic/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   add,
   create,
@@ -38,14 +38,13 @@ const AdminSubCategories = () => {
   const history = useHistory();
 
   const match = useRouteMatch();
-  const queryKey = ["category", match.params.category];
 
   const {
     isPending,
     isSuccess,
     data: category,
   } = useQuery({
-    queryKey,
+    queryKey: ["category", match.params.category],
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${match.params.category}`, { signal })
@@ -127,25 +126,20 @@ const AdminSubCategories = () => {
 };
 
 const SubCategoryList = ({ category }) => {
-  const queryClient = useQueryClient();
-  const queryKey = ["category", category["slug"], "children"];
-
   const {
     isPending,
     isSuccess,
     data: subCategories,
+    refetch,
   } = useQuery({
-    queryKey,
+    queryKey: ["category", category["slug"], "children"],
     queryFn: ({ signal }) =>
       api
         .get(`/categories/${category["slug"]}/children`, { signal })
         .then((response) => response.data),
   });
 
-  const refetchQueries = () =>
-    queryClient.refetchQueries({
-      queryKey,
-    });
+  const refetchQueries = () => refetch();
 
   const [presentAddSubCategoryModal, dismissAddSubCategoryModal] = useIonModal(
     AdminCategoryFormModal,

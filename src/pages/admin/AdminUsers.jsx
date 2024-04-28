@@ -1,9 +1,11 @@
 import api from "@/lib/api";
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
   IonItem,
@@ -12,22 +14,26 @@ import {
   IonPage,
   IonSearchbar,
   IonSpinner,
+  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
+  useIonAlert,
+  useIonLoading,
+  useIonToast,
 } from "@ionic/react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import DefaultUserImage from "@/assets/user@100.png";
 import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
+import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
-
-  const queryClient = useQueryClient();
-  const { data, isPending, isSuccess, hasNextPage, fetchNextPage } =
+  const { data, isPending, isSuccess, hasNextPage, fetchNextPage, refetch } =
     useInfiniteQuery({
       initialPageParam: "",
       queryKey: search ? ["users", "list", search] : ["users", "list"],
@@ -47,6 +53,8 @@ const AdminUsers = () => {
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
     [data]
   );
+
+  const handleTopUp = () => refetch();
 
   return (
     <IonPage>
@@ -76,7 +84,11 @@ const AdminUsers = () => {
         {isSuccess ? (
           <IonList>
             {users.map((user) => (
-              <AdminUserItem key={user["id"]} user={user} />
+              <AdminUserItem
+                key={user["id"]}
+                user={user}
+                onTopUp={handleTopUp}
+              />
             ))}
           </IonList>
         ) : null}
@@ -91,7 +103,35 @@ const AdminUsers = () => {
   );
 };
 
-const AdminUserItem = ({ user }) => {
+const AdminUserItem = ({ user, onTopUp }) => {
+  const openTopUpAlert = useTopUpAlert({
+    user,
+    onSuccess: onTopUp,
+  });
+
+  // Action sheet
+  const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+
+  const openActions = () =>
+    presentActionSheet({
+      buttons: [
+        {
+          text: "Top Up",
+          data: {
+            action: "top-up",
+          },
+          handler: openTopUpAlert,
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          data: {
+            action: "cancel",
+          },
+        },
+      ],
+    });
+
   return (
     <IonItem key={user["id"]}>
       <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
@@ -101,8 +141,22 @@ const AdminUserItem = ({ user }) => {
         <h4>{user["name"]}</h4>
         <p>{user["email"]}</p>
         <p>
+          <IonText
+            slot="start"
+            color={
+              user["wallet_balance"] <= 100
+                ? "danger"
+                : user["wallet_balance"] < 1000
+                ? "warning"
+                : "success"
+            }
+          >
+            ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+          </IonText>
+        </p>
+        <p>
           <Link
-            to={generatePath("/home/adverts/user/:id", {
+            to={generatePath("/admin/adverts/user/:id", {
               id: user["id"],
             })}
           >
@@ -110,8 +164,72 @@ const AdminUserItem = ({ user }) => {
           </Link>
         </p>
       </IonLabel>
+      <IonButton slot="end" onClick={openActions}>
+        <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
+      </IonButton>
     </IonItem>
   );
 };
+
+/** Top Up Alert */
+const useTopUpAlert = ({ user, onSuccess }) => {
+  const [presentAlert, dismissAlert] = useIonAlert();
+  const [presentToast, dismissToast] = useIonToast();
+  const [presentLoading, dismissLoading] = useIonLoading();
+
+  const topUpMutation = useTopUpMutation(user["id"], {
+    onSuccess() {
+      presentToast({
+        message: "Successfully credited.",
+        color: "success",
+        duration: 2000,
+      });
+    },
+    onError(error) {
+      presentToast({
+        message: error?.response?.data?.message || "Failed to credit wallet...",
+        color: "danger",
+        duration: 2000,
+      });
+    },
+  });
+
+  return () =>
+    presentAlert({
+      header: "Top Up",
+      message: "Credit User Wallet",
+      inputs: [
+        {
+          name: "amount",
+          placeholder: "Amount",
+          type: "number",
+        },
+      ],
+
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+        },
+        {
+          text: "OK",
+          role: "confirm",
+          handler: (input) =>
+            presentLoading("Please Wait...")
+              .then(() => topUpMutation.mutateAsync(input, { onSuccess }))
+              .finally(() => dismissLoading()),
+        },
+      ],
+    });
+};
+
+/** Top Up Mutation */
+const useTopUpMutation = (user, options) =>
+  useMutation({
+    ...options,
+    mutationKey: ["top-up", user],
+    mutationFn: (data) =>
+      api.put(`/users/${user}/top-up`, data).then((response) => response.data),
+  });
 
 export default AdminUsers;

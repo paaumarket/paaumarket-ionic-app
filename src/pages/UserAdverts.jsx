@@ -19,17 +19,15 @@ import { useRouteMatch } from "react-router-dom";
 import DefaultUserImage from "@/assets/user@100.png";
 import { isPlatform } from "@ionic/react";
 
-export default () => {
+export default ({ backButtonHref }) => {
   const match = useRouteMatch();
-
-  const queryKey = ["user", match.params.user];
 
   const {
     isPending,
     isSuccess,
     data: user,
   } = useQuery({
-    queryKey,
+    queryKey: ["user", match.params.user],
     queryFn: ({ signal }) =>
       api
         .get(`/users/${match.params.user}`, { signal })
@@ -41,7 +39,7 @@ export default () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={"/home/adverts"} />
+            <IonBackButton defaultHref={backButtonHref || "/home/adverts"} />
           </IonButtons>
 
           <IonTitle>
@@ -72,10 +70,8 @@ export default () => {
 };
 
 const UserAdvertList = ({ user }) => {
-  const queryKey = ["adverts", "user", user["id"]];
-
   const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
-    queryKey,
+    queryKey: ["adverts", "user", user["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>
       api
