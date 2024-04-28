@@ -19,6 +19,7 @@ import {
 } from "@ionic/react";
 import {
   callOutline,
+  createOutline,
   mailOutline,
   personOutline,
   storefrontOutline,
@@ -45,6 +46,12 @@ export default function Profile() {
             </IonThumbnail>
             {user["name"]}
           </div>
+
+          <IonButtons slot="primary">
+            <IonButton routerLink={"/home/profile/edit"}>
+              <IonIcon slot="icon-only" icon={createOutline}></IonIcon>
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
 

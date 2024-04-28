@@ -26,6 +26,7 @@ import TopUp from "@/pages/TopUp";
 import CategoryAdverts from "@/pages/CategoryAdverts";
 import UserAdverts from "@/pages/UserAdverts";
 import useAuth from "@/hooks/useAuth";
+import EditProfile from "@/pages/EditProfile";
 
 export default function Tabs() {
   const { user } = useAuth();
@@ -66,6 +67,13 @@ export default function Tabs() {
         <Route exact path="/home/profile/my-adverts">
           <ProtectedRoute>
             <MyAdverts />
+          </ProtectedRoute>
+        </Route>
+
+        {/* Edit Profile */}
+        <Route exact path="/home/profile/edit">
+          <ProtectedRoute>
+            <EditProfile />
           </ProtectedRoute>
         </Route>
 
