@@ -16,17 +16,23 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
