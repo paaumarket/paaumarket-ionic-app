@@ -29,7 +29,7 @@ import {
 import DefaultUserImage from "@/assets/user@100.png";
 
 export default function Profile() {
-  const { user, permissions } = useAuth();
+  const { user } = useAuth();
   return (
     <IonPage>
       <IonHeader>
@@ -121,7 +121,7 @@ export default function Profile() {
 
         <IonList className="ion-margin-top">
           <IonItemGroup>
-            {permissions.includes("access-dashboard") ? (
+            {user["permissions"].includes("access-dashboard") ? (
               <IonItem routerLink="/admin">
                 <IonLabel>Admin Panel</IonLabel>
                 {user?.["admin"]?.["reviewing_adverts_count"] ? (

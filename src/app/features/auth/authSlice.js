@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: null,
-  permissions: [],
 };
 
 // Slice
@@ -15,12 +14,10 @@ export const authSlice = createSlice({
     login(state, { payload }) {
       state.user = payload.user || state.user;
       state.token = payload.token || state.token;
-      state.permissions = payload.permissions || state.permissions;
     },
     logout(state) {
       state.user = initialState.user;
       state.token = initialState.token;
-      state.permissions = initialState.permissions;
     },
   },
 });
@@ -30,5 +27,4 @@ export const { login, logout } = authSlice.actions;
 
 // Selectors
 export const selectUser = (state) => state[authSlice.name].user;
-export const selectPermissions = (state) => state[authSlice.name].permissions;
 export const selectToken = (state) => state[authSlice.name].token;
