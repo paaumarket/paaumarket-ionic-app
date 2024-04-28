@@ -1,5 +1,7 @@
+import useAuth from "@/hooks/useAuth";
 import {
   IonBackButton,
+  IonBadge,
   IonButtons,
   IonContent,
   IonHeader,
@@ -14,6 +16,7 @@ import {
 import { folderOutline, megaphoneOutline, personOutline } from "ionicons/icons";
 
 const AdminDashboard = () => {
+  const { user } = useAuth();
   return (
     <IonPage>
       <IonHeader>
@@ -46,6 +49,12 @@ const AdminDashboard = () => {
               color="primary"
             ></IonIcon>
             <IonLabel>Adverts</IonLabel>
+
+            {user?.["admin"]["reviewing_adverts_count"] ? (
+              <IonBadge color={"warning"}>
+                {user?.["admin"]["reviewing_adverts_count"]}
+              </IonBadge>
+            ) : null}
           </IonItem>
 
           {/* Users */}

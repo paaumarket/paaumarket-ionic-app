@@ -5,6 +5,7 @@ import {
   IonIcon,
   IonLabel,
   IonRouterOutlet,
+  IonBadge,
 } from "@ionic/react";
 import {
   homeOutline,
@@ -24,8 +25,10 @@ import MyAdverts from "@/pages/MyAdverts";
 import TopUp from "@/pages/TopUp";
 import CategoryAdverts from "@/pages/CategoryAdverts";
 import UserAdverts from "@/pages/UserAdverts";
+import useAuth from "@/hooks/useAuth";
 
 export default function Tabs() {
+  const { user } = useAuth();
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -97,6 +100,11 @@ export default function Tabs() {
         <IonTabButton tab="tab3" href="/home/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
+          {user?.["admin"]["reviewing_adverts_count"] ? (
+            <IonBadge color={"warning"}>
+              {user?.["admin"]["reviewing_adverts_count"]}
+            </IonBadge>
+          ) : null}
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

@@ -2,6 +2,7 @@ import Header from "@/component/Header";
 import useAuth from "@/hooks/useAuth";
 import {
   IonBackButton,
+  IonBadge,
   IonButton,
   IonButtons,
   IonContent,
@@ -118,6 +119,11 @@ export default function Profile() {
           {permissions.includes("access-dashboard") ? (
             <IonItem routerLink="/admin">
               <IonLabel>Admin Panel</IonLabel>
+              {user?.["admin"]["reviewing_adverts_count"] ? (
+                <IonBadge color={"warning"}>
+                  {user?.["admin"]["reviewing_adverts_count"]}
+                </IonBadge>
+              ) : null}
             </IonItem>
           ) : null}
 
