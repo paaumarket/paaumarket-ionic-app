@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonIcon,
@@ -69,6 +70,10 @@ export default function Sell() {
               <IonText color="medium">MY BALANCE</IonText>
             </p>
           </IonLabel>
+
+          <IonButton slot="end" size="small" routerLink="/home/profile/top-up">
+            Add Fund
+          </IonButton>
         </IonItem>
         <AdvertForm onSuccess={handleFormSuccess} />
       </IonContent>
