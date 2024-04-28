@@ -6,8 +6,6 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonPage,
   IonRow,
   IonSearchbar,
@@ -26,24 +24,31 @@ import { useState } from "react";
 import AdvertList from "@/component/AdvertList";
 import { isPlatform } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
+import InfiniteScroll from "@/component/InfiniteScroll";
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  const { data, isPending, isSuccess, hasNextPage, fetchNextPage } =
-    useInfiniteQuery({
-      initialPageParam: "",
-      queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
-      queryFn: ({ signal, pageParam }) =>
-        api
-          .get(
-            `/adverts?cursor=${pageParam}${
-              search ? `&search=${encodeURIComponent(search)}` : ""
-            }`,
-            { signal }
-          )
-          .then((response) => response.data),
-      getNextPageParam: (lastPage) => lastPage["next_cursor"],
-    });
+  const {
+    data,
+    isPending,
+    isSuccess,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(
+          `/adverts?cursor=${pageParam}${
+            search ? `&search=${encodeURIComponent(search)}` : ""
+          }`,
+          { signal }
+        )
+        .then((response) => response.data),
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+  });
 
   return (
     <IonPage>
@@ -112,11 +117,11 @@ export default function Home() {
 
         <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
 
-        <IonInfiniteScroll
-          onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-        >
-          <IonInfiniteScrollContent></IonInfiniteScrollContent>
-        </IonInfiniteScroll>
+        <InfiniteScroll
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </IonContent>
     </IonPage>
   );

@@ -6,8 +6,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonItem,
   IonLabel,
   IonList,
@@ -30,24 +28,32 @@ import DefaultUserImage from "@/assets/user@100.png";
 import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
+import InfiniteScroll from "@/component/InfiniteScroll";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
-  const { data, isPending, isSuccess, hasNextPage, fetchNextPage, refetch } =
-    useInfiniteQuery({
-      initialPageParam: "",
-      queryKey: search ? ["users", "list", search] : ["users", "list"],
-      queryFn: ({ signal, pageParam }) =>
-        api
-          .get(
-            `/users?cursor=${pageParam}${
-              search ? `&search=${encodeURIComponent(search)}` : ""
-            }`,
-            { signal }
-          )
-          .then((response) => response.data),
-      getNextPageParam: (lastPage) => lastPage["next_cursor"],
-    });
+  const {
+    data,
+    isPending,
+    isSuccess,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: search ? ["users", "list", search] : ["users", "list"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(
+          `/users?cursor=${pageParam}${
+            search ? `&search=${encodeURIComponent(search)}` : ""
+          }`,
+          { signal }
+        )
+        .then((response) => response.data),
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+  });
 
   const users = useMemo(
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
@@ -93,11 +99,11 @@ const AdminUsers = () => {
           </IonList>
         ) : null}
 
-        <IonInfiniteScroll
-          onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-        >
-          <IonInfiniteScrollContent></IonInfiniteScrollContent>
-        </IonInfiniteScroll>
+        <InfiniteScroll
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </IonContent>
     </IonPage>
   );

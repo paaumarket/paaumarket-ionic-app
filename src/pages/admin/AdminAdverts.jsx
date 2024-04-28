@@ -4,8 +4,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonItem,
   IonLabel,
   IonList,
@@ -23,20 +21,28 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import AdminAdvertModal from "./AdminAdvertModal";
+import InfiniteScroll from "@/component/InfiniteScroll";
 
 const AdminAdverts = () => {
   const [segment, setSegment] = useState("reviewing");
 
-  const { isPending, isSuccess, data, fetchNextPage, refetch } =
-    useInfiniteQuery({
-      initialPageParam: "",
-      queryKey: ["adverts", "approval", segment],
-      getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
-      queryFn: ({ signal, pageParam }) =>
-        api
-          .get(`/adverts?approval=${segment}&cursor=${pageParam}`, { signal })
-          .then((response) => response.data),
-    });
+  const {
+    isPending,
+    isSuccess,
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: ["adverts", "approval", segment],
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(`/adverts?approval=${segment}&cursor=${pageParam}`, { signal })
+        .then((response) => response.data),
+  });
 
   const adverts = useMemo(
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
@@ -94,11 +100,11 @@ const AdminAdverts = () => {
           </IonList>
         ) : null}
 
-        <IonInfiniteScroll
-          onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-        >
-          <IonInfiniteScrollContent></IonInfiniteScrollContent>
-        </IonInfiniteScroll>
+        <InfiniteScroll
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </IonContent>
     </IonPage>
   );

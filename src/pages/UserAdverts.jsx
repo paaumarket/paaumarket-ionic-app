@@ -5,8 +5,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonPage,
   IonThumbnail,
   IonTitle,
@@ -18,6 +16,7 @@ import { useRouteMatch } from "react-router-dom";
 
 import DefaultUserImage from "@/assets/user@100.png";
 import { isPlatform } from "@ionic/react";
+import InfiniteScroll from "@/component/InfiniteScroll";
 
 export default ({ backButtonHref }) => {
   const match = useRouteMatch();
@@ -70,7 +69,14 @@ export default ({ backButtonHref }) => {
 };
 
 const UserAdvertList = ({ user }) => {
-  const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
+  const {
+    isPending,
+    isSuccess,
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["adverts", "user", user["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>
@@ -79,7 +85,7 @@ const UserAdvertList = ({ user }) => {
           signal,
         })
         .then((response) => response.data),
-    getNextPageParam: (lastPage) => lastPage["next_cursor"],
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
   });
 
   return (
@@ -90,11 +96,11 @@ const UserAdvertList = ({ user }) => {
         </h3>
       </div>
       <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
-      <IonInfiniteScroll
-        onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-      >
-        <IonInfiniteScrollContent></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
+      <InfiniteScroll
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </>
   );
 };

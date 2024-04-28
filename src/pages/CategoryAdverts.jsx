@@ -1,12 +1,11 @@
 import AdvertList from "@/component/AdvertList";
+import InfiniteScroll from "@/component/InfiniteScroll";
 import api from "@/lib/api";
 import {
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonPage,
   IonThumbnail,
   IonTitle,
@@ -67,7 +66,14 @@ export default () => {
 };
 
 const CategoryAdvertList = ({ category }) => {
-  const { isPending, isSuccess, data, fetchNextPage } = useInfiniteQuery({
+  const {
+    isPending,
+    isSuccess,
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["adverts", "category", category["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>
@@ -76,17 +82,17 @@ const CategoryAdvertList = ({ category }) => {
           signal,
         })
         .then((response) => response.data),
-    getNextPageParam: (lastPage) => lastPage["next_cursor"],
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
   });
 
   return (
     <>
       <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
-      <IonInfiniteScroll
-        onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-      >
-        <IonInfiniteScrollContent></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
+      <InfiniteScroll
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </>
   );
 };

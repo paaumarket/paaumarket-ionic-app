@@ -6,8 +6,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
   IonItem,
   IonLabel,
   IonList,
@@ -29,21 +27,29 @@ import AdvertDetails from "@/component/AdvertDetails";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
 import EditAdvertFormModal from "@/component/EditAdvertFormModal";
+import InfiniteScroll from "@/component/InfiniteScroll";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
-  const { isPending, isSuccess, data, fetchNextPage, refetch } =
-    useInfiniteQuery({
-      initialPageParam: "",
-      queryKey: ["my-adverts", "approval", segment],
-      getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
-      queryFn: ({ signal, pageParam }) =>
-        api
-          .get(`/my-adverts?approval=${segment}&cursor=${pageParam}`, {
-            signal,
-          })
-          .then((response) => response.data),
-    });
+  const {
+    isPending,
+    isSuccess,
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: ["my-adverts", "approval", segment],
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(`/my-adverts?approval=${segment}&cursor=${pageParam}`, {
+          signal,
+        })
+        .then((response) => response.data),
+  });
 
   const adverts = useMemo(
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
@@ -111,11 +117,11 @@ const MyAdverts = () => {
           </IonList>
         ) : null}
 
-        <IonInfiniteScroll
-          onIonInfinite={(ev) => fetchNextPage().finally(ev.target.complete())}
-        >
-          <IonInfiniteScrollContent></IonInfiniteScrollContent>
-        </IonInfiniteScroll>
+        <InfiniteScroll
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </IonContent>
     </IonPage>
   );
