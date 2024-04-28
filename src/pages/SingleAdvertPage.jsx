@@ -101,70 +101,74 @@ const AdvertContact = ({ advert }) => {
         <IonCardTitle>
           {isSuccess ? data["mobile_number"] : "Contact"}
         </IonCardTitle>
-        {isSuccess ? <IonCardSubtitle>Contact</IonCardSubtitle> : null}
+        <IonCardSubtitle>
+          {isSuccess ? "Contact" : "Request owner contact"}
+        </IonCardSubtitle>
       </IonCardHeader>
       <IonCardContent>
-        {!user ? (
-          <p>
-            You need to sign in first to see contact:{" "}
-            <Link to={`/login?return=${location.pathname}`}>Login</Link>
-          </p>
-        ) : isSuccess ? (
-          <>
+        <div className="flex flex-col gap-2">
+          {!user ? (
+            <p>
+              You need to sign in first to see contact:{" "}
+              <Link to={`/login?return=${location.pathname}`}>Login</Link>
+            </p>
+          ) : isSuccess ? (
+            <>
+              <IonButton
+                className="ion-margin-top"
+                expand="full"
+                shape="round"
+                fill="solid"
+                color="primary"
+                href={`tel:${data["mobile_number"]}`}
+              >
+                <IonIcon
+                  icon={callOutline}
+                  className="ion-padding-end"
+                ></IonIcon>
+                Call
+              </IonButton>
+              <IonButton
+                expand="full"
+                shape="round"
+                fill="outline"
+                href={`https://wa.me/${
+                  data["mobile_number"]
+                }?text=${encodeURIComponent(
+                  `Hi, I'm interested in your advert on Paau Market - ${
+                    advert["title"]
+                  } - ₦${Intl.NumberFormat().format(advert["price"])}`
+                )}`}
+                target="_blank"
+              >
+                <IonIcon
+                  icon={logoWhatsapp}
+                  className="ion-padding-end"
+                ></IonIcon>
+                WhatsApp Message
+              </IonButton>
+
+              <p className="p-2 text-sm rounded-md bg-[var(--ion-color-warning)] text-[var(--ion-color-warning-contrast)]">
+                <IonIcon
+                  className="inline-block mr-1 align-middle"
+                  icon={warningOutline}
+                />
+                Do not pay in advance even for the delivery!
+              </p>
+            </>
+          ) : (
             <IonButton
-              className="ion-margin-top"
               expand="full"
               shape="round"
               fill="solid"
               color="primary"
-              href={`tel:${data["mobile_number"]}`}
+              onClick={handleShowContact}
             >
               <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
-              Call
+              Show Contact
             </IonButton>
-            <IonButton
-              expand="full"
-              shape="round"
-              className="ion-margin-top"
-              fill="outline"
-              href={`https://wa.me/${
-                data["mobile_number"]
-              }?text=${encodeURIComponent(
-                `Hi, I'm interested in your advert on Paau Market - ${
-                  advert["title"]
-                } - ₦${Intl.NumberFormat().format(advert["price"])}`
-              )}`}
-              target="_blank"
-            >
-              <IonIcon
-                icon={logoWhatsapp}
-                className="ion-padding-end"
-              ></IonIcon>
-              WhatsApp Message
-            </IonButton>
-
-            <p className="p-2 mt-2 text-sm rounded-md dark:bg-slate-300 bg-slate-200 text-slate-700 ion-margin-top">
-              <IonIcon
-                color="warning"
-                // className="ion-margin-end"
-                icon={warningOutline}
-              ></IonIcon>
-              Do not pay in advance even for the delivery!
-            </p>
-          </>
-        ) : (
-          <IonButton
-            className="ion-margin-top"
-            expand="full"
-            shape="round"
-            fill="solid"
-            color="primary"
-            onClick={handleShowContact}
-          >
-            <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
-            Show Contact
-          </IonButton>
-        )}
+          )}
+        </div>
       </IonCardContent>
     </IonCard>
   );

@@ -95,15 +95,15 @@ export default function Profile() {
           </IonListHeader>
           <IonItemGroup>
             <IonItem>
-              <IonIcon slot="start" icon={personOutline} />
+              <IonIcon slot="start" color={"tertiary"} icon={personOutline} />
               <IonLabel>{user["name"]}</IonLabel>
             </IonItem>
             <IonItem>
-              <IonIcon slot="start" icon={mailOutline} />
+              <IonIcon slot="start" color={"tertiary"} icon={mailOutline} />
               <IonLabel>{user["email"]}</IonLabel>
             </IonItem>
             <IonItem>
-              <IonIcon slot="start" icon={callOutline} />
+              <IonIcon slot="start" color={"tertiary"} icon={callOutline} />
               <IonLabel>{user["mobile_number"]}</IonLabel>
             </IonItem>
           </IonItemGroup>

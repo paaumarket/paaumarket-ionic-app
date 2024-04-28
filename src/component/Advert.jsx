@@ -61,30 +61,28 @@ const Advert = ({ advert, full = false }) => {
         </IonCardSubtitle>
       </IonCardHeader>
       <IonCardContent>
-        {advert["user"] ? (
-          <Link
-            to={generatePath("/home/adverts/user/:id", {
-              id: advert["user"]["id"],
-            })}
-          >
-            <IonThumbnail
-              className={clsx(
-                "[--size:theme(spacing.6)]",
-                "inline-block align-middle"
-              )}
+        <div className="flex flex-col gap-2">
+          {advert["user"] ? (
+            <Link
+              to={generatePath("/home/adverts/user/:id", {
+                id: advert["user"]["id"],
+              })}
+              className="flex flex-wrap items-center gap-2"
             >
-              <img
-                alt={advert["user"]["name"]}
-                src={
-                  advert["user"]["profile_photo"]?.["src"] || DefaultUserImage
-                }
-              />
-            </IonThumbnail>{" "}
-            {advert["user"]["name"]}
-          </Link>
-        ) : null}
-        {full ? <p>{formatDistanceToNow(advert["created_at"])}</p> : null}
-        {advert["description"] ? <p>{advert["description"]}</p> : null}
+              <IonThumbnail className={clsx("[--size:theme(spacing.6)]")}>
+                <img
+                  alt={advert["user"]["name"]}
+                  src={
+                    advert["user"]["profile_photo"]?.["src"] || DefaultUserImage
+                  }
+                />
+              </IonThumbnail>{" "}
+              {advert["user"]["name"]}
+            </Link>
+          ) : null}
+          {full ? <p>{formatDistanceToNow(advert["created_at"])}</p> : null}
+          {advert["description"] ? <p>{advert["description"]}</p> : null}
+        </div>
       </IonCardContent>
     </IonCard>
   );
