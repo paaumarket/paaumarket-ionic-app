@@ -6,6 +6,9 @@ import {
   IonText,
   IonThumbnail,
 } from "@ionic/react";
+import clsx from "clsx";
+
+import DefaultUserImage from "@/assets/user@100.png";
 
 const AdvertDetails = ({ advert }) => {
   return (
@@ -14,7 +17,19 @@ const AdvertDetails = ({ advert }) => {
         <IonItem>
           <IonLabel>
             <h4>User</h4>
-            <p>{advert["user_name"]}</p>
+            <p className="flex flex-wrap items-center gap-2">
+              <IonThumbnail
+                className={clsx("[--size:theme(spacing.5)]", "inline-block")}
+              >
+                <img
+                  alt={advert["user_name"]}
+                  src={
+                    advert["user_profile_photo"]?.["src"] || DefaultUserImage
+                  }
+                />
+              </IonThumbnail>{" "}
+              {advert["user_name"]}
+            </p>
           </IonLabel>
         </IonItem>
       ) : null}
