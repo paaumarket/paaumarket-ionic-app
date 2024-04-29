@@ -45,7 +45,8 @@ const Advert = ({ advert, full = false }) => {
             className={clsx(
               "absolute",
               "bottom-0 right-1",
-              "bg-[var(--ion-color-light)] text-[var(--ion-color-light-contrast)]",
+              "bg-[var(--ion-color-tertiary)]",
+              "text-[var(--ion-color-tertiary-contrast)]",
               "text-xs",
               "p-1 rounded-t"
             )}

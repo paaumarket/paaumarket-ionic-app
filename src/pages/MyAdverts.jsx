@@ -29,6 +29,7 @@ import useDeleteAlert from "@/hooks/useDeleteAlert";
 import EditAdvertFormModal from "@/component/EditAdvertFormModal";
 import InfiniteScroll from "@/component/InfiniteScroll";
 import Refresher from "@/component/Refresher";
+import clsx from "clsx";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -201,8 +202,27 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
 
   return (
     <IonItem key={advert["id"]} onClick={() => openAdvertModal(advert)}>
-      <IonThumbnail slot="start" className="[--size:theme(spacing.20)]">
-        <img src={advert["images"][0]?.["image"]?.["cache"]?.["small"]} />
+      <IonThumbnail
+        slot="start"
+        className="[--size:theme(spacing.20)] relative"
+      >
+        <img
+          src={advert["images"][0]?.["image"]?.["cache"]?.["small"]}
+          className="object-cover object-center w-full h-full"
+        />
+
+        <span
+          className={clsx(
+            "absolute",
+            "bottom-0 right-1",
+            "bg-[var(--ion-color-tertiary)]",
+            "text-[var(--ion-color-tertiary-contrast)]",
+            "text-xs",
+            "p-1 rounded-t"
+          )}
+        >
+          {advert["images"].length}
+        </span>
       </IonThumbnail>
       <IonLabel>
         <h4>{advert["title"]}</h4>

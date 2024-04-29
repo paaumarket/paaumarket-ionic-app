@@ -82,7 +82,9 @@ const AdvertDetails = ({ advert }) => {
       </IonItem>
 
       <IonItem>
-        <AdvertImages advert={advert} />
+        <div className="w-full">
+          <AdvertImages advert={advert} />
+        </div>
       </IonItem>
 
       {/* Status */}
