@@ -51,9 +51,8 @@ const schema = yup
   .required();
 
 const ProfileDetailsEdit = () => {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const [presentToast] = useIonToast();
-  const { login } = useAuth();
   const form = useHookForm({
     schema,
     defaultValues: {
@@ -74,7 +73,6 @@ const ProfileDetailsEdit = () => {
     profileMutation.mutate(data, {
       onSuccess({ user }) {
         login({ user });
-        form.reset();
         presentToast({
           message: "Profile Successfully Updated!",
           color: "success",
