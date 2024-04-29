@@ -67,9 +67,9 @@ const Advert = ({ advert, full = false }) => {
           ₦{Intl.NumberFormat().format(advert["price"])}
         </IonCardSubtitle>
       </IonCardHeader>
-      <IonCardContent>
-        <div className="flex flex-col gap-2">
-          {advert["user"] ? (
+      {full ? (
+        <IonCardContent>
+          <div className="flex flex-col gap-2">
             <Link
               to={generatePath("/home/adverts/user/:id", {
                 id: advert["user"]["id"],
@@ -88,11 +88,11 @@ const Advert = ({ advert, full = false }) => {
               </IonAvatar>{" "}
               {advert["user"]["name"]}
             </Link>
-          ) : null}
-          {full ? <p>{formatDistanceToNow(advert["created_at"])}</p> : null}
-          {advert["description"] ? <p>{advert["description"]}</p> : null}
-        </div>
-      </IonCardContent>
+            <p>{formatDistanceToNow(advert["created_at"])}</p>
+            <p>{advert["description"]}</p>
+          </div>
+        </IonCardContent>
+      ) : null}
     </IonCard>
   );
 };
