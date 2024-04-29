@@ -83,7 +83,7 @@ const Register = () => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="m-0 font-bold text-center text-md">
+            <h2 className="ion-no-margin font-bold text-center text-md">
               Sign up to PAAU Market
             </h2>
           </IonText>

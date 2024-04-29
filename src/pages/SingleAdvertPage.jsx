@@ -10,6 +10,7 @@ import {
   IonCol,
   IonContent,
   IonGrid,
+  IonHeader,
   IonIcon,
   IonPage,
   IonRow,
@@ -17,7 +18,6 @@ import {
   IonToolbar,
   useIonLoading,
 } from "@ionic/react";
-import Header from "../component/Header";
 import { useParams, useLocation } from "react-router-dom";
 import api from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -40,7 +40,7 @@ export default function SingleAdvertPage() {
 
   return (
     <IonPage>
-      <Header>
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton defaultHref="/"></IonBackButton>
@@ -49,7 +49,7 @@ export default function SingleAdvertPage() {
             {isPending ? "Loading..." : isSuccess ? advert["title"] : "Error!"}
           </IonTitle>
         </IonToolbar>
-      </Header>
+      </IonHeader>
 
       <IonContent className="ion-padding" fullscreen>
         <IonGrid>

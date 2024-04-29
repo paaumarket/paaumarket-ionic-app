@@ -4,9 +4,12 @@ import {
   IonAvatar,
   IonBackButton,
   IonButtons,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -65,8 +68,32 @@ export default ({ backButtonHref }) => {
           </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        {isSuccess ? <UserAdvertList user={user} /> : null}
+      <IonContent fullscreen className="ion-padding-top ion-padding-bottom">
+        {isSuccess ? (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center justify-center gap-4">
+              <IonAvatar className="w-28 h-28">
+                <img
+                  src={
+                    user["profile_photo"]?.["cache"]?.["medium"] ||
+                    DefaultUserImage
+                  }
+                  alt={user["name"]}
+                />
+              </IonAvatar>
+              <h3 className="font-bold text-center ion-no-margin">
+                {user["name"]}
+              </h3>
+            </div>
+            <IonGrid className="w-full">
+              <IonRow className="ion-justify-content-center">
+                <IonCol size="12" sizeLg="8" sizeXl="9">
+                  <UserAdvertList user={user} />
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </div>
+        ) : null}
       </IonContent>
     </IonPage>
   );
@@ -94,12 +121,7 @@ const UserAdvertList = ({ user }) => {
   });
 
   return (
-    <>
-      <div className="ion-padding">
-        <h3 className="font-bold ion-text-center">
-          Adverts from {user["name"]}
-        </h3>
-      </div>
+    <div className="flex flex-col gap-4">
       <Refresher refresh={refetch} />
       <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
       <InfiniteScroll
@@ -107,6 +129,6 @@ const UserAdvertList = ({ user }) => {
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
       />
-    </>
+    </div>
   );
 };

@@ -15,9 +15,9 @@ export default function AdvertList({
   );
 
   return (
-    <div className="p-2">
+    <div>
       <ResponsiveMasonry
-        columnsCountBreakPoints={{ 425: 2, 576: 3, 768: 4, 992: 5, 1200: 6 }}
+        columnsCountBreakPoints={{ 425: 2, 567: 3, 768: 4, 1200: 5 }}
       >
         <Masonry gutter="10px">
           {isPending

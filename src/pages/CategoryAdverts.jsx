@@ -5,9 +5,12 @@ import api from "@/lib/api";
 import {
   IonBackButton,
   IonButtons,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonPage,
+  IonRow,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -63,7 +66,15 @@ export default () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {isSuccess ? <CategoryAdvertList category={category} /> : null}
+        {isSuccess ? (
+          <IonGrid>
+            <IonRow className="ion-justify-content-center">
+              <IonCol size="12" sizeLg="8" sizeXl="9">
+                <CategoryAdvertList category={category} />
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        ) : null}
       </IonContent>
     </IonPage>
   );

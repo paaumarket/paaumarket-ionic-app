@@ -1,6 +1,8 @@
 import {
   IonButton,
   IonButtons,
+  IonCard,
+  IonCardContent,
   IonCol,
   IonContent,
   IonGrid,
@@ -17,7 +19,7 @@ import {
 } from "@ionic/react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
-import { Link, generatePath } from "react-router-dom";
+import { generatePath } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
 import { useState } from "react";
@@ -26,6 +28,7 @@ import { isPlatform } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import InfiniteScroll from "@/component/InfiniteScroll";
 import Refresher from "@/component/Refresher";
+import clsx from "clsx";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -99,27 +102,37 @@ export default function Home() {
       </IonHeader>
 
       <IonContent>
-        {!search ? (
-          <>
-            <IonText>
-              <h4 className="font-bold ion-text-center ion-padding">
-                All category
-              </h4>
-            </IonText>
+        <IonGrid>
+          <IonRow className="ion-justify-content-center">
+            <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
+              {!search ? (
+                <>
+                  <IonText>
+                    <h4 className="font-bold ion-text-center ion-padding ion-no-margin">
+                      All category
+                    </h4>
+                  </IonText>
 
-            <Category />
-          </>
-        ) : null}
+                  <Category />
+                </>
+              ) : null}
+            </IonCol>
+            <IonCol>
+              <IonText>
+                <h4 className="font-bold ion-text-center ion-padding ion-no-margin">
+                  {search ? `Search: ${search}` : "Trending Ads"}
+                </h4>
+              </IonText>
 
-        <IonText>
-          <h4 className="font-bold ion-text-center ion-padding">
-            {search ? `Search: ${search}` : "Trending Ads"}
-          </h4>
-        </IonText>
-
+              <AdvertList
+                isPending={isPending}
+                isSuccess={isSuccess}
+                data={data}
+              />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
         <Refresher refresh={refetch} />
-        <AdvertList isPending={isPending} isSuccess={isSuccess} data={data} />
-
         <InfiniteScroll
           hasNextPage={hasNextPage}
           fetchNextPage={fetchNextPage}
@@ -142,26 +155,40 @@ const Category = () => {
       <IonSpinner />
     </div>
   ) : isSuccess ? (
-    <IonGrid className="ion-margin-bottom">
+    <IonGrid className="px-0">
       <IonRow>
         {data.map((category) => (
-          <IonCol key={category["id"]} size="4" sizeSm="3" sizeMd="2">
-            <Link
-              to={generatePath("/home/adverts/categories/:category", {
+          <IonCol
+            key={category["id"]}
+            size="4"
+            sizeSm="3"
+            sizeMd="2"
+            sizeLg="12"
+          >
+            <IonCard
+              className="flex flex-col justify-center w-full h-full ion-no-margin"
+              routerLink={generatePath("/home/adverts/categories/:category", {
                 category: category["slug"],
               })}
-              className="flex flex-col items-center text-center"
             >
-              <IonThumbnail className="[--size:theme(spacing.12)]">
-                <img
-                  src={category["image"]?.["cache"]?.["extra-small"]}
-                  alt=""
-                />
-              </IonThumbnail>
-              <IonText color={"dark"}>
-                <small className="inline-block">{category["name"]}</small>
-              </IonText>
-            </Link>
+              <IonCardContent
+                className={clsx(
+                  "p-2",
+                  "flex flex-col items-center justify-center text-center",
+                  "lg:flex-row lg:text-start lg:gap-2 lg:justify-start"
+                )}
+              >
+                <IonThumbnail className="[--size:theme(spacing.10)]">
+                  <img
+                    src={category["image"]?.["cache"]?.["extra-small"]}
+                    alt=""
+                  />
+                </IonThumbnail>
+                <div className="max-lg:text-xs">
+                  <IonText color={"dark"}>{category["name"]}</IonText>
+                </div>
+              </IonCardContent>
+            </IonCard>
           </IonCol>
         ))}
       </IonRow>

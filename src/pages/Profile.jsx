@@ -55,7 +55,9 @@ export default function Profile() {
                 alt={user["name"]}
               />
             </IonAvatar>
-            <h1 className="m-0 font-bold text-center">{user["name"]}</h1>
+            <h1 className="ion-no-margin font-bold text-center">
+              {user["name"]}
+            </h1>
           </div>
 
           <IonList>
@@ -132,7 +134,7 @@ export default function Profile() {
             </IonItemGroup>
           </IonList>
 
-          <IonList className="ion-margin-top">
+          <IonList>
             <IonItemGroup>
               {user["permissions"].includes("access-dashboard") ? (
                 <IonItem routerLink="/admin">
