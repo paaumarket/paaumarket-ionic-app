@@ -15,6 +15,7 @@ import {
   IonThumbnail,
   IonTitle,
   IonToolbar,
+  useIonAlert,
   useIonToast,
 } from "@ionic/react";
 import { useState } from "react";
@@ -25,6 +26,10 @@ import WemaLogo from "@/assets/banks/wema.png";
 import MoniepointLogo from "@/assets/banks/moniepoint.png";
 import api from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { usePaystackPayment } from "react-paystack";
+import CurrencyInput from "react-currency-input-field";
+import CurrencyIonInput from "@/component/CurrencyIonInput";
+import { useMemo } from "react";
 
 const BANKS_LOGO = {
   "035": WemaLogo,
@@ -65,6 +70,7 @@ const TopUp = () => {
       {/* Page content */}
       <IonContent fullscreen>
         {segment === "accounts" ? <AccountsTopUp /> : null}
+        {segment === "manual" ? <ManualTopUp /> : null}
       </IonContent>
       <IonFooter>
         <IonToolbar>
@@ -72,6 +78,80 @@ const TopUp = () => {
         </IonToolbar>
       </IonFooter>
     </IonPage>
+  );
+};
+const ManualTopUp = () => {
+  const [presentToast] = useIonToast();
+  const [presentAlert] = useIonAlert();
+  const { user } = useAuth();
+  const [amount, setAmount] = useState(100);
+  const config = useMemo(
+    () => ({
+      publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+      amount: amount * 100,
+      email: user["email"],
+    }),
+    [user, amount]
+  );
+
+  const initializePayment = usePaystackPayment(config);
+
+  const handlePayment = () => {
+    if (amount < 100) {
+      presentToast({
+        message: "Amount can't be less than 100.",
+        color: "danger",
+        duration: 2000,
+      });
+    } else {
+      initializePayment({
+        onSuccess(response) {
+          setAmount(100);
+          presentToast({
+            message: "Successfully funded.",
+            color: "success",
+            duration: 5000,
+          });
+          presentAlert({
+            header: "Top Up",
+            message:
+              "Funding was successful. Please wait while your account is credited!",
+            buttons: ["OK"],
+          });
+        },
+        onClose() {
+          setAmount(100);
+          presentToast({
+            message: "Funding was cancelled.",
+            color: "warning",
+            duration: 2000,
+          });
+        },
+      });
+    }
+  };
+
+  return (
+    <>
+      <IonList inset>
+        <IonItem>
+          <CurrencyInput
+            customInput={CurrencyIonInput}
+            label="Amount"
+            labelPlacement="stacked"
+            step={1}
+            min={100}
+            placeholder={0}
+            value={amount}
+            onValueChange={(value) => setAmount(value)}
+          />
+        </IonItem>
+      </IonList>
+
+      <IonButton onClick={handlePayment} className="ion-margin" expand="block">
+        Add Fund
+      </IonButton>
+    </>
   );
 };
 
