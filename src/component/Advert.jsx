@@ -44,11 +44,13 @@ const Advert = ({ advert, full = false }) => {
           <span
             className={clsx(
               "absolute",
-              "bottom-0 right-1",
+              "bottom-0 right-0",
               "bg-[var(--ion-color-tertiary)]",
               "text-[var(--ion-color-tertiary-contrast)]",
               "text-xs",
-              "p-1 rounded-t"
+              "p-1 rounded-tl",
+              "font-bold",
+              "leading-none"
             )}
           >
             {advert["images_count"]}

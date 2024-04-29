@@ -23,10 +23,10 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   add,
-  create,
+  createOutline,
   ellipsisHorizontal,
   ellipsisVertical,
-  trashBin,
+  trashBinOutline,
 } from "ionicons/icons";
 import { useRouteMatch } from "react-router-dom";
 import { useHistory } from "react-router";
@@ -103,10 +103,10 @@ const AdminSubCategories = () => {
           {isSuccess ? (
             <IonButtons slot="primary">
               <IonButton onClick={openEditCategoryModal}>
-                <IonIcon slot="icon-only" icon={create}></IonIcon>
+                <IonIcon slot="icon-only" icon={createOutline}></IonIcon>
               </IonButton>
               <IonButton onClick={openDeleteAlert}>
-                <IonIcon slot="icon-only" icon={trashBin}></IonIcon>
+                <IonIcon slot="icon-only" icon={trashBinOutline}></IonIcon>
               </IonButton>
             </IonButtons>
           ) : null}
