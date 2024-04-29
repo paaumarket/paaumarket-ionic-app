@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { imageOutline, lockClosedOutline } from "ionicons/icons";
+import { imageOutline, lockClosedOutline, personOutline } from "ionicons/icons";
 
 const EditProfile = () => {
   return (
@@ -31,6 +31,10 @@ const EditProfile = () => {
           <IonItem routerLink="/home/profile/edit/photo">
             <IonIcon slot="start" icon={imageOutline} color="primary" />
             <IonLabel>Photo</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/home/profile/edit/details">
+            <IonIcon slot="start" icon={personOutline} color="primary" />
+            <IonLabel>Profile Details</IonLabel>
           </IonItem>
           <IonItem routerLink="/home/profile/edit/password">
             <IonIcon slot="start" icon={lockClosedOutline} color="primary" />

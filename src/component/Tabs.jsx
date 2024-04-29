@@ -29,6 +29,7 @@ import useAuth from "@/hooks/useAuth";
 import EditProfile from "@/pages/EditProfile";
 import EditProfilePhoto from "@/pages/EditProfilePhoto";
 import EditProfilePassword from "@/pages/EditProfilePassword";
+import EditProfileDetails from "@/pages/EditProfileDetails";
 
 export default function Tabs() {
   const { user } = useAuth();
@@ -83,6 +84,13 @@ export default function Tabs() {
         <Route exact path="/home/profile/edit/photo">
           <ProtectedRoute>
             <EditProfilePhoto />
+          </ProtectedRoute>
+        </Route>
+
+        {/* Edit Profile Details */}
+        <Route exact path="/home/profile/edit/details">
+          <ProtectedRoute>
+            <EditProfileDetails />
           </ProtectedRoute>
         </Route>
 

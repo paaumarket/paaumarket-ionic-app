@@ -6,7 +6,6 @@ import {
   IonContent,
   IonHeader,
   IonInput,
-  IonInputPasswordToggle,
   IonItem,
   IonList,
   IonPage,
@@ -23,7 +22,7 @@ import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
 
-const EditProfilePassword = () => {
+const EditProfileDetails = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -31,13 +30,13 @@ const EditProfilePassword = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/home/profile/edit" />
           </IonButtons>
-          <IonTitle>Change Password</IonTitle>
+          <IonTitle>Update Details</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       {/* Page content */}
       <IonContent fullscreen>
-        <PasswordEdit />
+        <ProfileDetailsEdit />
       </IonContent>
     </IonPage>
   );
@@ -45,42 +44,39 @@ const EditProfilePassword = () => {
 
 const schema = yup
   .object({
-    current_password: yup.string().trim().required().label("Current Password"),
-    new_password: yup
-      .string()
-      .trim()
-      .min(8)
-      .max(16)
-      .required()
-      .label("New Password"),
+    name: yup.string().trim().required().label("Full Name"),
+    email: yup.string().trim().email().required().label("Email"),
+    mobile_number: yup.string().required().label("Mobile Number"),
   })
   .required();
 
-const PasswordEdit = () => {
+const ProfileDetailsEdit = () => {
+  const { user } = useAuth();
   const [presentToast] = useIonToast();
   const { login } = useAuth();
   const form = useHookForm({
     schema,
     defaultValues: {
-      current_password: "",
-      new_password: "",
+      name: user["name"],
+      email: user["email"],
+      mobile_number: user["mobile_number"],
     },
   });
 
-  const passwordMutation = useFormMutation({
+  const profileMutation = useFormMutation({
     form,
-    mutationKey: ["user", "password"],
+    mutationKey: ["user", "profile", "details"],
     mutationFn: (data) =>
-      api.put("/user/password", data).then((response) => response.data),
+      api.put("/user/profile", data).then((response) => response.data),
   });
 
   const handleFormSubmit = (data) => {
-    passwordMutation.mutate(data, {
+    profileMutation.mutate(data, {
       onSuccess({ user }) {
         login({ user });
         form.reset();
         presentToast({
-          message: "Password Successfully Updated!",
+          message: "Profile Successfully Updated!",
           color: "success",
           duration: 2000,
         });
@@ -92,15 +88,13 @@ const PasswordEdit = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(handleFormSubmit)}>
         <IonList>
-          {/* Current Password */}
           <Controller
-            name={"current_password"}
-            disabled={passwordMutation.isPending}
+            name={"name"}
             render={({ field, fieldState }) => (
               <IonItem>
                 <IonInput
-                  type="password"
-                  label="Current Password"
+                  type="text"
+                  label="Name"
                   labelPlacement="stacked"
                   name={field.name}
                   onIonInput={field.onChange}
@@ -110,22 +104,18 @@ const PasswordEdit = () => {
                   className={clsx(
                     fieldState.invalid && "ion-invalid ion-touched"
                   )}
-                >
-                  <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-                </IonInput>
+                ></IonInput>
               </IonItem>
             )}
           />
 
-          {/* New Password */}
           <Controller
-            name={"new_password"}
-            disabled={passwordMutation.isPending}
+            name={"email"}
             render={({ field, fieldState }) => (
               <IonItem>
                 <IonInput
-                  type="password"
-                  label="New Password"
+                  type="email"
+                  label="Email"
                   labelPlacement="stacked"
                   name={field.name}
                   onIonInput={field.onChange}
@@ -135,9 +125,28 @@ const PasswordEdit = () => {
                   className={clsx(
                     fieldState.invalid && "ion-invalid ion-touched"
                   )}
-                >
-                  <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-                </IonInput>
+                ></IonInput>
+              </IonItem>
+            )}
+          />
+
+          <Controller
+            name={"mobile_number"}
+            render={({ field, fieldState }) => (
+              <IonItem>
+                <IonInput
+                  type="number"
+                  label="Mobile Number"
+                  labelPlacement="stacked"
+                  name={field.name}
+                  onIonInput={field.onChange}
+                  onIonBlur={field.onBlur}
+                  value={field.value}
+                  errorText={fieldState.error?.message}
+                  className={clsx(
+                    fieldState.invalid && "ion-invalid ion-touched"
+                  )}
+                ></IonInput>
               </IonItem>
             )}
           />
@@ -147,13 +156,13 @@ const PasswordEdit = () => {
           <IonButton
             expand="block"
             type="submit"
-            disabled={passwordMutation.isPending}
+            disabled={profileMutation.isPending}
           >
-            {passwordMutation.isPending ? <IonSpinner /> : <>Save</>}
+            {profileMutation.isPending ? <IonSpinner /> : <>Save</>}
           </IonButton>
         </div>
       </form>
     </FormProvider>
   );
 };
-export default EditProfilePassword;
+export default EditProfileDetails;
