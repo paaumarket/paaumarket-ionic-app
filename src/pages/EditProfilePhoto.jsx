@@ -81,12 +81,16 @@ const ProfilePhotoEdit = () => {
       .finally(() => dismissLoading());
   };
   return (
-    <div className="flex flex-col items-start gap-2">
-      <IonAvatar slot="start" className="w-24 h-24">
-        <img
-          src={user["profile_photo"]?.["cache"]?.["small"] || DefaultUserImage}
-        />
-      </IonAvatar>
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-center">
+        <IonAvatar slot="start" className="w-24 h-24">
+          <img
+            src={
+              user["profile_photo"]?.["cache"]?.["small"] || DefaultUserImage
+            }
+          />
+        </IonAvatar>
+      </div>
 
       {/* Button to upload photo */}
       <IonButton onClick={() => imageUploadRef.current?.click()}>

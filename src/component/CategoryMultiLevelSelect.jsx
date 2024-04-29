@@ -4,7 +4,6 @@ import {
   IonItem,
   IonLabel,
   IonModal,
-  IonNote,
   IonSpinner,
   IonText,
   IonThumbnail,
@@ -53,32 +52,50 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
                 src={selected["image"]?.["cache"]?.["extra-small"]}
               />
             </IonThumbnail>
-            <IonLabel>
-              <h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-xs ion-no-margin">
                 <IonText color={errorText ? "danger" : "primary"}>
                   Category
                 </IonText>
               </h3>
-              <h4 className="ion-text-wrap">{selected["name"]}</h4>
-              <p>₦{selected["cost"]}</p>
-            </IonLabel>
+              <h4 className="text-sm ion-text-wrap ion-no-margin">
+                {selected["name"]}
+              </h4>
+
+              {/* Price */}
+              <p className="text-sm ion-no-margin">
+                <IonText color={"medium"}>₦{selected["cost"]}</IonText>
+              </p>
+              {errorText ? (
+                <p className="text-xs">
+                  <IonText color={"danger"}>{errorText}</IonText>
+                </p>
+              ) : null}
+            </div>
           </>
         ) : (
           <>
-            <IonLabel>
-              <h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-xs ion-no-margin">
                 <IonText color={errorText ? "danger" : "primary"}>
                   Category
                 </IonText>
               </h3>
-              <p>{isPending ? "Loading..." : "Select Category"}</p>
-            </IonLabel>
+              <p className="text-sm ion-no-margin">
+                <IonText color={"medium"}>
+                  {isPending ? "Loading..." : "Select Category"}
+                </IonText>
+              </p>
+              {errorText ? (
+                <p className="text-xs">
+                  <IonText color={"danger"}>{errorText}</IonText>
+                </p>
+              ) : null}
+            </div>
           </>
         )}
 
         {isPending ? <IonSpinner slot="end" /> : null}
-
-        {errorText ? <IonNote color={"danger"}>{errorText}</IonNote> : null}
       </IonItem>
       <IonModal trigger={id} ref={modalRef}>
         <MultiLevelSelect

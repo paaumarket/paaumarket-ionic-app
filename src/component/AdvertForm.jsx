@@ -1,5 +1,6 @@
 import {
   IonButton,
+  IonCard,
   IonCol,
   IonGrid,
   IonInput,
@@ -7,8 +8,8 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
-  IonNote,
   IonRow,
+  IonText,
   IonTextarea,
   useIonActionSheet,
   useIonLoading,
@@ -244,68 +245,71 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
               render={({ field, fieldState }) => (
                 <IonItem>
                   <IonLabel position="stacked">Images</IonLabel>
-                  <IonNote className="ion-margin-top">
-                    Upload Images - Minimum of 1 and Maximum of{" "}
-                    {MAX_IMAGE_UPLOAD}
-                  </IonNote>
+                  <div className="flex flex-col gap-2 py-2">
+                    <IonText color={"medium"} className="text-xs">
+                      Upload Images - Minimum of 1 and Maximum of{" "}
+                      {MAX_IMAGE_UPLOAD}
+                    </IonText>
 
-                  {fieldState.invalid ? (
-                    <IonNote color={"danger"}>
-                      {fieldState.error.message}
-                    </IonNote>
-                  ) : null}
+                    {fieldState.invalid ? (
+                      <IonText color={"danger"} className="text-xs">
+                        {fieldState.error.message}
+                      </IonText>
+                    ) : null}
 
-                  {/* Hidden Input file */}
-                  <input
-                    type="file"
-                    ref={imageInputRef}
-                    accept=".jpg, .jpeg, .png, .gif"
-                    multiple
-                    hidden
-                    onChange={(ev) => {
-                      Promise.all(
-                        Array.from(ev.target.files)
-                          .slice(0, MAX_IMAGE_UPLOAD - field.value.length)
-                          .map((file) => resizeImage(file, MAX_IMAGE_DIMENSION))
-                      ).then((images) => appendImage(images));
-                    }}
-                  />
-                  <div className="ion-margin-top">
-                    <IonButton
-                      type="button"
-                      onClick={() => imageInputRef.current?.click()}
-                      disabled={field.value.length === MAX_IMAGE_UPLOAD}
-                    >
-                      Choose Images
-                    </IonButton>
+                    {/* Hidden Input file */}
+                    <input
+                      type="file"
+                      ref={imageInputRef}
+                      accept=".jpg, .jpeg, .png, .gif"
+                      multiple
+                      hidden
+                      onChange={(ev) => {
+                        Promise.all(
+                          Array.from(ev.target.files)
+                            .slice(0, MAX_IMAGE_UPLOAD - field.value.length)
+                            .map((file) =>
+                              resizeImage(file, MAX_IMAGE_DIMENSION)
+                            )
+                        ).then((images) => appendImage(images));
+                      }}
+                    />
+                    <div className="ion-margin-top">
+                      <IonButton
+                        type="button"
+                        onClick={() => imageInputRef.current?.click()}
+                        disabled={field.value.length === MAX_IMAGE_UPLOAD}
+                      >
+                        Choose Images
+                      </IonButton>
+                    </div>
+                    <IonGrid>
+                      <IonRow>
+                        {/* Images */}
+                        {field.value.map((image, i) => (
+                          <IonCol key={i} size="6">
+                            <IonCard
+                              onClick={() => openImageActions(i)}
+                              className="ion-no-margin"
+                            >
+                              <img
+                                src={
+                                  image instanceof File
+                                    ? URL.createObjectURL(image)
+                                    : image["image"]["cache"]["medium"]
+                                }
+                                onLoad={
+                                  image instanceof File
+                                    ? (ev) => URL.revokeObjectURL(ev.target.src)
+                                    : null
+                                }
+                              />
+                            </IonCard>
+                          </IonCol>
+                        ))}
+                      </IonRow>
+                    </IonGrid>
                   </div>
-                  <IonGrid>
-                    <IonRow>
-                      {/* Images */}
-                      {field.value.map((image, i) => (
-                        <IonCol
-                          key={i}
-                          size="6"
-                          onClick={() => openImageActions(i)}
-                        >
-                          <IonItem>
-                            <img
-                              src={
-                                image instanceof File
-                                  ? URL.createObjectURL(image)
-                                  : image["image"]["cache"]["medium"]
-                              }
-                              onLoad={
-                                image instanceof File
-                                  ? (ev) => URL.revokeObjectURL(ev.target.src)
-                                  : null
-                              }
-                            />
-                          </IonItem>
-                        </IonCol>
-                      ))}
-                    </IonRow>
-                  </IonGrid>
                 </IonItem>
               )}
             />

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512"
+    height="512" x="0" y="0" viewBox="0 0 32 32" style="enable-background:new 0 0 512 512" xml:space="preserve"
+    class="">
+    <g>
+        <linearGradient id="a" x1="2.73" x2="29.27" y1="29.27" y2="2.73" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#6d03a8"></stop>
+            <stop offset="1" stop-color="#fd60c4"></stop>
+        </linearGradient>
+        <path fill="url(#a)"
+            d="M30 19.5v8a2.5 2.5 0 0 1-2.5 2.5h-8a2.5 2.5 0 0 1-2.5-2.5v-8a2.5 2.5 0 0 1 2.5-2.5h8a2.5 2.5 0 0 1 2.5 2.5zM12.5 17h-8A2.5 2.5 0 0 0 2 19.5v8A2.5 2.5 0 0 0 4.5 30h8a2.5 2.5 0 0 0 2.5-2.5v-8a2.5 2.5 0 0 0-2.5-2.5zm15-15h-8A2.5 2.5 0 0 0 17 4.5v8a2.5 2.5 0 0 0 2.5 2.5h8a2.5 2.5 0 0 0 2.5-2.5v-8A2.5 2.5 0 0 0 27.5 2zm-15 0h-8A2.5 2.5 0 0 0 2 4.5v8A2.5 2.5 0 0 0 4.5 15h8a2.5 2.5 0 0 0 2.5-2.5v-8A2.5 2.5 0 0 0 12.5 2z"
+            opacity="1" data-original="url(#a)" class=""></path>
+    </g>
+</svg>

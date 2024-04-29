@@ -46,7 +46,7 @@ export default function Profile() {
       <IonContent className="ion-padding">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col items-center justify-center gap-4">
-            <IonAvatar className="w-20 h-20">
+            <IonAvatar className="w-28 h-28">
               <img
                 src={
                   user["profile_photo"]?.["cache"]?.["small"] ||
@@ -55,7 +55,7 @@ export default function Profile() {
                 alt={user["name"]}
               />
             </IonAvatar>
-            <h1 className="ion-no-margin font-bold text-center">
+            <h1 className="font-bold text-center ion-no-margin">
               {user["name"]}
             </h1>
           </div>

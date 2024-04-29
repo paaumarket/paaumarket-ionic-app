@@ -14,6 +14,8 @@ import {
   IonSkeletonText,
 } from "@ionic/react";
 
+import DefaultCategoryImage from "@/assets/category.svg";
+
 import { formatDistanceToNow } from "date-fns";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -74,7 +76,7 @@ const Advert = ({ advert, full = false }) => {
               to={generatePath("/home/adverts/user/:id", {
                 id: advert["user"]["id"],
               })}
-              className="flex flex-wrap items-center gap-2"
+              className="inline-flex flex-wrap items-center gap-2"
             >
               <IonAvatar className={clsx("w-6 h-6")}>
                 <img
@@ -82,12 +84,32 @@ const Advert = ({ advert, full = false }) => {
                   src={
                     advert["user"]["profile_photo"]?.["cache"]?.[
                       "extra-small"
-                    ] || DefaultUserImage
+                    ] || DefaultCategoryImage
                   }
                 />
               </IonAvatar>{" "}
               {advert["user"]["name"]}
             </Link>
+            {/* Category */}
+            <Link
+              to={generatePath("/home/adverts/categories/:parent/:sub", {
+                parent: advert["category"]["parent"]["slug"],
+                sub: advert["category"]["slug"],
+              })}
+              className="inline-flex flex-wrap items-center gap-2"
+            >
+              <IonAvatar className={clsx("w-6 h-6")}>
+                <img
+                  alt={advert["category"]["name"]}
+                  src={
+                    advert["category"]["image"]?.["cache"]?.["extra-small"] ||
+                    DefaultUserImage
+                  }
+                />
+              </IonAvatar>{" "}
+              {advert["category"]["name"]}
+            </Link>
+
             <p>{formatDistanceToNow(advert["created_at"])}</p>
             <p>{advert["description"]}</p>
           </div>
