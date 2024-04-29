@@ -1,3 +1,9 @@
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import "@ionic/react/css/ionic-swiper.css";
+
 import {
   IonAvatar,
   IonCard,
@@ -11,16 +17,14 @@ import {
 import { formatDistanceToNow } from "date-fns";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
-import "swiper/css/bundle";
-
-import "@ionic/react/css/ionic-swiper.css";
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
 import clsx from "clsx";
 
 import DefaultUserImage from "@/assets/user@100.png";
+import { useState } from "react";
 
 const Advert = ({ advert, full = false }) => {
   return (
@@ -90,20 +94,70 @@ const Advert = ({ advert, full = false }) => {
   );
 };
 
-export const AdvertImages = ({ advert }) => (
-  <Swiper modules={[Navigation, IonicSlides]} navigation={true}>
-    {advert["images"].map((advertImage) => (
-      <SwiperSlide key={advertImage["id"]}>
-        <img
-          alt={advert["title"]}
-          src={advertImage["image"]["src"]}
-          width={advertImage["image"]["width"]}
-          height={advertImage["image"]["height"]}
-        />
-      </SwiperSlide>
-    ))}
-  </Swiper>
-);
+export const AdvertImages = ({ advert }) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  return (
+    <div>
+      {/* Main */}
+      <Swiper
+        spaceBetween={10}
+        navigation={true}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        modules={[FreeMode, Navigation, Thumbs, IonicSlides]}
+        className="[&.swiper_.swiper-slide]:h-auto"
+        autoHeight
+      >
+        {advert["images"].map((advertImage) => (
+          <SwiperSlide key={advertImage["id"]}>
+            <img
+              alt={advert["title"]}
+              src={advertImage["image"]["src"]}
+              width={advertImage["image"]["width"]}
+              height={advertImage["image"]["height"]}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Thumbs */}
+      <div className="ion-padding">
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={10}
+          slidesPerView={4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className={clsx(
+            "[&.swiper_.swiper-slide]:h-auto",
+            "[&.swiper_.swiper-slide]:items-stretch"
+          )}
+        >
+          {advert["images"].map((advertImage) => (
+            <SwiperSlide
+              key={advertImage["id"]}
+              className={clsx(
+                "w-1/3 h-full",
+                "opacity-60",
+                "[&.swiper-slide-thumb-active]:opacity-100"
+              )}
+            >
+              <img
+                className={clsx("w-full h-full object-cover object-center")}
+                alt={advert["title"]}
+                src={advertImage["image"]["src"]}
+                width={advertImage["image"]["width"]}
+                height={advertImage["image"]["height"]}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
+};
 
 export const AdvertPlaceholder = () => (
   <IonCard className="ion-no-margin">
