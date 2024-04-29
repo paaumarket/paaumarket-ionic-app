@@ -71,7 +71,7 @@ const ProfileDetailsEdit = () => {
 
   const handleFormSubmit = (data) => {
     profileMutation.mutate(data, {
-      onSuccess({ user }) {
+      onSuccess(user) {
         login({ user });
         presentToast({
           message: "Profile Successfully Updated!",

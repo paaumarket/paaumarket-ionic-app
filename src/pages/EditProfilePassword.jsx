@@ -76,7 +76,7 @@ const PasswordEdit = () => {
 
   const handleFormSubmit = (data) => {
     passwordMutation.mutate(data, {
-      onSuccess({ user }) {
+      onSuccess(user) {
         login({ user });
         form.reset();
         presentToast({
