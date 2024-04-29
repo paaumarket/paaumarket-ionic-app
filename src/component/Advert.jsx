@@ -116,7 +116,7 @@ export const AdvertImages = ({ advert }) => {
           <SwiperSlide key={advertImage["id"]}>
             <img
               alt={advert["title"]}
-              src={advertImage["image"]["src"]}
+              src={advertImage["image"]["cache"]["large"]}
               width={advertImage["image"]["width"]}
               height={advertImage["image"]["height"]}
             />
@@ -150,7 +150,7 @@ export const AdvertImages = ({ advert }) => {
               <img
                 className={clsx("w-full h-full object-cover object-center")}
                 alt={advert["title"]}
-                src={advertImage["image"]["src"]}
+                src={advertImage["image"]["cache"]["small"]}
                 width={advertImage["image"]["width"]}
                 height={advertImage["image"]["height"]}
               />
