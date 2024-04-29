@@ -108,7 +108,7 @@ export default function Home() {
               {!search ? (
                 <>
                   <IonText>
-                    <h4 className="font-bold ion-text-center ion-padding ion-no-margin">
+                    <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
                       All category
                     </h4>
                   </IonText>
@@ -119,7 +119,7 @@ export default function Home() {
             </IonCol>
             <IonCol>
               <IonText>
-                <h4 className="font-bold ion-text-center ion-padding ion-no-margin">
+                <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
                   {search ? `Search: ${search}` : "Trending Ads"}
                 </h4>
               </IonText>
