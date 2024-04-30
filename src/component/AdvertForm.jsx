@@ -29,7 +29,7 @@ import resizeImage from "@/utils/resizeImage";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 const MAX_IMAGE_UPLOAD = 5;
-const MAX_IMAGE_DIMENSION = 768;
+const MAX_IMAGE_DIMENSION = 1000;
 
 export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
   const imageInputRef = useRef();
