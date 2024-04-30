@@ -156,8 +156,8 @@ const AdminCategoryForm = ({
                   accept=".jpg, .jpeg, .png, .gif"
                   hidden
                   onChange={(ev) =>
-                    resizeImage(ev.target.files[0], 200).then((image) =>
-                      field.onChange(image)
+                    resizeImage(ev.target.files[0], 200, "image/png").then(
+                      (image) => field.onChange(image)
                     )
                   }
                 />
