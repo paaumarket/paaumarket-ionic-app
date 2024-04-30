@@ -1,14 +1,11 @@
 import {
   IonButton,
   IonCard,
-  IonCol,
-  IonGrid,
   IonInput,
   IonItem,
   IonItemGroup,
   IonLabel,
   IonList,
-  IonRow,
   IonText,
   IonTextarea,
   useIonActionSheet,
@@ -28,6 +25,8 @@ import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
 import { serialize } from "object-to-formdata";
 import resizeImage from "@/utils/resizeImage";
+
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 const MAX_IMAGE_UPLOAD = 5;
 const MAX_IMAGE_DIMENSION = 768;
@@ -245,7 +244,7 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
               render={({ field, fieldState }) => (
                 <IonItem>
                   <IonLabel position="stacked">Images</IonLabel>
-                  <div className="flex flex-col gap-2 py-2">
+                  <div className="flex flex-col w-full gap-2 py-2">
                     <IonText color={"medium"} className="text-xs">
                       Upload Images - Minimum of 1 and Maximum of{" "}
                       {MAX_IMAGE_UPLOAD}
@@ -283,32 +282,40 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
                         Choose Images
                       </IonButton>
                     </div>
-                    <IonGrid>
-                      <IonRow>
+
+                    <ResponsiveMasonry
+                      columnsCountBreakPoints={{
+                        425: 2,
+                        567: 3,
+                        768: 4,
+                        1200: 5,
+                      }}
+                    >
+                      <Masonry gutter="10px">
                         {/* Images */}
                         {field.value.map((image, i) => (
-                          <IonCol key={i} size="6">
-                            <IonCard
-                              onClick={() => openImageActions(i)}
-                              className="ion-no-margin"
-                            >
-                              <img
-                                src={
-                                  image instanceof File
-                                    ? URL.createObjectURL(image)
-                                    : image["image"]["cache"]["medium"]
-                                }
-                                onLoad={
-                                  image instanceof File
-                                    ? (ev) => URL.revokeObjectURL(ev.target.src)
-                                    : null
-                                }
-                              />
-                            </IonCard>
-                          </IonCol>
+                          <IonCard
+                            key={i}
+                            onClick={() => openImageActions(i)}
+                            className="w-full ion-no-margin"
+                          >
+                            <img
+                              src={
+                                image instanceof File
+                                  ? URL.createObjectURL(image)
+                                  : image["image"]["cache"]["medium"]
+                              }
+                              onLoad={
+                                image instanceof File
+                                  ? (ev) => URL.revokeObjectURL(ev.target.src)
+                                  : null
+                              }
+                              className="w-full"
+                            />
+                          </IonCard>
                         ))}
-                      </IonRow>
-                    </IonGrid>
+                      </Masonry>
+                    </ResponsiveMasonry>
                   </div>
                 </IonItem>
               )}
