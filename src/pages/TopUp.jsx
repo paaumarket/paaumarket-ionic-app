@@ -104,9 +104,6 @@ const OnlineTopUp = () => {
       publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
       amount: amount * 100,
       email: user["email"],
-      metadata: {
-        user_id: user["id"],
-      },
     }),
     [user, amount]
   );
