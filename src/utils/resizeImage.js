@@ -22,13 +22,9 @@ export default function resizeImage(file, maxSize = 768) {
       const ctx = canvas.getContext("2d");
 
       ctx.drawImage(ev.target, 0, 0, width, height);
-      canvas.toBlob(
-        (blob) => {
-          res(new File([blob], Date.now() + ".webp"));
-        },
-        "image/webp",
-        1
-      );
+      canvas.toBlob((blob) => {
+        res(new File([blob], Date.now() + ".webp"));
+      }, "image/webp");
     });
 
     img.addEventListener("error", rej);
