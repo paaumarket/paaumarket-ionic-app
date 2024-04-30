@@ -11,8 +11,10 @@ import {
 // Logo Image
 import logo from "../assets/paaumarket.svg";
 import SignInForm from "@/component/SignInForm";
+import { useHistory } from "react-router-dom";
 
-const SignIn = ({ history }) => {
+const SignIn = () => {
+  const history = useHistory();
   return (
     <IonPage>
       <IonHeader className="shadow-none">
@@ -31,7 +33,7 @@ const SignIn = ({ history }) => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="ion-no-margin font-bold text-center text-md">
+            <h2 className="font-bold text-center ion-no-margin text-md">
               Welcome back to PAAU Market
             </h2>
           </IonText>

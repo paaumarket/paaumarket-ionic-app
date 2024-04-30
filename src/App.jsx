@@ -63,70 +63,85 @@ const App = () => {
         <IonReactRouter>
           <IonRouterOutlet>
             {/* Admin Users */}
-            <Route exact path="/admin/users">
-              <AdminProtectedRoute>
-                <AdminUsers />
-              </AdminProtectedRoute>
-            </Route>
+            <Route
+              exact
+              path="/admin/users"
+              render={() => (
+                <AdminProtectedRoute>
+                  <AdminUsers />
+                </AdminProtectedRoute>
+              )}
+            />
 
             {/* Admin User Adverts */}
-            <Route exact path="/admin/adverts/user/:user">
-              <AdminProtectedRoute>
-                <UserAdverts backButtonHref="/admin/users" />
-              </AdminProtectedRoute>
-            </Route>
+            <Route
+              exact
+              path="/admin/adverts/user/:user"
+              render={() => (
+                <AdminProtectedRoute>
+                  <UserAdverts backButtonHref="/admin/users" />
+                </AdminProtectedRoute>
+              )}
+            />
 
             {/* Admin Adverts */}
-            <Route exact path="/admin/adverts">
-              <AdminProtectedRoute>
-                <AdminAdverts />
-              </AdminProtectedRoute>
-            </Route>
+            <Route
+              exact
+              path="/admin/adverts"
+              render={() => (
+                <AdminProtectedRoute>
+                  <AdminAdverts />
+                </AdminProtectedRoute>
+              )}
+            />
 
             {/* Admin Categories */}
-            <Route exact path="/admin/categories">
-              <AdminProtectedRoute>
-                <AdminCategories />
-              </AdminProtectedRoute>
-            </Route>
-            <Route exact path="/admin/categories/:category">
-              <AdminProtectedRoute>
-                <AdminSubCategories />
-              </AdminProtectedRoute>
-            </Route>
+            <Route
+              exact
+              path="/admin/categories"
+              render={() => (
+                <AdminProtectedRoute>
+                  <AdminCategories />
+                </AdminProtectedRoute>
+              )}
+            />
+
+            <Route
+              exact
+              path="/admin/categories/:category"
+              render={() => (
+                <AdminProtectedRoute>
+                  <AdminSubCategories />
+                </AdminProtectedRoute>
+              )}
+            />
 
             {/* Admin Dashboard */}
-            <Route exact path="/admin">
-              <AdminProtectedRoute>
-                <AdminDashboard />
-              </AdminProtectedRoute>
-            </Route>
+            <Route
+              exact
+              path="/admin"
+              render={() => (
+                <AdminProtectedRoute>
+                  <AdminDashboard />
+                </AdminProtectedRoute>
+              )}
+            />
 
-            <Route path="/home">
-              <Tabs />
-            </Route>
+            <Route
+              exact
+              path="/forget_password"
+              render={() => <ForgetPassword />}
+            />
+            <Route exact path="/new_password" render={() => <NewPassword />} />
+            <Route exact path="/otp_verification" render={() => <OTP />} />
 
-            <Route path="/forget_password">
-              <ForgetPassword />
-            </Route>
+            <Route exact path="/register" render={() => <Register />} />
+            <Route exact path="/login" render={() => <SignIn />} />
+            <Route exact path="/logout" render={() => <Logout />} />
 
-            <Route path="/new_password">
-              <NewPassword />
-            </Route>
+            <Route path="/home" render={() => <Tabs />} />
 
-            <Route path="/otp_verification">
-              <OTP />
-            </Route>
-
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route exact path="/login" component={SignIn} />
-            <Route exact path="/logout" component={Logout} />
-
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>

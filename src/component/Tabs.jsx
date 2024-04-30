@@ -38,100 +38,146 @@ export default function Tabs() {
       <IonRouterOutlet>
         <Redirect exact path="/home" to="/home/adverts" />
 
-        <Route exact path="/home/adverts/categories/:category">
-          <SubCategories />
-        </Route>
+        <Route
+          exact
+          path="/home/adverts/categories/:category"
+          render={() => <SubCategories />}
+        />
 
-        <Route exact path="/home/adverts/categories/:category/:sub">
-          <CategoryAdverts />
-        </Route>
+        <Route
+          exact
+          path="/home/adverts/categories/:category/:sub"
+          render={() => <CategoryAdverts />}
+        />
 
-        <Route exact path="/home/adverts/user/:user">
-          <UserAdverts />
-        </Route>
+        <Route
+          exact
+          path="/home/adverts/user/:user"
+          render={() => <UserAdverts />}
+        />
 
         {/* Adverts */}
-        <Route exact path="/home/adverts/ad/:id">
-          <SingleAdvertPage></SingleAdvertPage>
-        </Route>
+        <Route
+          exact
+          path="/home/adverts/ad/:id"
+          render={() => <SingleAdvertPage />}
+        />
 
-        <Route exact path="/home/adverts">
-          <Home></Home>
-        </Route>
+        <Route exact path="/home/adverts" render={() => <Home />} />
 
         {/* Posts */}
-        <Route exact path="/home/post">
-          <ProtectedRoute>
-            <Sell />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/post"
+          render={() => (
+            <ProtectedRoute>
+              <Sell />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* My Adverts */}
-        <Route exact path="/home/profile/my-adverts">
-          <ProtectedRoute>
-            <MyAdverts />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/my-adverts"
+          render={() => (
+            <ProtectedRoute>
+              <MyAdverts />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Edit Profile Password */}
-        <Route exact path="/home/profile/edit/password">
-          <ProtectedRoute>
-            <EditProfilePassword />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/edit/password"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfilePassword />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Edit Profile Photo */}
-        <Route exact path="/home/profile/edit/photo">
-          <ProtectedRoute>
-            <EditProfilePhoto />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/edit/photo"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfilePhoto />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Edit Profile Details */}
-        <Route exact path="/home/profile/edit/details">
-          <ProtectedRoute>
-            <EditProfileDetails />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/edit/details"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfileDetails />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Edit Profile */}
-        <Route exact path="/home/profile/edit">
-          <ProtectedRoute>
-            <EditProfile />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/edit"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Top up */}
-        <Route exact path="/home/profile/top-up">
-          <ProtectedRoute>
-            <TopUp />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile/top-up"
+          render={() => (
+            <ProtectedRoute>
+              <TopUp />
+            </ProtectedRoute>
+          )}
+        />
 
         {/* Profile */}
-        <Route exact path="/home/profile">
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        </Route>
+        <Route
+          exact
+          path="/home/profile"
+          render={() => (
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          )}
+        />
 
-        <Route exact path="/home">
-          <Redirect to="/home/adverts" />
-        </Route>
+        <Route
+          exact
+          path="/home"
+          render={() => <Redirect to="/home/adverts" />}
+        />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
+        {/* Home */}
         <IonTabButton tab="tab1" href="/home/adverts">
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
+
+        {/* Sell */}
         <IonTabButton tab="tab2" href="/home/post">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
+
+        {/* Profile */}
         <IonTabButton tab="tab3" href="/home/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
+          {/* Pending Adverts Count */}
           {user?.["admin"]?.["reviewing_adverts_count"] ? (
             <IonBadge color={"warning"}>
               {user?.["admin"]?.["reviewing_adverts_count"]}
