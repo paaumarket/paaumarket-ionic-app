@@ -1,8 +1,4 @@
-export default function resizeImage(
-  file,
-  MAX_IMAGE_DIMENSION = 768,
-  type = "image/jpeg"
-) {
+export default function resizeImage(file, maxSize = 768, type = "image/jpeg") {
   return new Promise((res, rej) => {
     const img = new Image();
 
@@ -12,11 +8,8 @@ export default function resizeImage(
       let width = ev.target.naturalWidth;
       let height = ev.target.naturalHeight;
 
-      if (width > MAX_IMAGE_DIMENSION || height > MAX_IMAGE_DIMENSION) {
-        let ratio = Math.min(
-          MAX_IMAGE_DIMENSION / width,
-          MAX_IMAGE_DIMENSION / height
-        );
+      if (width > maxSize || height > maxSize) {
+        let ratio = Math.min(maxSize / width, maxSize / height);
         width *= ratio;
         height *= ratio;
       }
