@@ -162,19 +162,19 @@ export default function Tabs() {
 
       <IonTabBar slot="bottom">
         {/* Home */}
-        <IonTabButton tab="tab1" href="/home/adverts">
+        <IonTabButton tab="adverts" href="/home/adverts">
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab="tab2" href="/home/post">
+        <IonTabButton tab="post" href="/home/post">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
-        <IonTabButton tab="tab3" href="/home/profile">
+        <IonTabButton tab="profile" href="/home/profile">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
           {/* Pending Adverts Count */}
