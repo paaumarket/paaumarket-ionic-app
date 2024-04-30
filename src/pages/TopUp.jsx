@@ -12,6 +12,7 @@ import {
   IonSegment,
   IonSegmentButton,
   IonSpinner,
+  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -38,7 +39,7 @@ const BANKS_LOGO = {
 
 const TopUp = () => {
   const { user } = useAuth();
-  const [segment, setSegment] = useState("accounts");
+  const [segment, setSegment] = useState("online");
 
   return (
     <IonPage>
@@ -54,14 +55,14 @@ const TopUp = () => {
             value={segment}
             onIonChange={(ev) => setSegment(ev.detail.value)}
           >
+            {/* Online */}
+            <IonSegmentButton value="online">
+              <IonLabel>Online</IonLabel>
+            </IonSegmentButton>
+
             {/* Accounts */}
             <IonSegmentButton value="accounts">
               <IonLabel>Accounts</IonLabel>
-            </IonSegmentButton>
-
-            {/* Manual */}
-            <IonSegmentButton value="manual">
-              <IonLabel>Manual</IonLabel>
             </IonSegmentButton>
           </IonSegment>
         </IonToolbar>
@@ -69,18 +70,31 @@ const TopUp = () => {
 
       {/* Page content */}
       <IonContent fullscreen>
+        {segment === "online" ? <OnlineTopUp /> : null}
         {segment === "accounts" ? <AccountsTopUp /> : null}
-        {segment === "manual" ? <ManualTopUp /> : null}
       </IonContent>
       <IonFooter>
         <IonToolbar>
-          <IonTitle>Balance: ₦{user["wallet_balance"]}</IonTitle>
+          <IonTitle>
+            Balance:{" "}
+            <IonText
+              color={
+                user["wallet_balance"] <= 100
+                  ? "danger"
+                  : user["wallet_balance"] < 1000
+                  ? "warning"
+                  : "success"
+              }
+            >
+              ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+            </IonText>
+          </IonTitle>
         </IonToolbar>
       </IonFooter>
     </IonPage>
   );
 };
-const ManualTopUp = () => {
+const OnlineTopUp = () => {
   const [presentToast] = useIonToast();
   const [presentAlert] = useIonAlert();
   const { user } = useAuth();
@@ -218,10 +232,26 @@ const AccountsTopUp = () => {
 };
 
 const RequestAccounts = ({ onSuccess }) => {
+  const [presentToast] = useIonToast();
   const mutation = useMutation({
     mutationKey: ["my-top-up-accounts", "request"],
     mutationFn: () =>
       api.post("/my-top-up-accounts/request").then((response) => response.data),
+    onSuccess() {
+      presentToast({
+        message: "Virtual Accounts Requested",
+        color: "success",
+        duration: 2000,
+      });
+    },
+    onError(error) {
+      presentToast({
+        message:
+          error?.response?.data?.message || "Failed to request accounts...",
+        color: "danger",
+        duration: 2000,
+      });
+    },
   });
 
   const requestAccounts = () => {
