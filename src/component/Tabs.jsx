@@ -168,13 +168,18 @@ export default function Tabs() {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab={user ? "sell" : "guest-sell"} href="/home/sell">
+        <IonTabButton
+          key={user ? "sell-tab" : "guest-sell-tab"}
+          tab={user ? "sell" : "guest-sell"}
+          href="/home/sell"
+        >
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
         <IonTabButton
+          key={user ? "profile-tab" : "guest-profile-tab"}
           tab={user ? "profile" : "guest-profile"}
           href="/home/profile"
         >
