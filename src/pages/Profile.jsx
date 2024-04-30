@@ -49,7 +49,7 @@ export default function Profile() {
             <IonAvatar className="w-28 h-28">
               <img
                 src={
-                  user["profile_photo"]?.["cache"]?.["small"] ||
+                  user["profile_photo"]?.["cache"]?.["medium"] ||
                   DefaultUserImage
                 }
                 alt={user["name"]}
