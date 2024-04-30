@@ -26,8 +26,8 @@ export default function resizeImage(file, MAX_IMAGE_DIMENSION = 768) {
 
       ctx.drawImage(ev.target, 0, 0, width, height);
       canvas.toBlob((blob) => {
-        res(new File([blob], Date.now() + ".png"));
-      });
+        res(new File([blob], Date.now() + ".jpg"));
+      }, "image/jpeg");
     });
 
     img.addEventListener("error", rej);
