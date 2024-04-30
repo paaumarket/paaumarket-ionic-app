@@ -98,7 +98,7 @@ const OnlineTopUp = () => {
   const [presentToast] = useIonToast();
   const [presentAlert] = useIonAlert();
   const { user } = useAuth();
-  const [amount, setAmount] = useState(100);
+  const [amount, setAmount] = useState("");
   const config = useMemo(
     () => ({
       publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
@@ -120,7 +120,7 @@ const OnlineTopUp = () => {
     } else {
       initializePayment({
         onSuccess(response) {
-          setAmount(100);
+          setAmount("");
           presentToast({
             message: "Successfully funded.",
             color: "success",
@@ -155,7 +155,7 @@ const OnlineTopUp = () => {
             labelPlacement="stacked"
             step={1}
             min={100}
-            placeholder={0}
+            placeholder={"Minimum of ₦100"}
             value={amount}
             onValueChange={(value) => setAmount(value)}
           />
