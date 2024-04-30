@@ -65,10 +65,10 @@ export default function Tabs() {
 
         <Route exact path="/home/adverts" render={() => <Home />} />
 
-        {/* Posts */}
+        {/* Sell */}
         <Route
           exact
-          path="/home/post"
+          path="/home/sell"
           render={() => (
             <ProtectedRoute>
               <Sell />
@@ -168,13 +168,16 @@ export default function Tabs() {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab="post" href="/home/post">
+        <IonTabButton tab={user ? "sell" : "guest-sell"} href="/home/sell">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
-        <IonTabButton tab="profile" href="/home/profile">
+        <IonTabButton
+          tab={user ? "profile" : "guest-profile"}
+          href="/home/profile"
+        >
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
           {/* Pending Adverts Count */}
