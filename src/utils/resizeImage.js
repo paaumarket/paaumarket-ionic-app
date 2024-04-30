@@ -1,4 +1,4 @@
-export default function resizeImage(file, maxSize = 768, type = "image/jpeg") {
+export default function resizeImage(file, maxSize = 768) {
   return new Promise((res, rej) => {
     const img = new Image();
 
@@ -23,13 +23,8 @@ export default function resizeImage(file, maxSize = 768, type = "image/jpeg") {
 
       ctx.drawImage(ev.target, 0, 0, width, height);
       canvas.toBlob((blob) => {
-        res(
-          new File(
-            [blob],
-            `${Date.now()}${type === "image/jpeg" ? ".jpg" : ".png"}`
-          )
-        );
-      }, type);
+        res(new File([blob], Date.now() + ".webp"));
+      }, "image/webp");
     });
 
     img.addEventListener("error", rej);
