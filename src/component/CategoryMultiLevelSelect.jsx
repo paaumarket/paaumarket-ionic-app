@@ -25,13 +25,14 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
       api
         .get("/categories?filter=all", { signal })
         .then((response) => response.data),
+    retry: true,
   });
 
   const items = useMemo(() => data || [], [data]);
 
   const selected = useMemo(
     () => items.find((item) => item.id === value),
-    [value]
+    [value, items]
   );
 
   const dismiss = () => modalRef.current?.dismiss();
