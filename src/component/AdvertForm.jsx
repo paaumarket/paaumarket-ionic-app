@@ -33,11 +33,11 @@ const MAX_IMAGE_DIMENSION = 1000;
 
 export default function AdvertForm({
   advert = null,
-  edit = false,
+  isEditing = false,
   isApproving = false,
   onSuccess,
 }) {
-  const includeCategory = isApproving || !edit;
+  const includeCategory = isApproving || !isEditing;
   const imageInputRef = useRef();
 
   const form = useHookForm({
@@ -49,10 +49,10 @@ export default function AdvertForm({
           }
         : null),
       /** Other attributes */
-      title: isApproving || edit ? advert["title"] : "",
-      description: isApproving || edit ? advert["description"] : "",
-      price: isApproving || edit ? advert["price"] : 0,
-      images: isApproving || edit ? advert["images"] : [],
+      title: isApproving || isEditing ? advert["title"] : "",
+      description: isApproving || isEditing ? advert["description"] : "",
+      price: isApproving || isEditing ? advert["price"] : 0,
+      images: isApproving || isEditing ? advert["images"] : [],
     },
     schema: yup
       .object({
@@ -111,7 +111,7 @@ export default function AdvertForm({
     form,
     mutationKey: isApproving
       ? ["adverts", advert["id"], "approve"]
-      : edit
+      : isEditing
       ? ["adverts", advert["id"], "edit"]
       : ["adverts", "create"],
     mutationFn: (data) => {
@@ -119,21 +119,21 @@ export default function AdvertForm({
         .post(
           isApproving
             ? `/adverts/${advert["id"]}/approve`
-            : edit
+            : isEditing
             ? `/adverts/${advert["id"]}`
             : "/adverts",
           serialize({
-            _method: isApproving || edit ? "put" : "post",
+            _method: isApproving || isEditing ? "put" : "post",
             ...data,
 
             /** Images */
             images:
-              isApproving || edit
+              isApproving || isEditing
                 ? data["images"].filter((image) => image instanceof File)
                 : data["images"],
 
             /** Deleted images */
-            ...(isApproving || edit
+            ...(isApproving || isEditing
               ? {
                   /** Images that doesn't exist in the data array */
                   deleted_images: advert["images"]
@@ -158,7 +158,7 @@ export default function AdvertForm({
     presentLoading({
       message: isApproving
         ? "Approving..."
-        : edit
+        : isEditing
         ? "Editing..."
         : "Creating...",
     })
@@ -347,7 +347,7 @@ export default function AdvertForm({
           expand="block"
           className="ion-margin"
         >
-          {isApproving ? "Approve" : edit ? "Save" : "Post Advert"}
+          {isApproving ? "Approve" : isEditing ? "Save" : "Post Advert"}
         </IonButton>
       </form>
     </FormProvider>

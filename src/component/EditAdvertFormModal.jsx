@@ -25,7 +25,7 @@ const EditAdvertFormModal = ({ advert, onCancelled, onSuccess }) => {
 
       {/* Content */}
       <IonContent fullscreen>
-        <AdvertForm edit advert={advert} onSuccess={onSuccess} />
+        <AdvertForm isEditing advert={advert} onSuccess={onSuccess} />
       </IonContent>
     </IonPage>
   );
