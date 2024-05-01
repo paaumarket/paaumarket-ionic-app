@@ -53,6 +53,7 @@ export default function Profile() {
                   DefaultUserImage
                 }
                 alt={user["name"]}
+                className="object-cover object-center w-full h-full"
               />
             </IonAvatar>
             <h1 className="font-bold text-center ion-no-margin">

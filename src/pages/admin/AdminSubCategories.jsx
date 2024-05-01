@@ -95,6 +95,7 @@ const AdminSubCategories = () => {
                 <img
                   alt={category["name"]}
                   src={category["image"]?.["cache"]?.["extra-small"]}
+                  className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>
             ) : null}
@@ -254,6 +255,7 @@ const SubCategoryItem = ({ category, onEdit, onDelete }) => {
         <img
           alt={category["name"]}
           src={category["image"]?.["cache"]?.["extra-small"]}
+          className="object-cover object-center w-full h-full"
         />
       </IonThumbnail>
       <IonLabel>

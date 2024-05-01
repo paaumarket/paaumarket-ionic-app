@@ -88,6 +88,7 @@ const ProfilePhotoEdit = () => {
             src={
               user["profile_photo"]?.["cache"]?.["small"] || DefaultUserImage
             }
+            className="object-cover object-center w-full h-full"
           />
         </IonAvatar>
       </div>

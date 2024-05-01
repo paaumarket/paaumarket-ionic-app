@@ -181,7 +181,8 @@ const Category = () => {
                 <IonThumbnail className="[--size:theme(spacing.10)]">
                   <img
                     src={category["image"]?.["cache"]?.["extra-small"]}
-                    alt=""
+                    alt={category["name"]}
+                    className="object-cover object-center w-full h-full"
                   />
                 </IonThumbnail>
                 <div className="max-lg:text-xs">

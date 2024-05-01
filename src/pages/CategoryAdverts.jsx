@@ -59,6 +59,7 @@ export default () => {
                 <img
                   alt={category["name"]}
                   src={category["image"]?.["cache"]?.["extra-small"]}
+                  className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>
             ) : null}

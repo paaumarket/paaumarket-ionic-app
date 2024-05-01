@@ -61,6 +61,7 @@ export default ({ backButtonHref }) => {
                     user["profile_photo"]?.["cache"]?.["extra-small"] ||
                     DefaultUserImage
                   }
+                  className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>
             ) : null}
@@ -79,6 +80,7 @@ export default ({ backButtonHref }) => {
                     DefaultUserImage
                   }
                   alt={user["name"]}
+                  className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>
               <h3 className="font-bold text-center ion-no-margin">

@@ -148,6 +148,7 @@ const AdminUserItem = ({ user, onTopUp }) => {
             user["profile_photo"]?.["cache"]?.["extra-small"] ||
             DefaultUserImage
           }
+          className="object-cover object-center w-full h-full"
         />
       </IonAvatar>
       <IonLabel>

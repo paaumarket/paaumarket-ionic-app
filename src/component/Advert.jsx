@@ -86,6 +86,7 @@ const Advert = ({ advert, full = false }) => {
                       "extra-small"
                     ] || DefaultCategoryImage
                   }
+                  className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>{" "}
               {advert["user"]["name"]}
@@ -105,6 +106,7 @@ const Advert = ({ advert, full = false }) => {
                     advert["category"]["image"]?.["cache"]?.["extra-small"] ||
                     DefaultUserImage
                   }
+                  className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>{" "}
               {advert["category"]["name"]}

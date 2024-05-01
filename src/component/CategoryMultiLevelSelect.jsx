@@ -50,6 +50,7 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
               <img
                 alt={selected["name"]}
                 src={selected["image"]?.["cache"]?.["extra-small"]}
+                className="object-cover object-center w-full h-full"
               />
             </IonThumbnail>
             <div className="flex flex-col gap-1">
@@ -110,6 +111,7 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
                 <img
                   alt={item["name"]}
                   src={item["image"]?.["cache"]?.["extra-small"]}
+                  className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>
               <IonLabel>

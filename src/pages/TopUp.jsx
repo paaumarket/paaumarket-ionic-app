@@ -211,7 +211,7 @@ const AccountsTopUp = () => {
             <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
               <img
                 src={BANKS_LOGO[account["bank_code"]]}
-                className="object-cover object-center"
+                className="object-cover object-center w-full h-full"
               />
             </IonThumbnail>
             <IonLabel>

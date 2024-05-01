@@ -26,6 +26,7 @@ const AdvertDetails = ({ advert }) => {
                     advert["user_profile_photo"]?.["cache"]?.["extra-small"] ||
                     DefaultUserImage
                   }
+                  className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>{" "}
               {advert["user_name"]}
@@ -51,6 +52,7 @@ const AdvertDetails = ({ advert }) => {
               <img
                 alt={advert["category_name"]}
                 src={advert["category_image"]?.["cache"]?.["extra-small"]}
+                className="object-cover object-center w-full h-full"
               />
             </IonThumbnail>{" "}
             {advert["category_name"]}
