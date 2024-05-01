@@ -31,27 +31,33 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 const MAX_IMAGE_UPLOAD = 5;
 const MAX_IMAGE_DIMENSION = 1000;
 
-export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
+export default function AdvertForm({
+  advert = null,
+  edit = false,
+  isApproving = false,
+  onSuccess,
+}) {
+  const includeCategory = isApproving || !edit;
   const imageInputRef = useRef();
 
   const form = useHookForm({
     defaultValues: {
       /** Category ID */
-      ...(!edit
+      ...(includeCategory
         ? {
-            category_id: null,
+            category_id: isApproving ? advert["category_id"] : null,
           }
         : null),
       /** Other attributes */
-      title: edit ? advert["title"] : "",
-      description: edit ? advert["description"] : "",
-      price: edit ? advert["price"] : 0,
-      images: edit ? advert["images"] : [],
+      title: isApproving || edit ? advert["title"] : "",
+      description: isApproving || edit ? advert["description"] : "",
+      price: isApproving || edit ? advert["price"] : 0,
+      images: isApproving || edit ? advert["images"] : [],
     },
     schema: yup
       .object({
         /** Category ID */
-        ...(!edit
+        ...(includeCategory
           ? {
               category_id: yup.number().required().label("Category"),
             }
@@ -103,24 +109,31 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
 
   const advertMutation = useFormMutation({
     form,
-    mutationKey: edit
+    mutationKey: isApproving
+      ? ["adverts", advert["id"], "approve"]
+      : edit
       ? ["adverts", advert["id"], "edit"]
       : ["adverts", "create"],
     mutationFn: (data) => {
       return api
         .post(
-          edit ? `/adverts/${advert["id"]}` : "/adverts",
+          isApproving
+            ? `/adverts/${advert["id"]}/approve`
+            : edit
+            ? `/adverts/${advert["id"]}`
+            : "/adverts",
           serialize({
-            _method: edit ? "put" : "post",
+            _method: isApproving || edit ? "put" : "post",
             ...data,
 
             /** Images */
-            images: edit
-              ? data["images"].filter((image) => image instanceof File)
-              : data["images"],
+            images:
+              isApproving || edit
+                ? data["images"].filter((image) => image instanceof File)
+                : data["images"],
 
             /** Deleted images */
-            ...(edit
+            ...(isApproving || edit
               ? {
                   /** Images that doesn't exist in the data array */
                   deleted_images: advert["images"]
@@ -143,7 +156,11 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
 
   const handleFormSubmit = (data) => {
     presentLoading({
-      message: edit ? "Editing..." : "Creating...",
+      message: isApproving
+        ? "Approving..."
+        : edit
+        ? "Editing..."
+        : "Creating...",
     })
       /** Mutate */
       .then(() => advertMutation.mutateAsync(data, { onSuccess }))
@@ -157,7 +174,7 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
       <form onSubmit={form.handleSubmit(handleFormSubmit)}>
         <IonList inset>
           {/* Category */}
-          {!edit ? (
+          {includeCategory ? (
             <Controller
               name="category_id"
               render={({ field, fieldState }) => (
@@ -324,8 +341,13 @@ export default function AdvertForm({ edit = false, advert = null, onSuccess }) {
         </IonList>
 
         {/* Submit Button */}
-        <IonButton type="submit" expand="block" className="ion-margin">
-          {edit ? "Save" : "Post Advert"}
+        <IonButton
+          color={isApproving ? "success" : "primary"}
+          type="submit"
+          expand="block"
+          className="ion-margin"
+        >
+          {isApproving ? "Approve" : edit ? "Save" : "Post Advert"}
         </IonButton>
       </form>
     </FormProvider>

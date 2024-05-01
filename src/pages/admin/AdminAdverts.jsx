@@ -16,6 +16,7 @@ import {
   IonTitle,
   IonToolbar,
   useIonModal,
+  useIonToast,
 } from "@ionic/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -52,6 +53,7 @@ const AdminAdverts = () => {
   );
 
   const handleApproved = () => refetch();
+  const handleDeclined = () => refetch();
 
   return (
     <IonPage>
@@ -99,6 +101,7 @@ const AdminAdverts = () => {
                 key={advert["id"]}
                 advert={advert}
                 onApproved={handleApproved}
+                onDeclined={handleDeclined}
               />
             ))}
           </IonList>
@@ -114,13 +117,28 @@ const AdminAdverts = () => {
   );
 };
 
-const AdminAdvertItem = ({ advert, onApproved }) => {
+const AdminAdvertItem = ({ advert, onApproved, onDeclined }) => {
+  const [presentToast] = useIonToast();
   const [present, dismiss] = useIonModal(AdminAdvertModal, {
     advert,
     onCancelled: () => dismiss(),
-    onSuccess: (advert) => {
+    onApproved() {
+      presentToast({
+        message: "Successfully Approved.",
+        color: "success",
+        duration: 2000,
+      });
       dismiss();
       onApproved(advert);
+    },
+    onDeclined(advert) {
+      presentToast({
+        message: "Advert Declined.",
+        color: "danger",
+        duration: 2000,
+      });
+      dismiss();
+      onDeclined(advert);
     },
   });
 
