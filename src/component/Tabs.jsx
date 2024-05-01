@@ -145,7 +145,7 @@ export default function Tabs() {
         {/* Profile */}
         <Route
           exact
-          path="/home/profile"
+          path={"/home/profile"}
           render={() => (
             <ProtectedRoute>
               <Profile />
@@ -168,21 +168,13 @@ export default function Tabs() {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton
-          key={user ? "sell-tab" : "guest-sell-tab"}
-          tab={user ? "sell" : "guest-sell"}
-          href="/home/sell"
-        >
+        <IonTabButton tab={"sell"} href={user ? "/home/sell" : "/login"}>
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
-        <IonTabButton
-          key={user ? "profile-tab" : "guest-profile-tab"}
-          tab={user ? "profile" : "guest-profile"}
-          href="/home/profile"
-        >
+        <IonTabButton tab={"profile"} href={user ? "/home/profile" : "/login"}>
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
           {/* Pending Adverts Count */}

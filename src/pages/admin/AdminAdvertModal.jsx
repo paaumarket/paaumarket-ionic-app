@@ -1,6 +1,7 @@
 import AdvertForm from "@/component/AdvertForm";
 import api from "@/lib/api";
 import {
+  IonAvatar,
   IonButton,
   IonButtons,
   IonContent,
@@ -11,6 +12,9 @@ import {
   useIonLoading,
 } from "@ionic/react";
 import { useMutation } from "@tanstack/react-query";
+
+import DefaultUserImage from "@/assets/user@100.png";
+import clsx from "clsx";
 
 const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
   const [presentLoading, dismissLoading] = useIonLoading();
@@ -48,6 +52,19 @@ const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
 
       {/* Content */}
       <IonContent fullscreen>
+        <div className="flex flex-wrap items-center gap-2 ion-margin">
+          <IonAvatar className={clsx("w-5 h-5", "inline-block")}>
+            <img
+              alt={advert["user_name"]}
+              src={
+                advert["user_profile_photo"]?.["cache"]?.["extra-small"] ||
+                DefaultUserImage
+              }
+              className="object-cover object-center w-full h-full"
+            />
+          </IonAvatar>{" "}
+          {advert["user_name"]}
+        </div>
         <AdvertForm isApproving advert={advert} onSuccess={onApproved} />
 
         <div className="ion-margin">

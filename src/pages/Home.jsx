@@ -29,8 +29,10 @@ import { personCircleOutline } from "ionicons/icons";
 import InfiniteScroll from "@/component/InfiniteScroll";
 import Refresher from "@/component/Refresher";
 import clsx from "clsx";
+import useAuth from "@/hooks/useAuth";
 
 export default function Home() {
+  const { user } = useAuth();
   const [search, setSearch] = useState("");
   const {
     data,
@@ -79,7 +81,7 @@ export default function Home() {
 
           <IonButtons slot="end">
             <IonButton
-              routerLink="/home/profile"
+              routerLink={user ? "/home/profile" : "/login"}
               fill="clear"
               color={"primary"}
             >
