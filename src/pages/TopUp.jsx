@@ -29,8 +29,8 @@ import api from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePaystackPayment } from "react-paystack";
 import CurrencyInput from "react-currency-input-field";
-import CurrencyIonInput from "@/component/CurrencyIonInput";
 import { useMemo } from "react";
+import FormIonInput from "@/components/FormIonInput";
 
 const BANKS_LOGO = {
   "035": WemaLogo,
@@ -150,7 +150,7 @@ const OnlineTopUp = () => {
       <IonList inset>
         <IonItem>
           <CurrencyInput
-            customInput={CurrencyIonInput}
+            customInput={FormIonInput}
             label="Amount"
             labelPlacement="stacked"
             step={1}

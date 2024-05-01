@@ -1,4 +1,4 @@
-import { AdvertImages } from "@/component/Advert";
+import { AdvertImages } from "@/components/Advert";
 import {
   IonAvatar,
   IonItem,

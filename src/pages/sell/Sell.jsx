@@ -14,7 +14,7 @@ import {
 import useAuth from "@/hooks/useAuth";
 import { useHistory } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import AdvertForm from "@/component/AdvertForm";
+import AdvertForm from "@/components/AdvertForm";
 import { walletOutline } from "ionicons/icons";
 
 export default function Sell() {

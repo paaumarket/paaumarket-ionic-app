@@ -23,11 +23,11 @@ import { generatePath } from "react-router-dom";
 
 import logo from "../assets/paaumarket.svg";
 import { useState } from "react";
-import AdvertList from "@/component/AdvertList";
+import AdvertList from "@/components/AdvertList";
 import { isPlatform } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
 

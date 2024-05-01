@@ -1,5 +1,5 @@
 import "./index.css";
-import "./pages/utils.css";
+import "@/pages/utils.css";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -36,23 +36,23 @@ import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 
 // All parent components
-import Register from "./pages/Register";
-import SignIn from "./pages/SignIn";
-import Tabs from "./component/Tabs";
-import Logout from "./pages/Logout";
+import Register from "@/pages/Register";
+import SignIn from "@/pages/SignIn";
+import Tabs from "@/components/Tabs";
+import Logout from "@/pages/Logout";
 
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminCategories from "@/pages/admin/AdminCategories";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
-import AdminProtectedRoute from "./component/AdminProtectedRoute";
+import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 
-import ForgetPassword from "./pages/ForgetPassword";
-import NewPassword from "./pages/NewPassword";
-import OTP from "./pages/OTP";
-import AdminAdverts from "./pages/admin/AdminAdverts";
+import ForgetPassword from "@/pages/ForgetPassword";
+import NewPassword from "@/pages/NewPassword";
+import OTP from "@/pages/OTP";
+import AdminAdverts from "@/pages/admin/AdminAdverts";
 import { ProfileUpdater } from "./ProfileUpdater";
-import AdminUsers from "./pages/admin/AdminUsers";
-import UserAdverts from "./pages/UserAdverts";
+import AdminUsers from "@/pages/admin/AdminUsers";
+import UserAdverts from "@/pages/UserAdverts";
 
 setupIonicReact();
 

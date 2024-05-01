@@ -23,12 +23,12 @@ import {
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
-import AdvertDetails from "@/component/AdvertDetails";
+import AdvertDetails from "@/components/AdvertDetails";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
-import EditAdvertFormModal from "@/component/EditAdvertFormModal";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import EditAdvertFormModal from "@/components/EditAdvertFormModal";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 
 const MyAdverts = () => {

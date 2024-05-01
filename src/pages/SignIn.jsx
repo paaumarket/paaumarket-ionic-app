@@ -10,7 +10,7 @@ import {
 
 // Logo Image
 import logo from "../assets/paaumarket.svg";
-import SignInForm from "@/component/SignInForm";
+import SignInForm from "@/components/SignInForm";
 import { useHistory } from "react-router-dom";
 
 const SignIn = () => {

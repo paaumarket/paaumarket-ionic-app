@@ -1,12 +1,9 @@
 import * as yup from "yup";
 import api from "@/lib/api";
-import clsx from "clsx";
 import useFormMutation from "@/hooks/useFormMutation";
 import useHookForm from "@/hooks/useHookForm";
-import { Controller, FormProvider } from "react-hook-form";
 import {
   IonButton,
-  IonInput,
   IonItem,
   IonLabel,
   IonList,
@@ -16,6 +13,7 @@ import { useRef } from "react";
 import { serialize } from "object-to-formdata";
 import { useQueryClient } from "@tanstack/react-query";
 import resizeImage from "@/utils/resizeImage";
+import FormIonInput from "@/components/FormIonInput";
 
 const AdminCategoryForm = ({
   edit = false,
@@ -24,10 +22,7 @@ const AdminCategoryForm = ({
   onSuccess,
 }) => {
   const queryClient = useQueryClient();
-
   const [presentLoading, dismissLoading] = useIonLoading();
-
-  const imageInputRef = useRef();
 
   const hasParent = (edit && category["parent_id"]) || parent;
   const form = useHookForm({
@@ -44,7 +39,11 @@ const AdminCategoryForm = ({
         name: yup.string().required().label("Category Name"),
 
         /** Add cost */
-        ...(hasParent ? { cost: yup.number().required().label("Cost") } : null),
+        ...(hasParent
+          ? {
+              cost: yup.number().required().label("Cost"),
+            }
+          : null),
       })
       .required(),
   });
@@ -94,106 +93,81 @@ const AdminCategoryForm = ({
   };
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)}>
-        <IonList>
-          {/* Name */}
-          <Controller
-            name="name"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  autofocus
-                  label="Name"
-                  labelPlacement="stacked"
-                  ref={field.ref}
-                  value={field.value}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                />
-              </IonItem>
-            )}
+    <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+      <IonList>
+        {/* Name */}
+        <IonItem>
+          <FormIonInput
+            {...form.register("name")}
+            label="Name"
+            labelPlacement="stacked"
+            errorText={form.formState.errors["name"]?.message}
           />
-          {/* Cost */}
-          {hasParent ? (
-            <Controller
-              name="cost"
-              render={({ field, fieldState }) => (
-                <IonItem>
-                  <IonInput
-                    type="number"
-                    autofocus
-                    min={0}
-                    label="Cost"
-                    labelPlacement="stacked"
-                    ref={field.ref}
-                    value={field.value}
-                    onIonInput={(ev) => field.onChange(ev.target.value || 0)}
-                    onIonBlur={field.onBlur}
-                    errorText={fieldState.error?.message}
-                    className={clsx(
-                      fieldState.invalid && "ion-invalid ion-touched"
-                    )}
-                  />
-                </IonItem>
-              )}
+        </IonItem>
+
+        {/* Cost */}
+        {hasParent ? (
+          <IonItem>
+            <FormIonInput
+              {...form.register("cost")}
+              type="number"
+              label="Cost"
+              labelPlacement="stacked"
+              errorText={form.formState.errors["cost"]?.message}
+              min={0}
             />
-          ) : null}
+          </IonItem>
+        ) : null}
 
-          {/* Image */}
-          <Controller
-            name="image"
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonLabel position="stacked">Image</IonLabel>
-                <input
-                  type="file"
-                  ref={imageInputRef}
-                  accept=".jpg, .jpeg, .png, .gif"
-                  hidden
-                  onChange={(ev) =>
-                    resizeImage(ev.target.files[0], 200).then((image) =>
-                      field.onChange(image)
-                    )
-                  }
-                />
-                <div className="ion-margin-top">
-                  <IonButton onClick={() => imageInputRef.current?.click()}>
-                    Choose Image
-                  </IonButton>
-                </div>
-                {field.value || category?.["image"] ? (
-                  <div className="ion-margin-top">
-                    <img
-                      src={
-                        field.value
-                          ? URL.createObjectURL(field.value)
-                          : category?.["image"]?.["cache"]?.["small"]
-                      }
-                      onLoad={
-                        field.value
-                          ? (ev) => URL.revokeObjectURL(ev.target.src)
-                          : null
-                      }
-                      className="max-h-60"
-                    />
-                  </div>
-                ) : null}
-              </IonItem>
-            )}
-          />
-        </IonList>
+        {/* Image */}
+        <ImageInput name="image" form={form} category={category} />
+      </IonList>
 
-        {/* Submit Button */}
-        <IonButton type="submit" expand="block" className="ion-margin-top">
-          Save
+      {/* Submit Button */}
+      <IonButton type="submit" expand="block" className="ion-margin-top">
+        Save
+      </IonButton>
+    </form>
+  );
+};
+
+const ImageInput = ({ category, name, form }) => {
+  const imageInputRef = useRef();
+  const image = form.watch(name);
+
+  return (
+    <IonItem>
+      <IonLabel position="stacked">Image</IonLabel>
+      <input
+        type="file"
+        ref={imageInputRef}
+        accept=".jpg, .jpeg, .png, .gif"
+        hidden
+        onChange={(ev) =>
+          resizeImage(ev.target.files[0], 200).then((image) =>
+            form.setValue(name, image)
+          )
+        }
+      />
+      <div className="ion-margin-top">
+        <IonButton onClick={() => imageInputRef.current?.click()}>
+          Choose Image
         </IonButton>
-      </form>
-    </FormProvider>
+      </div>
+      {image || category?.["image"] ? (
+        <div className="ion-margin-top">
+          <img
+            src={
+              image
+                ? URL.createObjectURL(image)
+                : category?.["image"]?.["cache"]?.["small"]
+            }
+            onLoad={image ? (ev) => URL.revokeObjectURL(ev.target.src) : null}
+            className="max-h-60"
+          />
+        </div>
+      ) : null}
+    </IonItem>
   );
 };
 

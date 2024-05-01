@@ -1,6 +1,6 @@
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
-import Advert, { AdvertPlaceholder } from "@/component/Advert";
+import Advert, { AdvertPlaceholder } from "@/components/Advert";
 import repeatComponent from "@/utils/repeatComponent";
 import { useMemo } from "react";
 

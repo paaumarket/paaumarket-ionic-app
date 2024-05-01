@@ -28,8 +28,8 @@ import DefaultUserImage from "@/assets/user@100.png";
 import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");

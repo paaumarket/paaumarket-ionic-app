@@ -1,4 +1,4 @@
-import AdvertForm from "@/component/AdvertForm";
+import AdvertForm from "@/components/AdvertForm";
 import api from "@/lib/api";
 import {
   IonAvatar,

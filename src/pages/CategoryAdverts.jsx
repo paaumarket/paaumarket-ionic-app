@@ -1,6 +1,6 @@
-import AdvertList from "@/component/AdvertList";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import AdvertList from "@/components/AdvertList";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
 import {
   IonBackButton,

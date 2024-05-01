@@ -22,8 +22,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import AdminAdvertModal from "./AdminAdvertModal";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 
 const AdminAdverts = () => {

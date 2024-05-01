@@ -1,13 +1,11 @@
 import * as yup from "yup";
-import clsx from "clsx";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonInput,
   IonItem,
   IonList,
   IonPage,
@@ -24,6 +22,8 @@ import logo from "../assets/paaumarket.svg";
 import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import { useHistory } from "react-router-dom";
+import FormIonInput from "@/components/FormIonInput";
+import PasswordIonInput from "@/components/PasswordIonInput";
 
 // Schema for form validation
 const schema = yup
@@ -89,111 +89,57 @@ const Register = () => {
           </IonText>
         </div>
 
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <IonList className="ion-padding ion-margin-bottom">
-              <Controller
-                name={"name"}
-                render={({ field, fieldState }) => (
-                  <IonItem>
-                    <IonInput
-                      type="text"
-                      label="Full Name"
-                      labelPlacement="floating"
-                      placeholder="Enter your name"
-                      name={field.name}
-                      onIonInput={field.onChange}
-                      onIonBlur={field.onBlur}
-                      value={field.value}
-                      errorText={fieldState.error?.message}
-                      className={clsx(
-                        fieldState.invalid && "ion-invalid ion-touched"
-                      )}
-                    ></IonInput>
-                  </IonItem>
-                )}
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <IonList className="ion-padding ion-margin-bottom">
+            {/* Name */}
+            <IonItem>
+              <FormIonInput
+                {...form.register("name")}
+                label="Name"
+                labelPlacement="stacked"
+                errorText={form.formState.errors["name"]?.message}
               />
+            </IonItem>
 
-              <Controller
-                name={"email"}
-                render={({ field, fieldState }) => (
-                  <IonItem>
-                    <IonInput
-                      type="email"
-                      label="Email"
-                      labelPlacement="floating"
-                      placeholder="Enter your Email address"
-                      name={field.name}
-                      onIonInput={field.onChange}
-                      onIonBlur={field.onBlur}
-                      value={field.value}
-                      errorText={fieldState.error?.message}
-                      className={clsx(
-                        fieldState.invalid && "ion-invalid ion-touched"
-                      )}
-                    ></IonInput>
-                  </IonItem>
-                )}
+            {/* Email */}
+            <IonItem>
+              <FormIonInput
+                {...form.register("email")}
+                label="Email"
+                labelPlacement="stacked"
+                errorText={form.formState.errors["email"]?.message}
               />
+            </IonItem>
 
-              <Controller
-                name={"mobile_number"}
-                render={({ field, fieldState }) => (
-                  <IonItem>
-                    <IonInput
-                      type="number"
-                      label="Phone Number"
-                      labelPlacement="floating"
-                      placeholder="Enter your Phone Number"
-                      name={field.name}
-                      onIonInput={field.onChange}
-                      onIonBlur={field.onBlur}
-                      value={field.value}
-                      errorText={fieldState.error?.message}
-                      className={clsx(
-                        fieldState.invalid && "ion-invalid ion-touched"
-                      )}
-                    ></IonInput>
-                  </IonItem>
-                )}
+            {/* Mobile Number */}
+            <IonItem>
+              <FormIonInput
+                {...form.register("mobile_number")}
+                type="number"
+                label="Mobile Number"
+                labelPlacement="stacked"
+                errorText={form.formState.errors["mobile_number"]?.message}
               />
+            </IonItem>
 
-              <Controller
-                name={"password"}
-                render={({ field, fieldState }) => (
-                  <IonItem>
-                    <IonInput
-                      type="password"
-                      label="Password"
-                      labelPlacement="floating"
-                      placeholder="Enter your password"
-                      name={field.name}
-                      onIonInput={field.onChange}
-                      onIonBlur={field.onBlur}
-                      value={field.value}
-                      errorText={fieldState.error?.message}
-                      className={clsx(
-                        fieldState.invalid && "ion-invalid ion-touched"
-                      )}
-                    ></IonInput>
-                  </IonItem>
-                )}
+            {/* Password */}
+            <IonItem>
+              <PasswordIonInput
+                {...form.register("password")}
+                label="Password"
+                errorText={form.formState.errors["password"]?.message}
               />
-            </IonList>
-            <IonButton
-              disabled={registrationMutation.isPending}
-              expand="full"
-              shape="round"
-              type="submit"
-            >
-              {registrationMutation.isPending ? (
-                <IonSpinner />
-              ) : (
-                <>Get Started</>
-              )}
-            </IonButton>
-          </form>
-        </FormProvider>
+            </IonItem>
+          </IonList>
+          <IonButton
+            disabled={registrationMutation.isPending}
+            expand="full"
+            shape="round"
+            type="submit"
+          >
+            {registrationMutation.isPending ? <IonSpinner /> : <>Get Started</>}
+          </IonButton>
+        </form>
 
         <IonText className="ion-padding">
           <p className="mb-5 text-xs text-center">

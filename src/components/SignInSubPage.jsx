@@ -7,7 +7,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import SignInForm from "@/component/SignInForm";
+import SignInForm from "@/components/SignInForm";
 
 const SignInSubPage = () => {
   return (

@@ -5,7 +5,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonInput,
   IonItem,
   IonList,
   IonPage,
@@ -15,12 +14,11 @@ import {
   useIonToast,
 } from "@ionic/react";
 
-import { Controller, FormProvider } from "react-hook-form";
 import useHookForm from "@/hooks/useHookForm";
-import clsx from "clsx";
 import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
+import FormIonInput from "@/components/FormIonInput";
 
 const EditProfileDetails = () => {
   return (
@@ -83,84 +81,50 @@ const ProfileDetailsEdit = () => {
   };
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)}>
-        <IonList>
-          <Controller
-            name={"name"}
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  type="text"
-                  label="Name"
-                  labelPlacement="stacked"
-                  name={field.name}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  value={field.value}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                ></IonInput>
-              </IonItem>
-            )}
+    <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+      <IonList>
+        {/* Name */}
+        <IonItem>
+          <FormIonInput
+            {...form.register("name")}
+            label="Name"
+            labelPlacement="stacked"
+            errorText={form.formState.errors["name"]?.message}
           />
+        </IonItem>
 
-          <Controller
-            name={"email"}
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  type="email"
-                  label="Email"
-                  labelPlacement="stacked"
-                  name={field.name}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  value={field.value}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                ></IonInput>
-              </IonItem>
-            )}
+        {/* Email */}
+        <IonItem>
+          <FormIonInput
+            {...form.register("email")}
+            label="Email"
+            labelPlacement="stacked"
+            errorText={form.formState.errors["email"]?.message}
           />
+        </IonItem>
 
-          <Controller
-            name={"mobile_number"}
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  type="number"
-                  label="Mobile Number"
-                  labelPlacement="stacked"
-                  name={field.name}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  value={field.value}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                ></IonInput>
-              </IonItem>
-            )}
+        {/* Mobile Number */}
+        <IonItem>
+          <FormIonInput
+            {...form.register("mobile_number")}
+            type="number"
+            label="Mobile Number"
+            labelPlacement="stacked"
+            errorText={form.formState.errors["mobile_number"]?.message}
           />
-        </IonList>
+        </IonItem>
+      </IonList>
 
-        <div className="ion-padding">
-          <IonButton
-            expand="block"
-            type="submit"
-            disabled={profileMutation.isPending}
-          >
-            {profileMutation.isPending ? <IonSpinner /> : <>Save</>}
-          </IonButton>
-        </div>
-      </form>
-    </FormProvider>
+      <div className="ion-padding">
+        <IonButton
+          expand="block"
+          type="submit"
+          disabled={profileMutation.isPending}
+        >
+          {profileMutation.isPending ? <IonSpinner /> : <>Save</>}
+        </IonButton>
+      </div>
+    </form>
   );
 };
 export default EditProfileDetails;

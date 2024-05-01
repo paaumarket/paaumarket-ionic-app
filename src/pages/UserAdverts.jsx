@@ -1,4 +1,4 @@
-import AdvertList from "@/component/AdvertList";
+import AdvertList from "@/components/AdvertList";
 import api from "@/lib/api";
 import {
   IonAvatar,
@@ -19,8 +19,8 @@ import { useRouteMatch } from "react-router-dom";
 
 import DefaultUserImage from "@/assets/user@100.png";
 import { isPlatform } from "@ionic/react";
-import InfiniteScroll from "@/component/InfiniteScroll";
-import Refresher from "@/component/Refresher";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 
 export default ({ backButtonHref }) => {
   const match = useRouteMatch();

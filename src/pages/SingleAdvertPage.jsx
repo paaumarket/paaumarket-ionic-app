@@ -21,7 +21,7 @@ import {
 import { useParams, useLocation } from "react-router-dom";
 import api from "@/lib/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import Advert, { AdvertPlaceholder } from "@/component/Advert";
+import Advert, { AdvertPlaceholder } from "@/components/Advert";
 import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
 import useAuth from "@/hooks/useAuth";
 import { Link } from "react-router-dom";

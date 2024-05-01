@@ -5,8 +5,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonInput,
-  IonInputPasswordToggle,
   IonItem,
   IonList,
   IonPage,
@@ -16,12 +14,11 @@ import {
   useIonToast,
 } from "@ionic/react";
 
-import { Controller, FormProvider } from "react-hook-form";
 import useHookForm from "@/hooks/useHookForm";
-import clsx from "clsx";
 import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
+import PasswordIonInput from "@/components/PasswordIonInput";
 
 const EditProfilePassword = () => {
   return (
@@ -89,71 +86,37 @@ const PasswordEdit = () => {
   };
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)}>
-        <IonList>
-          {/* Current Password */}
-          <Controller
-            name={"current_password"}
-            disabled={passwordMutation.isPending}
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  type="password"
-                  label="Current Password"
-                  labelPlacement="stacked"
-                  name={field.name}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  value={field.value}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                >
-                  <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-                </IonInput>
-              </IonItem>
-            )}
+    <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+      <IonList>
+        {/* Current Password */}
+        <IonItem>
+          <PasswordIonInput
+            {...form.register("current_password")}
+            label="Current Password"
+            errorText={form.formState.errors["current_password"]?.message}
           />
+        </IonItem>
 
-          {/* New Password */}
-          <Controller
-            name={"new_password"}
-            disabled={passwordMutation.isPending}
-            render={({ field, fieldState }) => (
-              <IonItem>
-                <IonInput
-                  type="password"
-                  label="New Password"
-                  labelPlacement="stacked"
-                  name={field.name}
-                  onIonInput={field.onChange}
-                  onIonBlur={field.onBlur}
-                  value={field.value}
-                  errorText={fieldState.error?.message}
-                  className={clsx(
-                    fieldState.invalid && "ion-invalid ion-touched"
-                  )}
-                >
-                  <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-                </IonInput>
-              </IonItem>
-            )}
+        {/* New Password */}
+        <IonItem>
+          <PasswordIonInput
+            {...form.register("new_password")}
+            label="New Password"
+            errorText={form.formState.errors["new_password"]?.message}
           />
-        </IonList>
+        </IonItem>
+      </IonList>
 
-        <div className="ion-padding">
-          <IonButton
-            expand="block"
-            type="submit"
-            disabled={passwordMutation.isPending}
-          >
-            {passwordMutation.isPending ? <IonSpinner /> : <>Save</>}
-          </IonButton>
-        </div>
-      </form>
-    </FormProvider>
+      <div className="ion-padding">
+        <IonButton
+          expand="block"
+          type="submit"
+          disabled={passwordMutation.isPending}
+        >
+          {passwordMutation.isPending ? <IonSpinner /> : <>Save</>}
+        </IonButton>
+      </div>
+    </form>
   );
 };
 export default EditProfilePassword;
