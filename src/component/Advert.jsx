@@ -84,7 +84,7 @@ const Advert = ({ advert, full = false }) => {
                   src={
                     advert["user"]["profile_photo"]?.["cache"]?.[
                       "extra-small"
-                    ] || DefaultCategoryImage
+                    ] || DefaultUserImage
                   }
                   className="object-cover object-center w-full h-full"
                 />
@@ -104,7 +104,7 @@ const Advert = ({ advert, full = false }) => {
                   alt={advert["category"]["name"]}
                   src={
                     advert["category"]["image"]?.["cache"]?.["extra-small"] ||
-                    DefaultUserImage
+                    DefaultCategoryImage
                   }
                   className="object-cover object-center w-full h-full"
                 />
