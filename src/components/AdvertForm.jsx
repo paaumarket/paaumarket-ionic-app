@@ -45,6 +45,11 @@ export default function AdvertForm({
     isEditing,
   });
 
+  const { append: appendImage, remove: removeImage } = useFieldArray({
+    control: form.control,
+    name: "images",
+  });
+
   const [presentLoading, dismissLoading] = useIonLoading();
   const advertMutation = useFormMutation({
     form,
@@ -113,7 +118,17 @@ export default function AdvertForm({
       <IonList inset>
         {/* Category */}
         {includeCategory ? (
-          <CategorySelect name="category_id" form={form} />
+          <Controller
+            control={form.control}
+            name="category_id"
+            render={({ field, fieldState }) => (
+              <CategoryMultiLevelSelect
+                value={field.value}
+                onSelect={(value) => field.onChange(value)}
+                errorText={fieldState.error?.message}
+              />
+            )}
+          />
         ) : null}
 
         <IonItemGroup>
@@ -159,7 +174,18 @@ export default function AdvertForm({
           />
 
           {/* Images */}
-          <ImagesInput name="images" form={form} />
+          <Controller
+            control={form.control}
+            name="images"
+            render={({ field, fieldState }) => (
+              <ImagesInput
+                images={field.value}
+                appendImage={appendImage}
+                removeImage={removeImage}
+                errorText={fieldState.error?.message}
+              />
+            )}
+          />
         </IonItemGroup>
       </IonList>
 
@@ -176,28 +202,9 @@ export default function AdvertForm({
   );
 }
 
-/** Category Select */
-const CategorySelect = ({ name, form }) => {
-  const value = form.watch(name);
-
-  return (
-    <CategoryMultiLevelSelect
-      value={value}
-      onSelect={(id) => form.setValue(name, id)}
-      errorText={form.formState.errors[name]?.message}
-    />
-  );
-};
-
 /** ImagesInput */
-const ImagesInput = ({ name, form }) => {
+const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
   const imageInputRef = useRef();
-  const { append: appendImage, remove: removeImage } = useFieldArray({
-    control: form.control,
-    name: name,
-  });
-
-  const images = form.watch(name);
 
   // Action sheet
   const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
@@ -233,9 +240,9 @@ const ImagesInput = ({ name, form }) => {
         </IonText>
 
         {/* Error message */}
-        {form.formState.errors[name] ? (
+        {errorText ? (
           <IonText color={"danger"} className="text-xs">
-            {form.formState.errors[name].message}
+            {errorText}
           </IonText>
         ) : null}
 
