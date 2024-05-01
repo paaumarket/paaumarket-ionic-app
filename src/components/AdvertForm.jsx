@@ -14,7 +14,7 @@ import * as yup from "yup";
 
 import CategoryMultiLevelSelect from "@/components/CategoryMultiLevelSelect";
 import useHookForm from "@/hooks/useHookForm";
-import { useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import CurrencyInput from "react-currency-input-field";
 import { useRef } from "react";
 import useFormMutation from "@/hooks/useFormMutation";
@@ -25,6 +25,7 @@ import resizeImage from "@/utils/resizeImage";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import FormIonInput from "./FormIonInput";
 import FormIonTextarea from "./FormIonTextarea";
+import { useMemo } from "react";
 
 const MAX_IMAGE_UPLOAD = 5;
 const MAX_IMAGE_DIMENSION = 1000;
@@ -137,18 +138,25 @@ export default function AdvertForm({
           </IonItem>
 
           {/* Price */}
-          <IonItem>
-            <CurrencyInput
-              {...form.register("price")}
-              customInput={FormIonInput}
-              label="Price"
-              labelPlacement="stacked"
-              step={1}
-              placeholder={0}
-              onValueChange={(value) => form.setValue("price", value)}
-              errorText={form.formState.errors["price"]?.message}
-            />
-          </IonItem>
+          <Controller
+            control={form.control}
+            name="price"
+            render={({ field, fieldState }) => (
+              <IonItem>
+                <CurrencyInput
+                  customInput={FormIonInput}
+                  label="Price"
+                  labelPlacement="stacked"
+                  step={1}
+                  placeholder={0}
+                  ref={field.ref}
+                  value={field.value}
+                  onValueChange={(value) => field.onChange(value)}
+                  errorText={fieldState.error?.message}
+                />
+              </IonItem>
+            )}
+          />
 
           {/* Images */}
           <ImagesInput name="images" form={form} />
@@ -303,8 +311,33 @@ const useAdvertHookForm = ({
   includeCategory,
   isApproving,
   isEditing,
-}) =>
-  useHookForm({
+}) => {
+  const schema = useMemo(
+    () =>
+      yup
+        .object({
+          /** Category ID */
+          ...(includeCategory
+            ? {
+                category_id: yup.number().required().label("Category"),
+              }
+            : null),
+          /** Other attributes */
+          title: yup.string().required().label("Title"),
+          description: yup.string().required().label("Description"),
+          price: yup.number().required().label("Price"),
+          images: yup
+            .array()
+            .required()
+            .min(1)
+            .max(MAX_IMAGE_UPLOAD)
+            .label("Images"),
+        })
+        .required(),
+    [advert, includeCategory, isApproving, isEditing]
+  );
+
+  return useHookForm({
     defaultValues: {
       /** Category ID */
       ...(includeCategory
@@ -318,24 +351,6 @@ const useAdvertHookForm = ({
       price: isApproving || isEditing ? advert["price"] : 0,
       images: isApproving || isEditing ? advert["images"] : [],
     },
-    schema: yup
-      .object({
-        /** Category ID */
-        ...(includeCategory
-          ? {
-              category_id: yup.number().required().label("Category"),
-            }
-          : null),
-        /** Other attributes */
-        title: yup.string().required().label("Title"),
-        description: yup.string().required().label("Description"),
-        price: yup.number().required().label("Price"),
-        images: yup
-          .array()
-          .required()
-          .min(1)
-          .max(MAX_IMAGE_UPLOAD)
-          .label("Images"),
-      })
-      .required(),
+    schema,
   });
+};
