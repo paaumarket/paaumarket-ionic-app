@@ -156,7 +156,7 @@ const Category = () => {
     </div>
   ) : isSuccess ? (
     <IonGrid className="px-0">
-      <IonRow>
+      <IonRow className="ion-justify-content-center">
         {data.map((category) => (
           <IonCol
             key={category["id"]}
