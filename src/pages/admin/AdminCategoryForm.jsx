@@ -14,6 +14,7 @@ import { serialize } from "object-to-formdata";
 import { useQueryClient } from "@tanstack/react-query";
 import resizeImage from "@/utils/resizeImage";
 import FormIonInput from "@/components/FormIonInput";
+import { Controller } from "react-hook-form";
 
 const AdminCategoryForm = ({
   edit = false,
@@ -120,7 +121,17 @@ const AdminCategoryForm = ({
         ) : null}
 
         {/* Image */}
-        <ImageInput name="image" form={form} category={category} />
+        <Controller
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <ImageInput
+              category={category}
+              image={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
       </IonList>
 
       {/* Submit Button */}
@@ -131,9 +142,8 @@ const AdminCategoryForm = ({
   );
 };
 
-const ImageInput = ({ category, name, form }) => {
+const ImageInput = ({ category, image, onChange }) => {
   const imageInputRef = useRef();
-  const image = form.watch(name);
 
   return (
     <IonItem>
@@ -144,9 +154,7 @@ const ImageInput = ({ category, name, form }) => {
         accept=".jpg, .jpeg, .png, .gif"
         hidden
         onChange={(ev) =>
-          resizeImage(ev.target.files[0], 200).then((image) =>
-            form.setValue(name, image)
-          )
+          resizeImage(ev.target.files[0], 200).then((image) => onChange(image))
         }
       />
       <div className="ion-margin-top">
