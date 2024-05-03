@@ -14,6 +14,7 @@ import {
   IonIcon,
   IonPage,
   IonRow,
+  IonText,
   IonTitle,
   IonToolbar,
   useIonLoading,
@@ -27,6 +28,7 @@ import useAuth from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 
 export default function SingleAdvertPage() {
+  const { user } = useAuth();
   const { id } = useParams();
   const {
     isPending,
@@ -58,7 +60,24 @@ export default function SingleAdvertPage() {
               {isPending ? (
                 <AdvertPlaceholder />
               ) : (
-                <Advert full advert={advert} />
+                <div className="flex flex-col gap-4">
+                  {user?.["id"] === advert["user_id"] ? (
+                    <div>
+                      <IonText
+                        color={
+                          advert["status"] === "approved"
+                            ? "success"
+                            : advert["status"] === "declined"
+                            ? "danger"
+                            : "warning"
+                        }
+                      >
+                        {advert["status"].toUpperCase()}
+                      </IonText>
+                    </div>
+                  ) : null}
+                  <Advert full advert={advert} />
+                </div>
               )}
             </IonCol>
             <IonCol size="12" sizeXl="4">
