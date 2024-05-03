@@ -18,7 +18,6 @@ import Home from "../pages/Home";
 import SingleAdvertPage from "../pages/SingleAdvertPage";
 import Sell from "../pages/sell/Sell";
 import Profile from "@/pages/Profile";
-// import Category from "@/pages/Category";
 import ProtectedRoute from "./ProtectedRoute";
 import SubCategories from "@/pages/SubCategories";
 import MyAdverts from "@/pages/MyAdverts";
@@ -30,9 +29,17 @@ import EditProfile from "@/pages/EditProfile";
 import EditProfilePhoto from "@/pages/EditProfilePhoto";
 import EditProfilePassword from "@/pages/EditProfilePassword";
 import EditProfileDetails from "@/pages/EditProfileDetails";
+import Notifications from "@/pages/Notifications";
+import { useMemo } from "react";
 
 export default function Tabs() {
   const { user } = useAuth();
+  const hasNotifications = useMemo(
+    () =>
+      user?.["unread_notifications_count"] ||
+      user?.["admin"]?.["reviewing_adverts_count"],
+    [user]
+  );
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -131,6 +138,17 @@ export default function Tabs() {
           )}
         />
 
+        {/* Notifications */}
+        <Route
+          exact
+          path="/home/profile/notifications"
+          render={() => (
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          )}
+        />
+
         {/* Top up */}
         <Route
           exact
@@ -175,14 +193,10 @@ export default function Tabs() {
 
         {/* Profile */}
         <IonTabButton tab={"profile"} href={user ? "/home/profile" : "/login"}>
+          {/* Notifications Count */}
+          {hasNotifications ? <IonBadge color={"danger"} /> : null}
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Profile</IonLabel>
-          {/* Pending Adverts Count */}
-          {user?.["admin"]?.["reviewing_adverts_count"] ? (
-            <IonBadge color={"warning"}>
-              {user?.["admin"]?.["reviewing_adverts_count"]}
-            </IonBadge>
-          ) : null}
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

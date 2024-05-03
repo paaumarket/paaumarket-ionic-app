@@ -18,9 +18,9 @@ export default function () {
     () =>
       mutation.mutate(null, {
         onSettled() {
-          logout();
-          history.replace("/");
           queryClient.resetQueries();
+          logout();
+          history.push("/");
         },
       }),
     []

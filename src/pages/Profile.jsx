@@ -21,6 +21,7 @@ import {
   callOutline,
   createOutline,
   mailOutline,
+  megaphoneOutline,
   personOutline,
   storefrontOutline,
   walletOutline,
@@ -63,12 +64,7 @@ export default function Profile() {
 
           <IonList>
             <IonItem>
-              <IonIcon
-                icon={walletOutline}
-                size="large"
-                slot="start"
-                color={"primary"}
-              />
+              <IonIcon icon={walletOutline} slot="start" color={"primary"} />
 
               <IonLabel>
                 <h3>
@@ -84,9 +80,7 @@ export default function Profile() {
                     ₦{Intl.NumberFormat().format(user["wallet_balance"])}
                   </IonText>
                 </h3>
-                <p>
-                  <IonText color="medium">MY BALANCE</IonText>
-                </p>
+                <p>MY BALANCE</p>
               </IonLabel>
 
               <IonButton
@@ -101,7 +95,6 @@ export default function Profile() {
             <IonItem routerLink="/home/profile/my-adverts">
               <IonIcon
                 icon={storefrontOutline}
-                size="large"
                 slot="start"
                 color={"primary"}
               />
@@ -112,6 +105,18 @@ export default function Profile() {
                 </h3>
                 <p>SEE ADS</p>
               </IonLabel>
+            </IonItem>
+
+            <IonItem routerLink="/home/profile/notifications">
+              <IonIcon icon={megaphoneOutline} slot="start" color={"primary"} />
+
+              <IonLabel color={"primary"}>Notifications</IonLabel>
+
+              {user["unread_notifications_count"] ? (
+                <IonBadge slot="end" color={"danger"}>
+                  {user["unread_notifications_count"]}
+                </IonBadge>
+              ) : null}
             </IonItem>
           </IonList>
 
