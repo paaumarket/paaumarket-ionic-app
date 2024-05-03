@@ -1,4 +1,6 @@
+import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
+import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
 import {
   IonBackButton,
@@ -25,6 +27,7 @@ import { walletOutline } from "ionicons/icons";
 import { useMemo } from "react";
 
 const Notifications = () => {
+  const { user, login } = useAuth();
   const {
     data,
     isPending,
@@ -47,6 +50,16 @@ const Notifications = () => {
     () => data?.pages.reduce((current, page) => current.concat(page.data), []),
     [data]
   );
+
+  const handleReadAllSuccess = () => {
+    login({
+      user: {
+        ...user,
+        unread_notifications_count: 0,
+      },
+    });
+    refetch();
+  };
 
   return (
     <IonPage>
@@ -81,9 +94,15 @@ const Notifications = () => {
       </IonContent>
       {isSuccess && notifications.length ? (
         <IonFooter className="ion-padding">
-          <NotificationsReadAllButton onSuccess={refetch} />
+          <NotificationsReadAllButton onSuccess={handleReadAllSuccess} />
         </IonFooter>
       ) : null}
+
+      <InfiniteScroll
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </IonPage>
   );
 };
