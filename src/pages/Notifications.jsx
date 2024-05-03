@@ -14,6 +14,7 @@ import {
   IonNote,
   IonPage,
   IonSpinner,
+  IonThumbnail,
   IonTitle,
   IonToolbar,
   useIonLoading,
@@ -137,7 +138,7 @@ const NotificationItem = ({ notification }) => {
       content = (
         <IonItem color={!notification["read_at"] ? "light" : undefined}>
           <IonIcon slot="start" icon={walletOutline} />
-          <IonLabel>
+          <IonLabel color={"success"}>
             <h4>Wallet Top Up</h4>
             <p> {notification["data"]["reference"]}</p>
           </IonLabel>
@@ -146,6 +147,40 @@ const NotificationItem = ({ notification }) => {
           </IonNote>
         </IonItem>
       );
+      break;
+
+    case "advert_approved_notification":
+    case "advert_declined_notification":
+      content = (
+        <IonItem
+          color={!notification["read_at"] ? "light" : undefined}
+          routerLink={"/home/adverts/ad/" + notification["data"]["advert_id"]}
+        >
+          <IonThumbnail
+            slot="start"
+            className="[--size:theme(spacing.10)] relative"
+          >
+            <img
+              src={notification["data"]["advert_image"]["cache"]["small"]}
+              className="object-cover object-center w-full h-full"
+            />
+          </IonThumbnail>
+          <IonLabel
+            color={
+              notification["type"] === "advert_approved_notification"
+                ? "success"
+                : "danger"
+            }
+          >
+            Your advert <b>{notification["data"]["advert_title"]}</b> was{" "}
+            {notification["type"] === "advert_approved_notification"
+              ? "approved"
+              : "declined"}
+            !
+          </IonLabel>
+        </IonItem>
+      );
+      break;
   }
 
   return content;

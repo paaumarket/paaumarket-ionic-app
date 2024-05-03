@@ -30,6 +30,7 @@ import EditAdvertFormModal from "@/components/EditAdvertFormModal";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import clsx from "clsx";
+import { useHistory } from "react-router";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -131,6 +132,8 @@ const MyAdverts = () => {
 };
 
 const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
+  const history = useHistory();
+
   // Show Advert
   const [present, dismiss] = useIonModal(MyAdvertModal, {
     advert,
@@ -201,7 +204,11 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
   };
 
   return (
-    <IonItem key={advert["id"]} onClick={() => openAdvertModal(advert)}>
+    <IonItem
+      button
+      key={advert["id"]}
+      onClick={() => history.push("/home/adverts/ad/" + advert["id"])}
+    >
       <IonThumbnail
         slot="start"
         className="[--size:theme(spacing.20)] relative"
