@@ -146,7 +146,7 @@ export default function Profile() {
                 <IonItem routerLink="/admin">
                   <IonLabel>Admin Panel</IonLabel>
                   {user?.["admin"]?.["reviewing_adverts_count"] ? (
-                    <IonBadge color={"warning"}>
+                    <IonBadge color={"danger"}>
                       {user?.["admin"]?.["reviewing_adverts_count"]}
                     </IonBadge>
                   ) : null}
