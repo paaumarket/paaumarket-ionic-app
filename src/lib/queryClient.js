@@ -4,10 +4,10 @@ import { QueryClient } from "@tanstack/react-query";
 export default new QueryClient({
   defaultOptions: {
     mutations: {
-      retry: (error) => typeof error.response === "undefined",
+      retry: (count, error) => typeof error.response === "undefined",
     },
     queries: {
-      retry: (error) => typeof error.response === "undefined",
+      retry: (count, error) => typeof error.response === "undefined",
     },
   },
 });
