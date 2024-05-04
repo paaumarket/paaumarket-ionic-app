@@ -19,6 +19,7 @@ import {
   useIonActionSheet,
   useIonAlert,
   useIonLoading,
+  useIonModal,
   useIonToast,
 } from "@ionic/react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
@@ -27,9 +28,16 @@ import { useMemo } from "react";
 import DefaultUserImage from "@/assets/user@100.png";
 import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
-import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
+import {
+  callOutline,
+  ellipsisHorizontal,
+  ellipsisVertical,
+  logoWhatsapp,
+} from "ionicons/icons";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
+import clsx from "clsx";
+import { format } from "date-fns";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
@@ -112,6 +120,11 @@ const AdminUsers = () => {
 };
 
 const AdminUserItem = ({ user, onTopUp }) => {
+  const [presentModal, dismissModal] = useIonModal(AdminUserDetailsModal, {
+    user,
+    onDismissed: () => dismissModal(),
+  });
+
   const openTopUpAlert = useTopUpAlert({
     user,
     onSuccess: onTopUp,
@@ -123,6 +136,13 @@ const AdminUserItem = ({ user, onTopUp }) => {
   const openActions = () =>
     presentActionSheet({
       buttons: [
+        {
+          text: "Show Details",
+          data: {
+            action: "show-details",
+          },
+          handler: () => presentModal(),
+        },
         {
           text: "Top Up",
           data: {
@@ -182,6 +202,112 @@ const AdminUserItem = ({ user, onTopUp }) => {
         <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
       </IonButton>
     </IonItem>
+  );
+};
+
+const AdminUserDetailsModal = ({ user, onDismissed }) => {
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={() => onDismissed()}>Cancel</IonButton>
+          </IonButtons>
+          <IonTitle>{user["name"]}</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        <div className="ion-padding">
+          <IonAvatar className={clsx("w-28 h-28", "inline-block")}>
+            <img
+              alt={user["name"]}
+              src={
+                user["profile_photo"]?.["cache"]?.["medium"] || DefaultUserImage
+              }
+              className="object-cover object-center w-full h-full"
+            />
+          </IonAvatar>
+        </div>
+        <IonList>
+          {/* Name */}
+          <IonItem>
+            <IonLabel>
+              <h3>Name</h3>
+              <p>{user["name"]}</p>
+            </IonLabel>
+          </IonItem>
+
+          {/* Email */}
+          <IonItem>
+            <IonLabel>
+              <h3>Email</h3>
+              <p>{user["email"]}</p>
+            </IonLabel>
+          </IonItem>
+
+          {/* Mobile Number */}
+          <IonItem>
+            <IonLabel>
+              <h3>Mobile Number</h3>
+              <p>{user["mobile_number"]}</p>
+            </IonLabel>
+            <IonButtons slot="end">
+              <IonButton
+                color={"primary"}
+                target="_blank"
+                href={`tel:${user["mobile_number"]}`}
+              >
+                <IonIcon icon={callOutline} />
+              </IonButton>
+              <IonButton
+                color={"primary"}
+                target="_blank"
+                href={`https://wa.me/${user["mobile_number"]}`}
+              >
+                <IonIcon icon={logoWhatsapp} />
+              </IonButton>
+            </IonButtons>
+          </IonItem>
+
+          {/* Wallet Balance */}
+          <IonItem>
+            <IonLabel>
+              <h3>Wallet Balance</h3>
+              <p>
+                <IonText
+                  slot="start"
+                  color={
+                    user["wallet_balance"] <= 100
+                      ? "danger"
+                      : user["wallet_balance"] < 1000
+                      ? "warning"
+                      : "success"
+                  }
+                >
+                  ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+                </IonText>
+              </p>
+            </IonLabel>
+          </IonItem>
+
+          {/* Adverts */}
+          <IonItem>
+            <IonLabel>
+              <h3>Adverts</h3>
+              <p>{user["adverts_count"]} ads</p>
+            </IonLabel>
+          </IonItem>
+
+          {/* Registered Date */}
+          <IonItem>
+            <IonLabel>
+              <h3>Registered</h3>
+              <p>{format(user["created_at"], "PPp")}</p>
+            </IonLabel>
+          </IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
   );
 };
 
