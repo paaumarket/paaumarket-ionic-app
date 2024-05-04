@@ -249,6 +249,8 @@ export default function Tabs() {
           path="/app"
           render={() => <Redirect to="/app/adverts" />}
         />
+
+        <Route render={() => <Redirect to="/" />} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">

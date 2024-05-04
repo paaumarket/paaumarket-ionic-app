@@ -54,6 +54,8 @@ const App = () => {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
+            <Route path="/app" render={() => <Tabs />} />
+
             <Route
               exact
               path="/forget_password"
@@ -66,9 +68,9 @@ const App = () => {
             <Route exact path="/login" render={() => <SignIn />} />
             <Route exact path="/logout" render={() => <Logout />} />
 
-            <Route path="/app" render={() => <Tabs />} />
-
             <Route exact path="/" render={() => <Redirect to="/app" />} />
+
+            <Route render={() => <Redirect to="/" />} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
