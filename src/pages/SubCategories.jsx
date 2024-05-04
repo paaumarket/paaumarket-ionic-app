@@ -37,7 +37,7 @@ export default () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/adverts" />
+            <IonBackButton defaultHref="/app/adverts" />
           </IonButtons>
 
           <IonTitle>
@@ -92,7 +92,7 @@ const SubCategoryList = ({ category }) => {
             <IonItem
               key={sub["id"]}
               routerLink={generatePath(
-                "/home/adverts/categories/:category/:sub",
+                "/app/adverts/categories/:category/:sub",
                 {
                   category: category["slug"],
                   sub: sub["slug"],

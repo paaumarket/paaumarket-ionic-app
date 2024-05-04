@@ -41,18 +41,10 @@ import SignIn from "@/pages/SignIn";
 import Tabs from "@/components/Tabs";
 import Logout from "@/pages/Logout";
 
-import AdminDashboard from "@/pages/admin/AdminDashboard";
-import AdminCategories from "@/pages/admin/AdminCategories";
-import AdminSubCategories from "@/pages/admin/AdminSubCategories";
-import AdminProtectedRoute from "@/components/AdminProtectedRoute";
-
 import ForgetPassword from "@/pages/ForgetPassword";
 import NewPassword from "@/pages/NewPassword";
 import OTP from "@/pages/OTP";
-import AdminAdverts from "@/pages/admin/AdminAdverts";
 import { ProfileUpdater } from "./ProfileUpdater";
-import AdminUsers from "@/pages/admin/AdminUsers";
-import UserAdverts from "@/pages/UserAdverts";
 
 setupIonicReact();
 
@@ -62,71 +54,6 @@ const App = () => {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
-            {/* Admin Users */}
-            <Route
-              exact
-              path="/admin/users"
-              render={() => (
-                <AdminProtectedRoute>
-                  <AdminUsers />
-                </AdminProtectedRoute>
-              )}
-            />
-
-            {/* Admin User Adverts */}
-            <Route
-              exact
-              path="/admin/adverts/user/:user"
-              render={() => (
-                <AdminProtectedRoute>
-                  <UserAdverts backButtonHref="/admin/users" />
-                </AdminProtectedRoute>
-              )}
-            />
-
-            {/* Admin Adverts */}
-            <Route
-              exact
-              path="/admin/adverts"
-              render={() => (
-                <AdminProtectedRoute>
-                  <AdminAdverts />
-                </AdminProtectedRoute>
-              )}
-            />
-
-            {/* Admin Categories */}
-            <Route
-              exact
-              path="/admin/categories"
-              render={() => (
-                <AdminProtectedRoute>
-                  <AdminCategories />
-                </AdminProtectedRoute>
-              )}
-            />
-
-            <Route
-              exact
-              path="/admin/categories/:category"
-              render={() => (
-                <AdminProtectedRoute>
-                  <AdminSubCategories />
-                </AdminProtectedRoute>
-              )}
-            />
-
-            {/* Admin Dashboard */}
-            <Route
-              exact
-              path="/admin"
-              render={() => (
-                <AdminProtectedRoute>
-                  <AdminDashboard />
-                </AdminProtectedRoute>
-              )}
-            />
-
             <Route
               exact
               path="/forget_password"
@@ -139,9 +66,9 @@ const App = () => {
             <Route exact path="/login" render={() => <SignIn />} />
             <Route exact path="/logout" render={() => <Logout />} />
 
-            <Route path="/home" render={() => <Tabs />} />
+            <Route path="/app" render={() => <Tabs />} />
 
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route exact path="/" render={() => <Redirect to="/app" />} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>

@@ -31,7 +31,7 @@ import { useState } from "react";
 const Advert = ({ advert, full = false }) => {
   return (
     <IonCard
-      routerLink={!full ? "/home/adverts/ad/" + advert["id"] : undefined}
+      routerLink={!full ? "/app/adverts/ad/" + advert["id"] : undefined}
       className="ion-no-margin"
     >
       {advert["preview_image"] ? (
@@ -73,7 +73,7 @@ const Advert = ({ advert, full = false }) => {
         <IonCardContent>
           <div className="flex flex-col gap-2">
             <Link
-              to={generatePath("/home/adverts/user/:id", {
+              to={generatePath("/app/adverts/user/:id", {
                 id: advert["user"]["id"],
               })}
               className="inline-flex flex-wrap items-center gap-2"
@@ -93,7 +93,7 @@ const Advert = ({ advert, full = false }) => {
             </Link>
             {/* Category */}
             <Link
-              to={generatePath("/home/adverts/categories/:parent/:sub", {
+              to={generatePath("/app/adverts/categories/:parent/:sub", {
                 parent: advert["category"]["parent"]["slug"],
                 sub: advert["category"]["slug"],
               })}

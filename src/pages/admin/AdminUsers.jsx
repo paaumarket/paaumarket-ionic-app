@@ -68,7 +68,7 @@ const AdminUsers = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/admin" />
+            <IonBackButton defaultHref="/app/me/admin" />
           </IonButtons>
           <IonTitle>Users</IonTitle>
         </IonToolbar>
@@ -170,7 +170,7 @@ const AdminUserItem = ({ user, onTopUp }) => {
         </p>
         <p>
           <Link
-            to={generatePath("/admin/adverts/user/:id", {
+            to={generatePath("/app/me/admin/adverts/user/:id", {
               id: user["id"],
             })}
           >

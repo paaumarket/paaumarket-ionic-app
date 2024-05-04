@@ -21,7 +21,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { generatePath } from "react-router-dom";
 
-import logo from "../assets/paaumarket.svg";
+import logo from "@/assets/paaumarket.svg";
 import { useState } from "react";
 import AdvertList from "@/components/AdvertList";
 import { isPlatform } from "@ionic/react";
@@ -81,7 +81,7 @@ export default function Home() {
 
           <IonButtons slot="end">
             <IonButton
-              routerLink={user ? "/home/profile" : "/login"}
+              routerLink={user ? "/app/me" : "/login"}
               fill="clear"
               color={"primary"}
             >
@@ -169,7 +169,7 @@ const Category = () => {
           >
             <IonCard
               className="flex flex-col justify-center w-full h-full ion-no-margin"
-              routerLink={generatePath("/home/adverts/categories/:category", {
+              routerLink={generatePath("/app/adverts/categories/:category", {
                 category: category["slug"],
               })}
             >

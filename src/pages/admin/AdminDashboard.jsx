@@ -22,7 +22,7 @@ const AdminDashboard = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile" />
+            <IonBackButton defaultHref="/app/me" />
           </IonButtons>
           <IonTitle>Admin</IonTitle>
         </IonToolbar>
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
       <IonContent fullscreen>
         <IonList>
           {/* Categories */}
-          <IonItem routerLink="/admin/categories">
+          <IonItem routerLink="/app/me/admin/categories">
             <IonIcon
               aria-hidden="true"
               icon={folderOutline}
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
           </IonItem>
 
           {/* Adverts */}
-          <IonItem routerLink="/admin/adverts">
+          <IonItem routerLink="/app/me/admin/adverts">
             <IonIcon
               aria-hidden="true"
               icon={megaphoneOutline}
@@ -51,14 +51,14 @@ const AdminDashboard = () => {
             <IonLabel>Adverts</IonLabel>
 
             {user?.["admin"]?.["reviewing_adverts_count"] ? (
-              <IonBadge color={"warning"}>
+              <IonBadge color={"danger"}>
                 {user?.["admin"]?.["reviewing_adverts_count"]}
               </IonBadge>
             ) : null}
           </IonItem>
 
           {/* Users */}
-          <IonItem routerLink="/admin/users">
+          <IonItem routerLink="/app/me/admin/users">
             <IonIcon
               aria-hidden="true"
               icon={personOutline}

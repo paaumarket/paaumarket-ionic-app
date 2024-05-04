@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // Logo Image
-import api from "../lib/api";
+import api from "@/lib/api";
 import useAuth from "@/hooks/useAuth";
 import useFormMutation from "@/hooks/useFormMutation";
 import FormIonInput from "./FormIonInput";

@@ -40,7 +40,7 @@ export default () => {
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton
-              defaultHref={generatePath("/home/adverts/categories/:category", {
+              defaultHref={generatePath("/app/adverts/categories/:category", {
                 category: match.params.category,
               })}
             />

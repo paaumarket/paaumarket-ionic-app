@@ -16,9 +16,9 @@ import {
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import api from "../lib/api";
+import api from "@/lib/api";
 // Logo Image
-import logo from "../assets/paaumarket.svg";
+import logo from "@/assets/paaumarket.svg";
 import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import { useHistory } from "react-router-dom";
@@ -60,7 +60,7 @@ const Register = () => {
       onSuccess(auth) {
         login(auth);
 
-        history.replace("/home");
+        history.replace("/app");
       },
     });
   };

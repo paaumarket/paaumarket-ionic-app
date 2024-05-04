@@ -60,7 +60,7 @@ const AdminAdverts = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/admin" />
+            <IonBackButton defaultHref="/app/me/admin" />
           </IonButtons>
           <IonTitle>Adverts</IonTitle>
         </IonToolbar>

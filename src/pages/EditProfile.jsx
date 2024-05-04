@@ -19,7 +19,7 @@ const EditProfile = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile" />
+            <IonBackButton defaultHref="/app/me" />
           </IonButtons>
           <IonTitle>Edit Profile</IonTitle>
         </IonToolbar>
@@ -28,15 +28,15 @@ const EditProfile = () => {
       {/* Page content */}
       <IonContent fullscreen>
         <IonList>
-          <IonItem routerLink="/home/profile/edit/photo">
+          <IonItem routerLink="/app/me/edit/photo">
             <IonIcon slot="start" icon={imageOutline} color="primary" />
             <IonLabel>Photo</IonLabel>
           </IonItem>
-          <IonItem routerLink="/home/profile/edit/details">
+          <IonItem routerLink="/app/me/edit/details">
             <IonIcon slot="start" icon={personOutline} color="primary" />
             <IonLabel>Profile Details</IonLabel>
           </IonItem>
-          <IonItem routerLink="/home/profile/edit/password">
+          <IonItem routerLink="/app/me/edit/password">
             <IonIcon slot="start" icon={lockClosedOutline} color="primary" />
             <IonLabel>Password</IonLabel>
           </IonItem>

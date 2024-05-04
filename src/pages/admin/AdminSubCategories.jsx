@@ -56,7 +56,7 @@ const AdminSubCategories = () => {
   const openDeleteAlert = useDeleteAlert({
     title: category?.["name"],
     onDelete: () => categoryDeleteMutation.mutateAsync(),
-    onSuccess: () => history.replace("/admin/categories"),
+    onSuccess: () => history.replace("/app/me/admin/categories"),
   });
 
   const [presentEditCategoryModal, dismissEditCategoryModal] = useIonModal(
@@ -67,7 +67,7 @@ const AdminSubCategories = () => {
       onCancelled: () => dismissEditCategoryModal(),
       onSuccess: (category) => {
         dismissEditCategoryModal();
-        history.replace("/admin/categories/" + category["slug"]);
+        history.replace("/app/me/admin/categories/" + category["slug"]);
       },
     }
   );
@@ -79,7 +79,7 @@ const AdminSubCategories = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/admin/categories" />
+            <IonBackButton defaultHref="/app/me/admin/categories" />
           </IonButtons>
 
           <IonTitle>

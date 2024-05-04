@@ -42,7 +42,7 @@ export default ({ backButtonHref }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={backButtonHref || "/home/adverts"} />
+            <IonBackButton defaultHref={backButtonHref || "/app/adverts"} />
           </IonButtons>
 
           <IonTitle>

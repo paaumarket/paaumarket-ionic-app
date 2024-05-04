@@ -15,11 +15,7 @@ export default function Header({ children, showProfile = true }) {
 
         {showProfile ? (
           <IonButtons slot="end">
-            <IonButton
-              routerLink="/home/profile"
-              fill="clear"
-              color={"primary"}
-            >
+            <IonButton routerLink="/app/me" fill="clear" color={"primary"}>
               <IonIcon icon={personCircleOutline} size="large" />
             </IonButton>
           </IonButtons>

@@ -46,7 +46,7 @@ const AdminCategories = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/admin" />
+            <IonBackButton defaultHref="/app/me/admin" />
           </IonButtons>
           <IonTitle>Categories</IonTitle>
         </IonToolbar>

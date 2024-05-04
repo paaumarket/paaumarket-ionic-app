@@ -67,7 +67,7 @@ const MyAdverts = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile" />
+            <IonBackButton defaultHref="/app/me" />
           </IonButtons>
           <IonTitle>My Adverts</IonTitle>
         </IonToolbar>
@@ -207,7 +207,7 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
     <IonItem
       button
       key={advert["id"]}
-      onClick={() => history.push("/home/adverts/ad/" + advert["id"])}
+      onClick={() => history.push("/app/adverts/ad/" + advert["id"])}
     >
       <IonThumbnail
         slot="start"

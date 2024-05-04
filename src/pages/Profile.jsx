@@ -37,7 +37,7 @@ export default function Profile() {
         <IonToolbar>
           <IonTitle>Profile</IonTitle>
           <IonButtons slot="primary">
-            <IonButton routerLink={"/home/profile/edit"}>
+            <IonButton routerLink={"/app/me/edit"}>
               <IonIcon slot="icon-only" icon={createOutline}></IonIcon>
             </IonButton>
           </IonButtons>
@@ -83,16 +83,12 @@ export default function Profile() {
                 <p>MY BALANCE</p>
               </IonLabel>
 
-              <IonButton
-                slot="end"
-                size="small"
-                routerLink="/home/profile/top-up"
-              >
+              <IonButton slot="end" size="small" routerLink="/app/me/top-up">
                 Add Fund
               </IonButton>
             </IonItem>
 
-            <IonItem routerLink="/home/profile/my-adverts">
+            <IonItem routerLink="/app/me/my-adverts">
               <IonIcon
                 icon={storefrontOutline}
                 slot="start"
@@ -107,7 +103,7 @@ export default function Profile() {
               </IonLabel>
             </IonItem>
 
-            <IonItem routerLink="/home/profile/notifications">
+            <IonItem routerLink="/app/me/notifications">
               <IonIcon icon={megaphoneOutline} slot="start" color={"primary"} />
 
               <IonLabel color={"primary"}>Notifications</IonLabel>
@@ -143,7 +139,7 @@ export default function Profile() {
           <IonList>
             <IonItemGroup>
               {user["permissions"].includes("access-dashboard") ? (
-                <IonItem routerLink="/admin">
+                <IonItem routerLink="/app/me/admin">
                   <IonLabel>Admin Panel</IonLabel>
                   {user?.["admin"]?.["reviewing_adverts_count"] ? (
                     <IonBadge color={"danger"}>

@@ -46,7 +46,7 @@ const TopUp = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile" />
+            <IonBackButton defaultHref="/app/me" />
           </IonButtons>
           <IonTitle>Top Up</IonTitle>
         </IonToolbar>

@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 
 // Logo Image
-import logo from "../assets/paaumarket.svg";
+import logo from "@/assets/paaumarket.svg";
 import SignInForm from "@/components/SignInForm";
 import { useHistory } from "react-router-dom";
 
@@ -39,7 +39,7 @@ const SignIn = () => {
           </IonText>
         </div>
 
-        <SignInForm onSuccess={() => history.replace("/home")} />
+        <SignInForm onSuccess={() => history.replace("/app")} />
       </IonContent>
     </IonPage>
   );

@@ -32,7 +32,7 @@ export default function Sell() {
       },
     });
 
-    history.replace("/home/profile/my-adverts");
+    history.replace("/app/me/my-adverts");
   };
 
   return (
@@ -71,7 +71,7 @@ export default function Sell() {
             </p>
           </IonLabel>
 
-          <IonButton slot="end" size="small" routerLink="/home/profile/top-up">
+          <IonButton slot="end" size="small" routerLink="/app/me/top-up">
             Add Fund
           </IonButton>
         </IonItem>

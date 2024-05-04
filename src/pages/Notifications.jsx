@@ -66,7 +66,7 @@ const Notifications = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile" />
+            <IonBackButton defaultHref="/app/me" />
           </IonButtons>
           <IonTitle>Notifications</IonTitle>
         </IonToolbar>
@@ -173,7 +173,7 @@ const NotificationItem = ({ notification }) => {
       content = (
         <IonItem
           color={!notification["read_at"] ? "light" : undefined}
-          routerLink={"/home/adverts/ad/" + notification["data"]["advert_id"]}
+          routerLink={"/app/adverts/ad/" + notification["data"]["advert_id"]}
         >
           <IonThumbnail
             slot="start"

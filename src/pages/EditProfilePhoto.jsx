@@ -26,7 +26,7 @@ const EditProfilePhoto = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile/edit" />
+            <IonBackButton defaultHref="/app/me/edit" />
           </IonButtons>
           <IonTitle>Edit Profile Photo</IonTitle>
         </IonToolbar>

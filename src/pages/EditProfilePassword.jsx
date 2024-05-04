@@ -26,7 +26,7 @@ const EditProfilePassword = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home/profile/edit" />
+            <IonBackButton defaultHref="/app/me/edit" />
           </IonButtons>
           <IonTitle>Change Password</IonTitle>
         </IonToolbar>
