@@ -151,7 +151,7 @@ const AdvertContact = ({ advert }) => {
                 expand="full"
                 shape="round"
                 fill="outline"
-                href={`https://wa.me/${
+                href={`https://wa.me/234${
                   data["mobile_number"]
                 }?text=${encodeURIComponent(
                   `Hi, I'm interested in your advert on Paau Market - ${

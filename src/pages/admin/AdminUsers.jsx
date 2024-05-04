@@ -262,7 +262,7 @@ const AdminUserDetailsModal = ({ user, onDismissed }) => {
               <IonButton
                 color={"primary"}
                 target="_blank"
-                href={`https://wa.me/${user["mobile_number"]}`}
+                href={`https://wa.me/234${user["mobile_number"]}`}
               >
                 <IonIcon icon={logoWhatsapp} />
               </IonButton>
