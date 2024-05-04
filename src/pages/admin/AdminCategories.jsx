@@ -29,7 +29,7 @@ const AdminCategories = () => {
     onCancelled: () => dismiss(),
     onSuccess: (category) => {
       dismiss();
-      history.push(`/admin/categories/${category.slug}`);
+      history.push(`/app/me/admin/categories/${category.slug}`);
     },
   });
 
@@ -67,7 +67,7 @@ const AdminCategories = () => {
             {data.map((category) => (
               <IonItem
                 key={category["id"]}
-                routerLink={`/admin/categories/${category["slug"]}`}
+                routerLink={`/app/me/admin/categories/${category["slug"]}`}
               >
                 <IonThumbnail
                   slot="start"
