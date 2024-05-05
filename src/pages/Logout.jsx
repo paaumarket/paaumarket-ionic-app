@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 export default function () {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const queryClient = useQueryClient();
   const history = useHistory();
   const mutation = useMutation({
@@ -15,21 +15,23 @@ export default function () {
   });
 
   useEffect(
-    () =>
-      mutation.mutate(null, {
-        onSettled() {
-          queryClient.resetQueries();
-          logout();
-          history.push("/");
-        },
-      }),
+    () => {
+      queryClient.cancelQueries().then(
+        ()=> 
+          mutation.mutateAsync().finally(()=>{
+              queryClient.removeQueries();
+              logout();
+              history.replace("/");
+          })
+      );
+    },
     []
   );
 
   return (
     <IonPage>
       <IonContent>
-        <IonLoading isOpen />
+        <IonLoading isOpen={Boolean(user)} message="Signing out..." />
       </IonContent>
     </IonPage>
   );
