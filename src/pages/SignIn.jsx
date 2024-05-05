@@ -20,7 +20,7 @@ const SignIn = () => {
       <IonHeader className="shadow-none">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/"></IonBackButton>
+            <IonBackButton defaultHref="/app"></IonBackButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>

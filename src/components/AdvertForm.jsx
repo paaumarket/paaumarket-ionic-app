@@ -146,9 +146,11 @@ export default function AdvertForm({
           <IonItem>
             <FormIonTextarea
               {...form.register("description")}
+              autoGrow
               label="Description"
               labelPlacement="stacked"
               errorText={form.formState.errors["description"]?.message}
+              rows={5}
             />
           </IonItem>
 

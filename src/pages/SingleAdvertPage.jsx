@@ -45,7 +45,7 @@ export default function SingleAdvertPage() {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/"></IonBackButton>
+            <IonBackButton defaultHref="/app"></IonBackButton>
           </IonButtons>
           <IonTitle>
             {isPending ? "Loading..." : isSuccess ? advert["title"] : "Error!"}

@@ -5,7 +5,6 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
-  IonPage,
   IonText,
   IonTitle,
   IonToolbar,
@@ -16,6 +15,7 @@ import { useHistory } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import AdvertForm from "@/components/AdvertForm";
 import { walletOutline } from "ionicons/icons";
+import TabsPage from "@/components/TabsPage";
 
 export default function Sell() {
   const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ export default function Sell() {
   };
 
   return (
-    <IonPage>
+    <TabsPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Post New Advert</IonTitle>
@@ -77,6 +77,6 @@ export default function Sell() {
         </IonItem>
         <AdvertForm onSuccess={handleFormSuccess} />
       </IonContent>
-    </IonPage>
+    </TabsPage>
   );
 }

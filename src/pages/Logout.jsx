@@ -14,24 +14,20 @@ export default function () {
     mutationFn: () => api.post("/logout"),
   });
 
-  useEffect(
-    () => {
-      queryClient.cancelQueries().then(
-        ()=> 
-          mutation.mutateAsync().finally(()=>{
-              queryClient.removeQueries();
-              logout();
-              history.replace("/");
-          })
-      );
-    },
-    []
-  );
+  useEffect(() => {
+    queryClient.cancelQueries().then(() =>
+      mutation.mutateAsync().finally(() => {
+        queryClient.removeQueries();
+        logout();
+        history.replace("/");
+      })
+    );
+  }, []);
 
   return (
     <IonPage>
       <IonContent>
-        <IonLoading isOpen={Boolean(user)} message="Signing out..." />
+        <IonLoading isOpen message="Signing out..." />
       </IonContent>
     </IonPage>
   );

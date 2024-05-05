@@ -8,7 +8,6 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
-  IonPage,
   IonRow,
   IonSearchbar,
   IonSpinner,
@@ -30,6 +29,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
+import TabsPage from "@/components/TabsPage";
 
 export default function Home() {
   const { user } = useAuth();
@@ -58,7 +58,7 @@ export default function Home() {
   });
 
   return (
-    <IonPage>
+    <TabsPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
@@ -141,7 +141,7 @@ export default function Home() {
           isFetchingNextPage={isFetchingNextPage}
         />
       </IonContent>
-    </IonPage>
+    </TabsPage>
   );
 }
 
