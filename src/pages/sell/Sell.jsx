@@ -1,10 +1,13 @@
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
   IonContent,
   IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
+  IonList,
   IonText,
   IonTitle,
   IonToolbar,
@@ -44,37 +47,44 @@ export default function Sell() {
       </IonHeader>
 
       <IonContent>
-        <IonItem>
-          <IonIcon
-            icon={walletOutline}
-            size="large"
-            slot="start"
-            color={"primary"}
-          />
+        <IonList>
+          <IonItem>
+            <IonIcon
+              icon={walletOutline}
+              size="large"
+              slot="start"
+              color={"primary"}
+            />
 
-          <IonLabel>
-            <h3>
-              <IonText
-                color={
-                  user["wallet_balance"] <= 100
-                    ? "danger"
-                    : user["wallet_balance"] < 1000
-                    ? "warning"
-                    : "success"
-                }
-              >
-                ₦{Intl.NumberFormat().format(user["wallet_balance"])}
-              </IonText>
-            </h3>
-            <p>
-              <IonText color="medium">MY BALANCE</IonText>
-            </p>
-          </IonLabel>
+            <IonLabel>
+              <h3>
+                <IonText
+                  color={
+                    user["wallet_balance"] <= 100
+                      ? "danger"
+                      : user["wallet_balance"] < 1000
+                      ? "warning"
+                      : "success"
+                  }
+                >
+                  ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+                </IonText>
+              </h3>
+              <p>
+                <IonText color="medium">MY BALANCE</IonText>
+              </p>
+            </IonLabel>
 
-          <IonButton slot="end" size="small" routerLink="/app/me/top-up">
-            Add Fund
-          </IonButton>
-        </IonItem>
+            <IonButton slot="end" size="small" routerLink="/app/me/top-up">
+              Add Fund
+            </IonButton>
+          </IonItem>
+        </IonList>
+        <IonCard color={"warning"}>
+          <IonCardContent>
+            Please ensure to post in the right category
+          </IonCardContent>
+        </IonCard>
         <AdvertForm onSuccess={handleFormSuccess} />
       </IonContent>
     </TabsPage>

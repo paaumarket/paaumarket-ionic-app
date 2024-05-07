@@ -1,10 +1,13 @@
 import {
   IonButton,
   IonCard,
+  IonCol,
+  IonGrid,
   IonItem,
   IonItemGroup,
   IonLabel,
   IonList,
+  IonRow,
   IonText,
   useIonActionSheet,
   useIonLoading,
@@ -22,7 +25,6 @@ import api from "@/lib/api";
 import { serialize } from "object-to-formdata";
 import resizeImage from "@/utils/resizeImage";
 
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import FormIonInput from "./FormIonInput";
 import FormIonTextarea from "./FormIonTextarea";
 import { useMemo } from "react";
@@ -276,39 +278,33 @@ const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
         </div>
 
         {/* Image list */}
-        <ResponsiveMasonry
-          columnsCountBreakPoints={{
-            425: 2,
-            567: 3,
-            768: 4,
-            1200: 5,
-          }}
-        >
-          <Masonry gutter="10px">
+        <IonGrid className="w-full p-0">
+          <IonRow>
             {/* Images */}
             {images.map((image, i) => (
-              <IonCard
-                key={i}
-                onClick={() => openImageActions(i)}
-                className="w-full ion-no-margin"
-              >
-                <img
-                  src={
-                    image instanceof File
-                      ? URL.createObjectURL(image)
-                      : image["image"]["cache"]["medium"]
-                  }
-                  onLoad={
-                    image instanceof File
-                      ? (ev) => URL.revokeObjectURL(ev.target.src)
-                      : null
-                  }
-                  className="w-full h-40"
-                />
-              </IonCard>
+              <IonCol key={i} size="6" sizeSm="4" sizeMd="3">
+                <IonCard
+                  onClick={() => openImageActions(i)}
+                  className="w-full ion-no-margin"
+                >
+                  <img
+                    src={
+                      image instanceof File
+                        ? URL.createObjectURL(image)
+                        : image["image"]["cache"]["medium"]
+                    }
+                    onLoad={
+                      image instanceof File
+                        ? (ev) => URL.revokeObjectURL(ev.target.src)
+                        : null
+                    }
+                    className="w-full h-40"
+                  />
+                </IonCard>
+              </IonCol>
             ))}
-          </Masonry>
-        </ResponsiveMasonry>
+          </IonRow>
+        </IonGrid>
       </div>
     </IonItem>
   );
