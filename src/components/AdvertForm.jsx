@@ -252,7 +252,7 @@ const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
         <input
           type="file"
           ref={imageInputRef}
-          accept=".jpg, .jpeg, .png, .gif"
+          accept=".jpg, .jpeg, .png, .gif, .webp"
           multiple
           hidden
           onChange={(ev) => {
@@ -303,7 +303,7 @@ const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
                       ? (ev) => URL.revokeObjectURL(ev.target.src)
                       : null
                   }
-                  className="w-full"
+                  className="w-full h-40"
                 />
               </IonCard>
             ))}

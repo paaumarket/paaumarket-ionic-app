@@ -5,6 +5,7 @@ import {
   IonHeader,
   IonPage,
   IonText,
+  IonTitle,
   IonToolbar,
 } from "@ionic/react";
 
@@ -22,6 +23,7 @@ const SignIn = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/app"></IonBackButton>
           </IonButtons>
+          <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -33,7 +35,7 @@ const SignIn = () => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="font-bold text-center ion-no-margin text-md">
+            <h2 className="font-light text-center ion-no-margin text-md">
               Welcome back to PAAU Market
             </h2>
           </IonText>

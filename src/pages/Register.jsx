@@ -11,6 +11,7 @@ import {
   IonPage,
   IonSpinner,
   IonText,
+  IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
@@ -72,6 +73,7 @@ const Register = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/app"></IonBackButton>
           </IonButtons>
+          <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -83,7 +85,7 @@ const Register = () => {
             className="w-20 h-20 mx-auto mt-10"
           />
           <IonText className="ion-text-color">
-            <h2 className="font-bold text-center ion-no-margin text-md">
+            <h2 className="font-light text-center ion-no-margin text-md">
               Sign up to PAAU Market
             </h2>
           </IonText>

@@ -151,7 +151,7 @@ const ImageInput = ({ category, image, onChange }) => {
       <input
         type="file"
         ref={imageInputRef}
-        accept=".jpg, .jpeg, .png, .gif"
+        accept=".jpg, .jpeg, .png, .gif, .webp"
         hidden
         onChange={(ev) =>
           resizeImage(ev.target.files[0], 200).then((image) => onChange(image))

@@ -41,7 +41,7 @@ const Advert = ({ advert, full = false }) => {
             src={advert["preview_image"]["cache"]["medium"]}
             width={advert["preview_image"]["width"]}
             height={advert["preview_image"]["height"]}
-            className="object-cover object-center w-full"
+            className="object-cover object-center w-full h-40"
           />
           <span
             className={clsx(
@@ -62,7 +62,7 @@ const Advert = ({ advert, full = false }) => {
 
       {advert["images"] ? <AdvertImages advert={advert} /> : null}
       <IonCardHeader>
-        <IonCardTitle className="text-lg font-bold">
+        <IonCardTitle className="text-base font-bold">
           {advert["title"]}
         </IonCardTitle>
         <IonCardSubtitle>
@@ -190,7 +190,7 @@ export const AdvertPlaceholder = () => (
   <IonCard className="ion-no-margin">
     <IonSkeletonText
       animated={true}
-      className="ion-no-margin aspect-square max-h-60"
+      className="h-40 ion-no-margin aspect-square"
     ></IonSkeletonText>
     <IonCardHeader>
       <IonCardTitle>

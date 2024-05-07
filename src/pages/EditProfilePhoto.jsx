@@ -102,7 +102,7 @@ const ProfilePhotoEdit = () => {
       <input
         type="file"
         ref={imageUploadRef}
-        accept=".jpg, .jpeg, .png, .gif"
+        accept=".jpg, .jpeg, .png, .gif, .webp"
         hidden
         onChange={(ev) => {
           resizeImage(ev.target.files[0], 512)
