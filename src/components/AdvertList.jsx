@@ -27,7 +27,7 @@ export default function AdvertList({
           ? adverts.map((advert) => {
               return (
                 <AdvertCol key={advert["id"]}>
-                  <Advert advert={advert} />
+                  <Advert advert={advert} className="h-full" />
                 </AdvertCol>
               );
             })

@@ -32,7 +32,7 @@ const Advert = ({ advert, full = false }) => {
   return (
     <IonCard
       routerLink={!full ? "/app/adverts/ad/" + advert["id"] : undefined}
-      className="ion-no-margin"
+      className="h-full ion-no-margin"
     >
       {advert["preview_image"] ? (
         <div className="relative">
@@ -62,10 +62,12 @@ const Advert = ({ advert, full = false }) => {
 
       {advert["images"] ? <AdvertImages advert={advert} /> : null}
       <IonCardHeader>
-        <IonCardTitle className="text-base font-bold">
+        <IonCardTitle
+          className={clsx("text-sm font-bold", !full ? "truncate" : null)}
+        >
           {advert["title"]}
         </IonCardTitle>
-        <IonCardSubtitle>
+        <IonCardSubtitle className="text-sm">
           ₦{Intl.NumberFormat().format(advert["price"])}
         </IonCardSubtitle>
       </IonCardHeader>
