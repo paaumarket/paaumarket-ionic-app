@@ -103,7 +103,7 @@ export default function Home() {
         ) : null}
       </IonHeader>
 
-      <IonContent color={"light"}>
+      <IonContent>
         <IonGrid>
           <IonRow className="ion-justify-content-center">
             <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
