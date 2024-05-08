@@ -14,7 +14,7 @@ import {
 } from "ionicons/icons";
 import { useMemo } from "react";
 
-export default function TabsPage({ children }) {
+export default function TabsPage({ children, ...props }) {
   const { user } = useAuth();
   const hasNotifications = useMemo(
     () =>
@@ -24,7 +24,7 @@ export default function TabsPage({ children }) {
   );
 
   return (
-    <IonPage>
+    <IonPage {...props}>
       {children}
       <IonTabBar>
         {/* Home */}
@@ -34,13 +34,13 @@ export default function TabsPage({ children }) {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab={"sell"} href="/app/sell">
+        <IonTabButton tab="sell" href="/app/sell">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
-        <IonTabButton tab={"profile"} href="/app/me">
+        <IonTabButton tab="me" href="/app/me">
           {/* Notifications Count */}
           {hasNotifications ? <IonBadge color={"danger"} /> : null}
           <IonIcon icon={personCircleOutline} />

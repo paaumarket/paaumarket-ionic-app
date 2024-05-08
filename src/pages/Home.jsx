@@ -1,4 +1,5 @@
 import {
+  IonAvatar,
   IonButton,
   IonButtons,
   IonCard,
@@ -8,6 +9,12 @@ import {
   IonGrid,
   IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonMenu,
+  IonMenuButton,
+  IonMenuToggle,
   IonRow,
   IonSearchbar,
   IonSpinner,
@@ -20,16 +27,23 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { generatePath } from "react-router-dom";
 
-import logo from "@/assets/paaumarket.svg";
 import { useState } from "react";
 import AdvertList from "@/components/AdvertList";
 import { isPlatform } from "@ionic/react";
-import { personCircleOutline } from "ionicons/icons";
+import {
+  addCircleOutline,
+  barChartOutline,
+  homeOutline,
+  lockClosedOutline,
+  logOutOutline,
+  personCircleOutline,
+} from "ionicons/icons";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
 import TabsPage from "@/components/TabsPage";
+import DefaultUserImage from "@/assets/user@100.png";
 
 export default function Home() {
   const { user } = useAuth();
@@ -58,90 +72,173 @@ export default function Home() {
   });
 
   return (
-    <TabsPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonButton fill="clear" onClick={() => refetch()}>
-              <IonIcon icon={logo} size="large" />
-            </IonButton>
-          </IonButtons>
-          {isPlatform("ios") ? (
-            <IonTitle>Paau Market</IonTitle>
-          ) : (
-            <IonSearchbar
-              value={search}
-              debounce={500}
-              onIonInput={(ev) => setSearch(ev.target.value)}
-              showClearButton="always"
-              placeholder="Search Paau Market"
-              maxlength={30}
-            />
-          )}
-
-          <IonButtons slot="end">
-            <IonButton
-              routerLink={user ? "/app/me" : "/login"}
-              fill="clear"
-              color={"primary"}
-            >
-              <IonIcon icon={personCircleOutline} size="large" />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-        {isPlatform("ios") ? (
+    <>
+      <IonMenu contentId="main-content">
+        <IonHeader>
           <IonToolbar>
-            <IonSearchbar
-              value={search}
-              debounce={500}
-              onIonInput={(ev) => setSearch(ev.target.value)}
-              showClearButton="always"
-              placeholder="Search Paau Market"
-              maxlength={30}
-            />
+            <IonTitle>Paau Market</IonTitle>
           </IonToolbar>
-        ) : null}
-      </IonHeader>
+        </IonHeader>
+        <IonContent>
+          {user ? (
+            <div className="flex flex-col items-center justify-center gap-4 ion-padding">
+              <IonAvatar className="w-28 h-28">
+                <img
+                  src={
+                    user["profile_photo"]?.["cache"]?.["medium"] ||
+                    DefaultUserImage
+                  }
+                  alt={user["name"]}
+                  className="object-cover object-center w-full h-full"
+                />
+              </IonAvatar>
+              <h1 className="text-lg font-bold text-center truncate ion-no-margin">
+                {user["name"]}
+              </h1>
+            </div>
+          ) : null}
+          <IonList>
+            <IonMenuToggle>
+              <IonItem routerLink="/app/adverts">
+                <IonIcon slot="start" icon={homeOutline}></IonIcon>
+                <IonLabel>Home</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
 
-      <IonContent>
-        <IonGrid>
-          <IonRow className="ion-justify-content-center">
-            <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
-              {!search ? (
-                <>
-                  <IonText>
-                    <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
-                      All category
-                    </h4>
-                  </IonText>
+            <IonMenuToggle>
+              <IonItem routerLink="/app/sell">
+                <IonIcon slot="start" icon={addCircleOutline}></IonIcon>
+                <IonLabel>Sell</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
 
-                  <Category />
-                </>
-              ) : null}
-            </IonCol>
-            <IonCol>
-              <IonText>
-                <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
-                  {search ? `Search: ${search}` : "Trending Ads"}
-                </h4>
-              </IonText>
+            {user ? (
+              <>
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/me">
+                    <IonIcon slot="start" icon={personCircleOutline}></IonIcon>
+                    <IonLabel>My Profile</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
 
-              <AdvertList
-                isPending={isPending}
-                isSuccess={isSuccess}
-                data={data}
+                {user["permissions"].includes("access-dashboard") ? (
+                  <IonMenuToggle>
+                    <IonItem routerLink="/app/me/admin">
+                      <IonIcon slot="start" icon={barChartOutline}></IonIcon>
+                      <IonLabel>Admin Panel</IonLabel>
+                    </IonItem>
+                  </IonMenuToggle>
+                ) : null}
+
+                <IonMenuToggle>
+                  <IonItem routerLink="/logout">
+                    <IonIcon slot="start" icon={logOutOutline}></IonIcon>
+                    <IonLabel>Logout</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+              </>
+            ) : (
+              <>
+                <IonMenuToggle>
+                  <IonItem routerLink="/login">
+                    <IonIcon slot="start" icon={lockClosedOutline}></IonIcon>
+                    <IonLabel>Login</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+                <IonMenuToggle>
+                  <IonItem routerLink="/register">
+                    <IonIcon slot="start" icon={personCircleOutline}></IonIcon>
+                    <IonLabel>Register</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+              </>
+            )}
+          </IonList>
+        </IonContent>
+      </IonMenu>
+      <TabsPage id="main-content">
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonMenuButton></IonMenuButton>
+            </IonButtons>
+            {isPlatform("ios") ? (
+              <IonTitle>Paau Market</IonTitle>
+            ) : (
+              <IonSearchbar
+                value={search}
+                debounce={500}
+                onIonInput={(ev) => setSearch(ev.target.value)}
+                showClearButton="always"
+                placeholder="Search Paau Market"
+                maxlength={30}
               />
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-        <Refresher refresh={refetch} />
-        <InfiniteScroll
-          hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-        />
-      </IonContent>
-    </TabsPage>
+            )}
+
+            <IonButtons slot="end">
+              <IonButton
+                routerLink={user ? "/app/me" : "/login"}
+                fill="clear"
+                color={"primary"}
+              >
+                <IonIcon icon={personCircleOutline} size="large" />
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+          {isPlatform("ios") ? (
+            <IonToolbar>
+              <IonSearchbar
+                value={search}
+                debounce={500}
+                onIonInput={(ev) => setSearch(ev.target.value)}
+                showClearButton="always"
+                placeholder="Search Paau Market"
+                maxlength={30}
+              />
+            </IonToolbar>
+          ) : null}
+        </IonHeader>
+
+        <IonContent>
+          <IonGrid>
+            <IonRow className="ion-justify-content-center">
+              <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
+                {!search ? (
+                  <>
+                    <IonText>
+                      <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
+                        All category
+                      </h4>
+                    </IonText>
+
+                    <Category />
+                  </>
+                ) : null}
+              </IonCol>
+              <IonCol>
+                <IonText>
+                  <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
+                    {search ? `Search: ${search}` : "Trending Ads"}
+                  </h4>
+                </IonText>
+
+                <AdvertList
+                  isPending={isPending}
+                  isSuccess={isSuccess}
+                  data={data}
+                />
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+          <Refresher refresh={refetch} />
+          <InfiniteScroll
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
+        </IonContent>
+      </TabsPage>
+    </>
   );
 }
 
