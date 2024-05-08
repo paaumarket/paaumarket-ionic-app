@@ -41,7 +41,7 @@ const Advert = ({ advert, full = false }) => {
             src={advert["preview_image"]["cache"]["medium"]}
             width={advert["preview_image"]["width"]}
             height={advert["preview_image"]["height"]}
-            className="object-cover object-center w-full h-48"
+            className="object-cover object-center w-full h-52"
           />
           <span
             className={clsx(
@@ -192,7 +192,7 @@ export const AdvertPlaceholder = () => (
   <IonCard className="ion-no-margin">
     <IonSkeletonText
       animated={true}
-      className="h-48 ion-no-margin aspect-square"
+      className="h-52 ion-no-margin aspect-square"
     ></IonSkeletonText>
     <IonCardHeader>
       <IonCardTitle>
