@@ -14,7 +14,7 @@ import {
 } from "@ionic/react";
 import { useMutation } from "@tanstack/react-query";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import clsx from "clsx";
 
 const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {

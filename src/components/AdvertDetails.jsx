@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import clsx from "clsx";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 
 const AdvertDetails = ({ advert }) => {
   return (

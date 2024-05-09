@@ -13,7 +13,7 @@ import {
   useIonToast,
 } from "@ionic/react";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import { useRef } from "react";
 import resizeImage from "@/utils/resizeImage";
 import { useMutation } from "@tanstack/react-query";

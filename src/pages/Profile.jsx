@@ -26,7 +26,7 @@ import {
   walletOutline,
 } from "ionicons/icons";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import TabsPage from "@/components/TabsPage";
 
 export default function Profile() {
@@ -47,7 +47,7 @@ export default function Profile() {
       <IonContent className="ion-padding">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col items-center justify-center gap-4">
-            <IonAvatar className="w-28 h-28">
+            <IonAvatar className="w-32 h-32">
               <img
                 src={
                   user["profile_photo"]?.["cache"]?.["medium"] ||
@@ -57,7 +57,7 @@ export default function Profile() {
                 className="object-cover object-center w-full h-full"
               />
             </IonAvatar>
-            <h1 className="font-bold text-center ion-no-margin">
+            <h1 className="text-lg font-bold text-center ion-no-margin">
               {user["name"]}
             </h1>
           </div>

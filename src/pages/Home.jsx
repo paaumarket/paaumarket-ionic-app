@@ -43,7 +43,7 @@ import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
 import TabsPage from "@/components/TabsPage";
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 
 export default function Home() {
   const { user } = useAuth();

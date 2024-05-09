@@ -25,7 +25,7 @@ import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
 import clsx from "clsx";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import { useState } from "react";
 
 const Advert = ({ advert, full = false }) => {

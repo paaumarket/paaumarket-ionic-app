@@ -25,7 +25,7 @@ import {
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import { Link } from "react-router-dom";
 import { generatePath } from "react-router";
 import {

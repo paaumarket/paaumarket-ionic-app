@@ -17,7 +17,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useRouteMatch } from "react-router-dom";
 
-import DefaultUserImage from "@/assets/user@100.png";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import { isPlatform } from "@ionic/react";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
@@ -73,7 +73,7 @@ export default ({ backButtonHref }) => {
         {isSuccess ? (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col items-center justify-center gap-4">
-              <IonAvatar className="w-28 h-28">
+              <IonAvatar className="w-32 h-32">
                 <img
                   src={
                     user["profile_photo"]?.["cache"]?.["medium"] ||
@@ -83,7 +83,7 @@ export default ({ backButtonHref }) => {
                   className="object-cover object-center w-full h-full"
                 />
               </IonAvatar>
-              <h3 className="font-bold text-center ion-no-margin">
+              <h3 className="text-lg font-bold text-center ion-no-margin">
                 {user["name"]}
               </h3>
             </div>
