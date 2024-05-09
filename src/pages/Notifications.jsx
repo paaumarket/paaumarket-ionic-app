@@ -159,7 +159,12 @@ const NotificationItem = ({ notification }) => {
           <IonIcon slot="start" icon={walletOutline} />
           <IonLabel color={"success"}>
             <h4>Wallet Top Up</h4>
-            <p> {notification["data"]["reference"]}</p>
+            <p>
+              {" "}
+              {notification["data"]["reference"] === "WELCOME_BALANCE"
+                ? "Welcome Balance"
+                : notification["data"]["reference"]}
+            </p>
           </IonLabel>
           <IonNote slot="end" color={"success"}>
             +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
