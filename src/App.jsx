@@ -48,6 +48,8 @@ import Logout from "@/pages/Logout";
 import ForgetPassword from "@/pages/ForgetPassword";
 import NewPassword from "@/pages/NewPassword";
 import OTP from "@/pages/OTP";
+import AboutUs from "@/pages/AboutUs";
+import SupportLine from "@/pages/SupportLine";
 
 import Home from "@/pages/Home";
 import SingleAdvertPage from "@/pages/SingleAdvertPage";
@@ -281,6 +283,10 @@ const App = () => {
               path="/forget_password"
               render={() => <ForgetPassword />}
             />
+
+            <Route exact path="/about_us" render={() => <AboutUs />} />
+            <Route exact path="/support_line" render={() => <SupportLine />} />
+
             <Route exact path="/new_password" render={() => <NewPassword />} />
             <Route exact path="/otp_verification" render={() => <OTP />} />
 

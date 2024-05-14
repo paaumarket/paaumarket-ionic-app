@@ -32,7 +32,11 @@ import AdvertList from "@/components/AdvertList";
 import { isPlatform } from "@ionic/react";
 import {
   addCircleOutline,
+  alertCircleOutline,
   barChartOutline,
+  basketOutline,
+  callOutline,
+  cashOutline,
   homeOutline,
   lockClosedOutline,
   logOutOutline,
@@ -109,6 +113,34 @@ export default function Home() {
               <IonItem routerLink="/app/sell">
                 <IonIcon slot="start" icon={addCircleOutline}></IonIcon>
                 <IonLabel>Sell</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+
+            <IonMenuToggle>
+              <IonItem routerLink="/app/adverts">
+                <IonIcon slot="start" icon={cashOutline}></IonIcon>
+                <IonLabel>How To Sell</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+
+            <IonMenuToggle>
+              <IonItem routerLink="/app/adverts">
+                <IonIcon slot="start" icon={basketOutline}></IonIcon>
+                <IonLabel>How To Buy</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+
+            <IonMenuToggle>
+              <IonItem routerLink="/about_us">
+                <IonIcon slot="start" icon={alertCircleOutline}></IonIcon>
+                <IonLabel>About Us</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+
+            <IonMenuToggle>
+              <IonItem routerLink="/support_line">
+                <IonIcon slot="start" icon={callOutline}></IonIcon>
+                <IonLabel>Support Line</IonLabel>
               </IonItem>
             </IonMenuToggle>
 
