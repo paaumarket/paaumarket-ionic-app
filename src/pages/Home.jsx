@@ -15,6 +15,7 @@ import {
   IonMenu,
   IonMenuButton,
   IonMenuToggle,
+  IonPage,
   IonRow,
   IonSearchbar,
   IonSpinner,
@@ -46,7 +47,6 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
-import TabsPage from "@/components/TabsPage";
 import DefaultUserImage from "@/assets/user-avatar.svg";
 
 export default function Home() {
@@ -188,7 +188,7 @@ export default function Home() {
           </IonList>
         </IonContent>
       </IonMenu>
-      <TabsPage id="main-content">
+      <IonPage id="main-content">
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
@@ -269,7 +269,7 @@ export default function Home() {
             isFetchingNextPage={isFetchingNextPage}
           />
         </IonContent>
-      </TabsPage>
+      </IonPage>
     </>
   );
 }

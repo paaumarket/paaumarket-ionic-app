@@ -12,6 +12,7 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonPage,
   IonText,
   IonTitle,
   IonToolbar,
@@ -27,12 +28,11 @@ import {
 } from "ionicons/icons";
 
 import DefaultUserImage from "@/assets/user-avatar.svg";
-import TabsPage from "@/components/TabsPage";
 
 export default function Profile() {
   const { user } = useAuth();
   return (
-    <TabsPage>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Profile</IonTitle>
@@ -155,6 +155,6 @@ export default function Profile() {
           </IonList>
         </div>
       </IonContent>
-    </TabsPage>
+    </IonPage>
   );
 }
