@@ -33,7 +33,8 @@ export const OTPVerification = ({ t, email, onSuccess, onCancelled }) => {
     useResendOTPMutation();
 
   /** Callback to check code input */
-  const handleCodeInput = (code) => {
+  const handleCodeInput = (ev) => {
+    const code = ev.target.value;
     setCode(code);
     if (code.length === OTP_CODE_LENGTH) {
       verifyOTP({ email, code }, { onSuccess });
@@ -82,7 +83,7 @@ export const OTPVerification = ({ t, email, onSuccess, onCancelled }) => {
               <OTPCodeInput
                 onChange={handleCodeInput}
                 value={code}
-                isDisabled={isVerifyingOTP}
+                disabled={isVerifyingOTP}
               />
 
               {/* OTP Countdown */}
