@@ -69,7 +69,7 @@ const SignInForm = ({ onSuccess }) => {
           />
         </IonItem>
 
-        <Link className="block text-sm text-right" to="/forget_password">
+        <Link className="block text-sm text-right" to="/forgot-password">
           Forget Password?
         </Link>
       </IonList>

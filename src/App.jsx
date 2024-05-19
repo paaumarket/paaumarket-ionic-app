@@ -45,7 +45,7 @@ import Register from "@/pages/Register";
 import SignIn from "@/pages/SignIn";
 import Logout from "@/pages/Logout";
 
-import ForgetPassword from "@/pages/ForgetPassword";
+import ForgotPassword from "@/pages/ForgotPassword";
 import NewPassword from "@/pages/NewPassword";
 import OTP from "@/pages/OTP";
 import AboutUs from "@/pages/AboutUs";
@@ -280,8 +280,8 @@ const App = () => {
 
             <Route
               exact
-              path="/forget_password"
-              render={() => <ForgetPassword />}
+              path="/forgot-password"
+              render={() => <ForgotPassword />}
             />
 
             <Route exact path="/about_us" render={() => <AboutUs />} />

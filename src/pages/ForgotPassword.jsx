@@ -24,7 +24,7 @@ const schema = yup
   })
   .required();
 
-export default function ForgetPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("null");
   const form = useForm({
     resolver: yupResolver(schema),
