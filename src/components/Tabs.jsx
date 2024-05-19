@@ -1,4 +1,12 @@
-import { IonRouterOutlet } from "@ionic/react";
+import {
+  IonBadge,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+} from "@ionic/react";
 import { Redirect, Route } from "react-router-dom";
 
 import Home from "@/pages/Home";
@@ -27,6 +35,12 @@ import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import AdminAdverts from "@/pages/admin/AdminAdverts";
 import AdminUsers from "@/pages/admin/AdminUsers";
 
+import {
+  addCircleOutline,
+  homeOutline,
+  personCircleOutline,
+} from "ionicons/icons";
+
 export default function Tabs() {
   const { user } = useAuth();
   const hasNotifications = useMemo(
@@ -36,203 +50,240 @@ export default function Tabs() {
     [user]
   );
   return (
-    <IonRouterOutlet>
-      <Redirect exact path="/app" to="/app/adverts" />
+    <IonTabs>
+      <IonRouterOutlet>
+        <Redirect exact path="/app" to="/app/adverts" />
 
-      <Route
-        exact
-        path="/app/adverts/categories/:category"
-        render={() => <SubCategories />}
-      />
+        {/* ------------------------ Adverts ----------------------- */}
+        {/* Adverts */}
+        <Route exact path="/app/adverts" render={() => <Home />} />
 
-      <Route
-        exact
-        path="/app/adverts/categories/:category/:sub"
-        render={() => <CategoryAdverts />}
-      />
+        {/* Advert - Single */}
+        <Route
+          exact
+          path="/app/adverts/ad/:id"
+          render={() => <SingleAdvertPage />}
+        />
 
-      <Route
-        exact
-        path="/app/adverts/user/:user"
-        render={() => <UserAdverts />}
-      />
+        {/* Advert - Sub Categories */}
+        <Route
+          exact
+          path="/app/adverts/categories/:category"
+          render={() => <SubCategories />}
+        />
+        {/* Advert - Category Ads */}
+        <Route
+          exact
+          path="/app/adverts/categories/:category/:sub"
+          render={() => <CategoryAdverts />}
+        />
 
-      {/* Adverts */}
-      <Route
-        exact
-        path="/app/adverts/ad/:id"
-        render={() => <SingleAdvertPage />}
-      />
+        {/* Adverts  - User Ads */}
+        <Route
+          exact
+          path="/app/adverts/user/:user"
+          render={() => <UserAdverts />}
+        />
 
-      <Route exact path="/app/adverts" render={() => <Home />} />
+        {/* ------------------------ SELL ----------------------- */}
+        {/* Sell */}
+        <Route
+          exact
+          path="/app/sell"
+          render={() => (
+            <ProtectedRoute>
+              <Sell />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Sell */}
-      <Route
-        exact
-        path="/app/sell"
-        render={() => (
-          <ProtectedRoute>
-            <Sell />
-          </ProtectedRoute>
-        )}
-      />
+        {/* ------------------------ PROFILE ----------------------- */}
+        {/* Profile */}
+        <Route
+          exact
+          path={"/app/me"}
+          render={() => (
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Admin Users */}
-      <Route
-        exact
-        path="/app/me/admin/users"
-        render={() => (
-          <AdminProtectedRoute>
-            <AdminUsers />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* My Adverts */}
+        <Route
+          exact
+          path="/app/me/my-adverts"
+          render={() => (
+            <ProtectedRoute>
+              <MyAdverts />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Admin User Adverts */}
-      <Route
-        exact
-        path="/app/me/admin/adverts/user/:user"
-        render={() => (
-          <AdminProtectedRoute>
-            <UserAdverts backButtonHref="/app/me/admin/users" />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* Edit Profile */}
+        <Route
+          exact
+          path="/app/me/edit"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Admin Adverts */}
-      <Route
-        exact
-        path="/app/me/admin/adverts"
-        render={() => (
-          <AdminProtectedRoute>
-            <AdminAdverts />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* Edit Profile Details */}
+        <Route
+          exact
+          path="/app/me/edit/details"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfileDetails />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Admin Categories */}
-      <Route
-        exact
-        path="/app/me/admin/categories"
-        render={() => (
-          <AdminProtectedRoute>
-            <AdminCategories />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* Edit Profile Photo */}
+        <Route
+          exact
+          path="/app/me/edit/photo"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfilePhoto />
+            </ProtectedRoute>
+          )}
+        />
 
-      <Route
-        exact
-        path="/app/me/admin/categories/:category"
-        render={() => (
-          <AdminProtectedRoute>
-            <AdminSubCategories />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* Edit Profile Password */}
+        <Route
+          exact
+          path="/app/me/edit/password"
+          render={() => (
+            <ProtectedRoute>
+              <EditProfilePassword />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Admin Dashboard */}
-      <Route
-        exact
-        path="/app/me/admin"
-        render={() => (
-          <AdminProtectedRoute>
-            <AdminDashboard />
-          </AdminProtectedRoute>
-        )}
-      />
+        {/* Notifications */}
+        <Route
+          exact
+          path="/app/me/notifications"
+          render={() => (
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* My Adverts */}
-      <Route
-        exact
-        path="/app/me/my-adverts"
-        render={() => (
-          <ProtectedRoute>
-            <MyAdverts />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Top up */}
+        <Route
+          exact
+          path="/app/me/top-up"
+          render={() => (
+            <ProtectedRoute>
+              <TopUp />
+            </ProtectedRoute>
+          )}
+        />
 
-      {/* Edit Profile Password */}
-      <Route
-        exact
-        path="/app/me/edit/password"
-        render={() => (
-          <ProtectedRoute>
-            <EditProfilePassword />
-          </ProtectedRoute>
-        )}
-      />
+        {/* ------------------------ ADMIN ----------------------- */}
+        {/* Admin Dashboard */}
+        <Route
+          exact
+          path="/app/me/admin"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminDashboard />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Edit Profile Photo */}
-      <Route
-        exact
-        path="/app/me/edit/photo"
-        render={() => (
-          <ProtectedRoute>
-            <EditProfilePhoto />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Admin Users */}
+        <Route
+          exact
+          path="/app/me/admin/users"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminUsers />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Edit Profile Details */}
-      <Route
-        exact
-        path="/app/me/edit/details"
-        render={() => (
-          <ProtectedRoute>
-            <EditProfileDetails />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Admin Adverts */}
+        <Route
+          exact
+          path="/app/me/admin/adverts"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminAdverts />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Edit Profile */}
-      <Route
-        exact
-        path="/app/me/edit"
-        render={() => (
-          <ProtectedRoute>
-            <EditProfile />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Admin User Adverts */}
+        <Route
+          exact
+          path="/app/me/admin/adverts/user/:user"
+          render={() => (
+            <AdminProtectedRoute>
+              <UserAdverts backButtonHref="/app/me/admin/users" />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Notifications */}
-      <Route
-        exact
-        path="/app/me/notifications"
-        render={() => (
-          <ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Admin Categories */}
+        <Route
+          exact
+          path="/app/me/admin/categories"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminCategories />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Top up */}
-      <Route
-        exact
-        path="/app/me/top-up"
-        render={() => (
-          <ProtectedRoute>
-            <TopUp />
-          </ProtectedRoute>
-        )}
-      />
+        {/* Admin Sub Categories */}
+        <Route
+          exact
+          path="/app/me/admin/categories/:category"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminSubCategories />
+            </AdminProtectedRoute>
+          )}
+        />
 
-      {/* Profile */}
-      <Route
-        exact
-        path={"/app/me"}
-        render={() => (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        )}
-      />
+        {/* ------------------------ CORE ----------------------- */}
+        <Route
+          exact
+          path="/app"
+          render={() => <Redirect to="/app/adverts" />}
+        />
 
-      <Route exact path="/app" render={() => <Redirect to="/app/adverts" />} />
+        <Route render={() => <Redirect to="/app/adverts" />} />
+      </IonRouterOutlet>
 
-      <Route render={() => <Redirect to="/" />} />
-    </IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        {/* Home */}
+        <IonTabButton tab="adverts" href="/app/adverts">
+          <IonIcon icon={homeOutline} />
+          <IonLabel>Home</IonLabel>
+        </IonTabButton>
+
+        {/* Sell */}
+        <IonTabButton tab={"sell"} href={user ? "/app/sell" : "/login"}>
+          <IonIcon icon={addCircleOutline} />
+          <IonLabel>Sell</IonLabel>
+        </IonTabButton>
+
+        {/* Profile */}
+        <IonTabButton tab={"profile"} href={user ? "/app/me" : "/login"}>
+          {/* Notifications Count */}
+          {hasNotifications ? <IonBadge color={"danger"} /> : null}
+          <IonIcon icon={personCircleOutline} />
+          <IonLabel>Me</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   );
 }
