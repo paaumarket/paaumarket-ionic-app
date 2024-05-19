@@ -7,7 +7,7 @@ export const useVerifyOTPMutation = () => {
   return useMutation({
     mutationKey: ["otp", "verify"],
     mutationFn: (data) =>
-      api.post("/otp/resend", data).then((response) => response.data),
+      api.post("/otp/verify", data).then((response) => response.data),
     onSuccess() {
       presentToast({
         message: "OTP Successfully verified!",
