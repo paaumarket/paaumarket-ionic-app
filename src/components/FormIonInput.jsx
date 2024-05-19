@@ -3,7 +3,7 @@ import { IonInput } from "@ionic/react";
 import { forwardRef } from "react";
 
 const FormIonInput = forwardRef(
-  ({ onChange, onBlur, errorText, ...props }, ref) => {
+  ({ onChange, onBlur, errorText, className = "", ...props }, ref) => {
     return (
       <IonInput
         {...props}
@@ -11,7 +11,7 @@ const FormIonInput = forwardRef(
         onIonInput={onChange}
         onIonBlur={onBlur}
         errorText={errorText}
-        className={clsx(errorText && "ion-invalid ion-touched")}
+        className={clsx(className, errorText && "ion-invalid ion-touched")}
       />
     );
   }

@@ -68,6 +68,9 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      react-countdown:
+        specifier: ^2.3.5
+        version: 2.3.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-currency-input-field:
         specifier: ^3.8.0
         version: 3.8.0(react@18.2.0)
@@ -77,6 +80,9 @@ importers:
       react-hook-form:
         specifier: ^7.51.3
         version: 7.51.3(react@18.2.0)
+      react-otp-input:
+        specifier: ^3.1.1
+        version: 3.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-paystack:
         specifier: ^5.0.0
         version: 5.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -3271,6 +3277,12 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
+  react-countdown@2.3.5:
+    resolution: {integrity: sha512-K26ENYEesMfPxhRRtm1r+Pf70SErrvW3g4CArLi/x6MPFjgfDFYePT4UghEj8p2nI0cqVV7/JjDgjyr//U60Og==}
+    peerDependencies:
+      react: '>= 15'
+      react-dom: '>= 15'
+
   react-currency-input-field@3.8.0:
     resolution: {integrity: sha512-DKSIjacrvgUDOpuB16b+OVDvp5pbCt+s+RHJgpRZCHNhzg1yBpRUoy4fbnXpeOj0kdbwf5BaXCr2mAtxEujfhg==}
     peerDependencies:
@@ -3295,6 +3307,12 @@ packages:
 
   react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
+
+  react-otp-input@3.1.1:
+    resolution: {integrity: sha512-bjPavgJ0/Zmf/AYi4onj8FbH93IjeD+e8pWwxIJreDEWsU1ILR5fs8jEJmMGWSBe/yyvPP6X/W6Mk9UkOCkTPw==}
+    peerDependencies:
+      react: '>=16.8.6 || ^17.0.0 || ^18.0.0'
+      react-dom: '>=16.8.6 || ^17.0.0 || ^18.0.0'
 
   react-paystack@5.0.0:
     resolution: {integrity: sha512-d7oA+ksX0GES2Uyh9H6E8Oq4yD/r3CDVfhKpZCjcztW2IIVf6pldscRs6+gFfGWWk9IvEK2G6QqZmaGKlbGHhw==}
@@ -7698,6 +7716,12 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
+  react-countdown@2.3.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
   react-currency-input-field@3.8.0(react@18.2.0):
     dependencies:
       react: 18.2.0
@@ -7717,6 +7741,11 @@ snapshots:
   react-is@17.0.2: {}
 
   react-is@18.2.0: {}
+
+  react-otp-input@3.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   react-paystack@5.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:

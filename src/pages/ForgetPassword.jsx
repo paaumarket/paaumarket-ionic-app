@@ -1,9 +1,6 @@
-import React from "react";
-
 import {
   IonButton,
   IonContent,
-  IonInput,
   IonItem,
   IonList,
   IonPage,
@@ -11,21 +8,24 @@ import {
   IonText,
 } from "@ionic/react";
 
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
-import clsx from "clsx";
+import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
+import { useState } from "react";
+import FormIonInput from "@/components/FormIonInput";
 
 // Schema for form validation
 const schema = yup
   .object({
-    new_password: yup.string().trim().max(16).required().label("Email"),
+    email: yup.string().trim().email().required().label("Email"),
   })
   .required();
 
 export default function ForgetPassword() {
+  const [email, setEmail] = useState("null");
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -35,14 +35,24 @@ export default function ForgetPassword() {
 
   const passwordMutation = useFormMutation({
     form,
-    mutationKey: ["forgoetPassword"],
+    mutationKey: ["forgot-password"],
     mutationFn: (data) =>
-      api.post("/forget_password", data).then((response) => response.data),
+      api.post("/forgot-password", data).then((response) => response.data),
   });
 
   const onSubmit = (data) => {
-    passwordMutation.mutate(data, {});
+    passwordMutation.mutate(data, {
+      onSuccess(data) {
+        setEmail(data["email"]);
+        showOTP();
+      },
+    });
   };
+
+  const showOTP = useOTPVerification({
+    email: "sadiqsalau888@gmail.com",
+  });
+
   return (
     <IonPage>
       <IonContent className="ion-padding" fullscreen>
@@ -60,42 +70,29 @@ export default function ForgetPassword() {
           </p>
         </IonText>
 
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <IonList>
-              <Controller
-                name={"email"}
-                render={({ field, fieldState }) => (
-                  <IonItem>
-                    <IonInput
-                      type="text"
-                      label="Your email"
-                      labelPlacement="floating"
-                      placeholder="Enter your email"
-                      name={field.name}
-                      onIonInput={field.onChange}
-                      onIonBlur={field.onBlur}
-                      value={field.value}
-                      errorText={fieldState.error?.message}
-                      className={clsx(
-                        fieldState.invalid && "ion-invalid ion-touched"
-                      )}
-                    ></IonInput>
-                  </IonItem>
-                )}
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <IonList>
+            {/* Email */}
+            <IonItem>
+              <FormIonInput
+                {...form.register("email")}
+                label="Your email"
+                labelPlacement="floating"
+                placeholder="Enter your email"
+                errorText={form.formState.errors["email"]?.message}
               />
-            </IonList>
+            </IonItem>
+          </IonList>
 
-            <IonButton
-              disabled={passwordMutation.isPending}
-              expand="full"
-              shape="round"
-              type="submit"
-            >
-              {passwordMutation.isPending ? <IonSpinner /> : <>Send Code</>}
-            </IonButton>
-          </form>
-        </FormProvider>
+          <IonButton
+            disabled={passwordMutation.isPending}
+            expand="full"
+            shape="round"
+            type="submit"
+          >
+            {passwordMutation.isPending ? <IonSpinner /> : <>Send Code</>}
+          </IonButton>
+        </form>
       </IonContent>
     </IonPage>
   );

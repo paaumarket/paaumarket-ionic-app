@@ -3,7 +3,7 @@ import { IonTextarea } from "@ionic/react";
 import { forwardRef } from "react";
 
 const FormIonTextarea = forwardRef(
-  ({ onChange, onBlur, errorText, ...props }, ref) => {
+  ({ onChange, onBlur, errorText, className = "", ...props }, ref) => {
     return (
       <IonTextarea
         {...props}
@@ -11,7 +11,7 @@ const FormIonTextarea = forwardRef(
         onIonInput={onChange}
         onIonBlur={onBlur}
         errorText={errorText}
-        className={clsx(errorText && "ion-invalid ion-touched")}
+        className={clsx(className, errorText && "ion-invalid ion-touched")}
       />
     );
   }
