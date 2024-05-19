@@ -50,7 +50,7 @@ export default function ForgotPassword() {
   };
 
   const showOTP = useOTPVerification({
-    email: "sadiqsalau888@gmail.com",
+    email,
   });
 
   return (
