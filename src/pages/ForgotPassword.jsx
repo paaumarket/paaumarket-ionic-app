@@ -1,11 +1,16 @@
 import {
+  IonBackButton,
   IonButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonItem,
   IonList,
   IonPage,
   IonSpinner,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
 
 import { useForm } from "react-hook-form";
@@ -14,7 +19,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
 import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
-import { useState } from "react";
 import FormIonInput from "@/components/FormIonInput";
 
 // Schema for form validation
@@ -25,7 +29,6 @@ const schema = yup
   .required();
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("null");
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -43,21 +46,31 @@ export default function ForgotPassword() {
   const onSubmit = (data) => {
     passwordMutation.mutate(data, {
       onSuccess(data) {
-        setEmail(data["email"]);
-        showOTP();
+        showOTP(data["email"]);
       },
     });
   };
 
-  const showOTP = useOTPVerification({
-    email,
+  const [showOTP, closeOtp] = useOTPVerification({
+    onSuccess() {
+      closeOtp();
+      //
+    },
   });
 
   return (
     <IonPage>
+      <IonHeader className="shadow-none">
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/login"></IonBackButton>
+          </IonButtons>
+          <IonTitle>Forgot Password</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent className="ion-padding" fullscreen>
-        <div className="h-10"></div>
-        <IonText>
+        <div className="flex flex-col gap-4">
           <h2>
             <b>Forget Password?</b>
           </h2>
@@ -68,31 +81,32 @@ export default function ForgotPassword() {
               your account.
             </IonText>
           </p>
-        </IonText>
 
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <IonList>
-            {/* Email */}
-            <IonItem>
-              <FormIonInput
-                {...form.register("email")}
-                label="Your email"
-                labelPlacement="floating"
-                placeholder="Enter your email"
-                errorText={form.formState.errors["email"]?.message}
-              />
-            </IonItem>
-          </IonList>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <IonList>
+              {/* Email */}
+              <IonItem>
+                <FormIonInput
+                  {...form.register("email")}
+                  label="Your email"
+                  labelPlacement="floating"
+                  placeholder="Enter your email"
+                  errorText={form.formState.errors["email"]?.message}
+                />
+              </IonItem>
+            </IonList>
 
-          <IonButton
-            disabled={passwordMutation.isPending}
-            expand="full"
-            shape="round"
-            type="submit"
-          >
-            {passwordMutation.isPending ? <IonSpinner /> : <>Send Code</>}
-          </IonButton>
-        </form>
+            <IonButton
+              disabled={passwordMutation.isPending}
+              expand="full"
+              shape="round"
+              type="submit"
+              className="ion-margin-top"
+            >
+              {passwordMutation.isPending ? <IonSpinner /> : <>Send Code</>}
+            </IonButton>
+          </form>
+        </div>
       </IonContent>
     </IonPage>
   );

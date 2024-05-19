@@ -25,6 +25,7 @@ import useAuth from "@/hooks/useAuth";
 import { useHistory } from "react-router-dom";
 import FormIonInput from "@/components/FormIonInput";
 import PasswordIonInput from "@/components/PasswordIonInput";
+import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
 
 // Schema for form validation
 const schema = yup
@@ -58,13 +59,19 @@ const Register = () => {
 
   const onSubmit = (data) => {
     registrationMutation.mutate(data, {
-      onSuccess(auth) {
-        login(auth);
-
-        history.replace("/app");
+      onSuccess(data) {
+        showOTP(data["email"]);
       },
     });
   };
+
+  const [showOTP, closeOtp] = useOTPVerification({
+    onSuccess(auth) {
+      closeOtp();
+      login(auth);
+      history.replace("/app");
+    },
+  });
 
   return (
     <IonPage>
