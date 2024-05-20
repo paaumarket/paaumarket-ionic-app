@@ -7,6 +7,6 @@ export default function AdminProtectedRoute({ children }) {
   return user?.["permissions"]?.includes("access-dashboard") ? (
     children
   ) : (
-    <Redirect to={user ? "/" : "/login"} />
+    <Redirect to={user ? "/app" : "/app/login"} />
   );
 }

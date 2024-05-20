@@ -148,7 +148,7 @@ export default function Profile() {
                   ) : null}
                 </IonItem>
               ) : null}
-              <IonItem routerLink="/logout">
+              <IonItem routerLink="/app/logout">
                 <IonLabel>Logout</IonLabel>
               </IonItem>
             </IonItemGroup>

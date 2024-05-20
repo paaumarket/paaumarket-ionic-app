@@ -38,13 +38,6 @@ import { Redirect, Route } from "react-router-dom";
 import { ProfileUpdater } from "./ProfileUpdater";
 
 // All parent components
-import Register from "@/pages/Register";
-import SignIn from "@/pages/SignIn";
-import Logout from "@/pages/Logout";
-
-import ForgotPassword from "@/pages/ForgotPassword";
-import AboutUs from "@/pages/AboutUs";
-import SupportLine from "@/pages/SupportLine";
 
 import Tabs from "./components/Tabs";
 
@@ -57,19 +50,6 @@ const App = () => {
         <IonReactRouter>
           <IonRouterOutlet>
             <Route path="/app" render={() => <Tabs />} />
-
-            <Route
-              exact
-              path="/forgot-password"
-              render={() => <ForgotPassword />}
-            />
-
-            <Route exact path="/about_us" render={() => <AboutUs />} />
-            <Route exact path="/support_line" render={() => <SupportLine />} />
-
-            <Route exact path="/register" render={() => <Register />} />
-            <Route exact path="/login" render={() => <SignIn />} />
-            <Route exact path="/logout" render={() => <Logout />} />
 
             <Route exact path="/" render={() => <Redirect to="/app" />} />
 

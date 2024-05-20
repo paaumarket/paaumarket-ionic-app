@@ -160,7 +160,7 @@ const Register = () => {
 
         <IonText className="ion-text-center">
           <p>
-            Already have an account? <Link to="/login">Sign In</Link>
+            Already have an account? <Link to="/app/login">Sign In</Link>
           </p>
         </IonText>
       </IonContent>

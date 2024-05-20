@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { OTPCancelButton } from "./OTPCancelButton";
 import { OTPCodeInput } from "./OTPCodeInput";
 import { OTPCountdown } from "./OTPCountdown";
 import { OTP_CODE_LENGTH, OTP_COUNTDOWN_LENGTH } from "./OTP.constants";
@@ -94,9 +93,6 @@ export const OTPVerification = ({ t, email, onSuccess, onCancelled }) => {
               />
             </>
           )}
-
-          {/* Cancel button */}
-          <OTPCancelButton onCancelled={onCancelled} />
         </div>
       </IonContent>
     </IonPage>

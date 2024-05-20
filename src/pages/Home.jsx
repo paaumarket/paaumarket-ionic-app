@@ -84,6 +84,7 @@ export default function Home() {
           </IonToolbar>
         </IonHeader>
         <IonContent>
+          {/* User Details */}
           {user ? (
             <div className="flex flex-col items-center justify-center gap-4 ion-padding">
               <IonAvatar className="w-28 h-28">
@@ -99,6 +100,19 @@ export default function Home() {
               <h1 className="text-lg font-bold text-center truncate ion-no-margin">
                 {user["name"]}
               </h1>
+              <h3 className="text-center truncate ion-no-margin">
+                <IonText
+                  color={
+                    user["wallet_balance"] <= 100
+                      ? "danger"
+                      : user["wallet_balance"] < 1000
+                      ? "warning"
+                      : "success"
+                  }
+                >
+                  ₦{Intl.NumberFormat().format(user["wallet_balance"])}
+                </IonText>
+              </h3>
             </div>
           ) : null}
           <IonList>
@@ -131,14 +145,14 @@ export default function Home() {
             </IonMenuToggle>
 
             <IonMenuToggle>
-              <IonItem routerLink="/about_us">
+              <IonItem routerLink="/app/about-us">
                 <IonIcon slot="start" icon={alertCircleOutline}></IonIcon>
                 <IonLabel>About Us</IonLabel>
               </IonItem>
             </IonMenuToggle>
 
             <IonMenuToggle>
-              <IonItem routerLink="/support_line">
+              <IonItem routerLink="/app/support-line">
                 <IonIcon slot="start" icon={callOutline}></IonIcon>
                 <IonLabel>Support Line</IonLabel>
               </IonItem>
@@ -163,7 +177,7 @@ export default function Home() {
                 ) : null}
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/logout">
+                  <IonItem routerLink="/app/logout">
                     <IonIcon slot="start" icon={logOutOutline}></IonIcon>
                     <IonLabel>Logout</IonLabel>
                   </IonItem>
@@ -172,13 +186,13 @@ export default function Home() {
             ) : (
               <>
                 <IonMenuToggle>
-                  <IonItem routerLink="/login">
+                  <IonItem routerLink="/app/login">
                     <IonIcon slot="start" icon={lockClosedOutline}></IonIcon>
                     <IonLabel>Login</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
                 <IonMenuToggle>
-                  <IonItem routerLink="/register">
+                  <IonItem routerLink="/app/register">
                     <IonIcon slot="start" icon={personCircleOutline}></IonIcon>
                     <IonLabel>Register</IonLabel>
                   </IonItem>
@@ -208,11 +222,7 @@ export default function Home() {
             )}
 
             <IonButtons slot="end">
-              <IonButton
-                routerLink={user ? "/app/me" : "/login"}
-                fill="clear"
-                color={"primary"}
-              >
+              <IonButton routerLink={"/app/me"} fill="clear" color={"primary"}>
                 <IonIcon icon={personCircleOutline} size="large" />
               </IonButton>
             </IonButtons>

@@ -35,7 +35,7 @@ export default function ForgotPassword() {
       <IonHeader className="shadow-none">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/login"></IonBackButton>
+            <IonBackButton defaultHref="/app/login"></IonBackButton>
           </IonButtons>
           <IonTitle>Forgot Password</IonTitle>
         </IonToolbar>
@@ -46,7 +46,7 @@ export default function ForgotPassword() {
           {email ? (
             <ResetPasswordForm
               email={email}
-              onSuccess={() => history.replace("/login")}
+              onSuccess={() => history.replace("/app/login")}
             />
           ) : (
             <ForgotPasswordForm onSuccess={(data) => setEmail(data["email"])} />

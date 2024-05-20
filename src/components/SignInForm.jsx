@@ -69,7 +69,7 @@ const SignInForm = ({ onSuccess }) => {
           />
         </IonItem>
 
-        <Link className="block text-sm text-right" to="/forgot-password">
+        <Link className="block text-sm text-right" to="/app/forgot-password">
           Forget Password?
         </Link>
       </IonList>
@@ -85,7 +85,7 @@ const SignInForm = ({ onSuccess }) => {
 
       <IonText className="ion-text-center">
         <p>
-          Create an account? <Link to="/register">Sign Up</Link>
+          Create an account? <Link to="/app/register">Sign Up</Link>
         </p>
       </IonText>
     </form>

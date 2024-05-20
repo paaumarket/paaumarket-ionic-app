@@ -1,6 +1,6 @@
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
-import { IonContent, IonLoading, IonPage } from "@ionic/react";
+import { IonContent, IonPage, useIonLoading } from "@ionic/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -14,21 +14,24 @@ export default function () {
     mutationFn: () => api.post("/logout"),
   });
 
+  const [present, dismiss] = useIonLoading();
+
   useEffect(() => {
-    queryClient.cancelQueries().then(() =>
-      mutation.mutateAsync().finally(() => {
-        queryClient.removeQueries();
-        logout();
-        history.replace("/");
-      })
-    );
+    present()
+      .then(() => queryClient.cancelQueries())
+      .then(() => mutation.mutateAsync())
+      .finally(() => {
+        dismiss().then(() => {
+          logout();
+          queryClient.removeQueries();
+          history.replace("/app");
+        });
+      });
   }, []);
 
   return (
     <IonPage>
-      <IonContent>
-        <IonLoading isOpen message="Signing out..." />
-      </IonContent>
+      <IonContent></IonContent>
     </IonPage>
   );
 }

@@ -129,7 +129,7 @@ const AdvertContact = ({ advert }) => {
           {!user ? (
             <p>
               You need to sign in first to see contact:{" "}
-              <Link to={`/login?return=${location.pathname}`}>Login</Link>
+              <Link to={`/app/login?return=${location.pathname}`}>Login</Link>
             </p>
           ) : isSuccess ? (
             <>

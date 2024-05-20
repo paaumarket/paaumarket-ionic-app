@@ -40,6 +40,16 @@ import {
   homeOutline,
   personCircleOutline,
 } from "ionicons/icons";
+import useRouteMatches from "@/hooks/useRouteMatches";
+import clsx from "clsx";
+
+import Register from "@/pages/Register";
+import SignIn from "@/pages/SignIn";
+import Logout from "@/pages/Logout";
+
+import ForgotPassword from "@/pages/ForgotPassword";
+import AboutUs from "@/pages/AboutUs";
+import SupportLine from "@/pages/SupportLine";
 
 export default function Tabs() {
   const { user } = useAuth();
@@ -49,6 +59,15 @@ export default function Tabs() {
       user?.["admin"]?.["reviewing_adverts_count"],
     [user]
   );
+
+  const showTabBar = !useRouteMatches([
+    "/app/login",
+    "/app/register",
+    "/app/forgot-password",
+    "/app/support-line",
+    "/app/about-us",
+  ]).length;
+
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -253,6 +272,20 @@ export default function Tabs() {
           )}
         />
 
+        {/* ------------------------ TABLESS PAGES ----------------------- */}
+        <Route
+          exact
+          path="/app/forgot-password"
+          render={() => <ForgotPassword />}
+        />
+
+        <Route exact path="/app/about-us" render={() => <AboutUs />} />
+        <Route exact path="/app/support-line" render={() => <SupportLine />} />
+
+        <Route exact path="/app/register" render={() => <Register />} />
+        <Route exact path="/app/login" render={() => <SignIn />} />
+        <Route exact path="/app/logout" render={() => <Logout />} />
+
         {/* ------------------------ CORE ----------------------- */}
         <Route
           exact
@@ -263,7 +296,7 @@ export default function Tabs() {
         <Route render={() => <Redirect to="/app/adverts" />} />
       </IonRouterOutlet>
 
-      <IonTabBar slot="bottom">
+      <IonTabBar slot="bottom" className={clsx(!showTabBar ? "hidden" : null)}>
         {/* Home */}
         <IonTabButton tab="adverts" href="/app/adverts">
           <IonIcon icon={homeOutline} />
@@ -271,13 +304,13 @@ export default function Tabs() {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab={"sell"} href={user ? "/app/sell" : "/login"}>
+        <IonTabButton tab={"sell"} href={"/app/sell"}>
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
-        <IonTabButton tab={"profile"} href={user ? "/app/me" : "/login"}>
+        <IonTabButton tab={"profile"} href={"/app/me"}>
           {/* Notifications Count */}
           {hasNotifications ? <IonBadge color={"danger"} /> : null}
           <IonIcon icon={personCircleOutline} />
