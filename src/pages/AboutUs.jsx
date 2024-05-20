@@ -1,11 +1,28 @@
-import React from "react";
-
-import { IonContent, IonIcon, IonPage, IonText } from "@ionic/react";
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonPage,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
 import { alertCircleOutline } from "ionicons/icons";
 
 export default function AboutUs() {
   return (
     <IonPage>
+      <IonHeader className="shadow-none">
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/app"></IonBackButton>
+          </IonButtons>
+          <IonTitle>About</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent className="ion-padding" fullscreen>
         <div className="mt-10"></div>
         <IonText>
@@ -25,7 +42,7 @@ export default function AboutUs() {
         </IonText>
 
         <div className="mt-5">
-          <p className="text-center text-pink-500 text-3xl">
+          <p className="text-3xl text-center text-pink-500">
             Under Construction
           </p>
         </div>

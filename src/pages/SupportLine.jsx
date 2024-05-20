@@ -1,7 +1,8 @@
-import React from "react";
-
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
   IonItem,
   IonItemGroup,
@@ -11,6 +12,8 @@ import {
   IonPage,
   IonRouterLink,
   IonText,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
 import {
   callOutline,
@@ -23,6 +26,15 @@ import {
 export default function SupportLine() {
   return (
     <IonPage>
+      <IonHeader className="shadow-none">
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/app"></IonBackButton>
+          </IonButtons>
+          <IonTitle>Support</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent className="ion-padding" fullscreen>
         <div className="mt-10"></div>
         <IonText>
