@@ -46,10 +46,7 @@ export default function HowToSell() {
         </IonText>
 
         <div>
-          <video controls className="w-full">
-
-          <source src="https://youtu.be/I_l4QIR5D8Y"  />
-          </video>
+          <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/I_l4QIR5D8Y?si=Y2IGG1OUbYw-P_xk" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </div>
       </IonContent>
     </IonPage>
