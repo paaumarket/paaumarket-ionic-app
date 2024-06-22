@@ -131,25 +131,25 @@ export default function Home() {
             </IonMenuToggle>
 
             <IonMenuToggle>
-              <IonItem routerLink="/app/adverts">
+              <IonItem routerLink="/app/how-to-sell">
                 <IonIcon slot="start" icon={cashOutline}></IonIcon>
                 <IonLabel>How To Sell</IonLabel>
               </IonItem>
             </IonMenuToggle>
 
             <IonMenuToggle>
-              <IonItem routerLink="/app/adverts">
+              <IonItem routerLink="/app/how-to-buy">
                 <IonIcon slot="start" icon={basketOutline}></IonIcon>
                 <IonLabel>How To Buy</IonLabel>
               </IonItem>
             </IonMenuToggle>
 
-            <IonMenuToggle>
+            {/* <IonMenuToggle>
               <IonItem routerLink="/app/about-us">
                 <IonIcon slot="start" icon={alertCircleOutline}></IonIcon>
                 <IonLabel>About Us</IonLabel>
               </IonItem>
-            </IonMenuToggle>
+            </IonMenuToggle> */}
 
             <IonMenuToggle>
               <IonItem routerLink="/app/support-line">

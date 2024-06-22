@@ -50,6 +50,8 @@ import Logout from "@/pages/Logout";
 import ForgotPassword from "@/pages/ForgotPassword";
 import AboutUs from "@/pages/AboutUs";
 import SupportLine from "@/pages/SupportLine";
+import HowToSell from "@/pages/HowToSell";
+import HowToBuy from "@/pages/HowToBuy";
 
 export default function Tabs() {
   const { user } = useAuth();
@@ -66,6 +68,8 @@ export default function Tabs() {
     "/app/forgot-password",
     "/app/support-line",
     "/app/about-us",
+    "/app/how-to-sell",
+    "/app/how-to-buy",
   ]).length;
 
   return (
@@ -281,6 +285,8 @@ export default function Tabs() {
 
         <Route exact path="/app/about-us" render={() => <AboutUs />} />
         <Route exact path="/app/support-line" render={() => <SupportLine />} />
+        <Route exact path="/app/how-to-sell" render={() => <HowToSell />} />
+        <Route exact path="/app/how-to-buy" render={() => <HowToBuy />} />
 
         <Route exact path="/app/register" render={() => <Register />} />
         <Route exact path="/app/login" render={() => <SignIn />} />
