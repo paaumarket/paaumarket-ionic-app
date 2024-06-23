@@ -3,25 +3,12 @@ import {
     IonButtons,
     IonContent,
     IonHeader,
-    IonIcon,
-    IonItem,
-    IonItemGroup,
-    IonLabel,
-    IonList,
-    IonListHeader,
     IonPage,
-    IonRouterLink,
     IonText,
     IonTitle,
     IonToolbar,
   } from "@ionic/react";
-  import {
-    callOutline,
-    logoFacebook,
-    logoTwitter,
-    logoWhatsapp,
-    mailOutline,
-  } from "ionicons/icons";
+
   
   export default function HowToBuy() {
     return (
@@ -46,13 +33,12 @@ import {
           </IonText>
 
           <div className="flex justify-center">
-              <video controls width="400">
-                <source src="/how_to_buy.mp4" />
-              </video>
+            <iframe src="https://player.vimeo.com/video/966064024?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="720" height="1684" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="How To Buy on Paau Market"></iframe>
               
               {/* YouTube */}
               {/* <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/5Ng6l0-NIts?si=WmDGZi5IF1rfeLM_" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> */}
           </div>
+          
         </IonContent>
       </IonPage>
     );
