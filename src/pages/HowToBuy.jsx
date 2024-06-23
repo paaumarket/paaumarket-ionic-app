@@ -45,8 +45,13 @@ import {
             </div>
           </IonText>
 
-          <div>
-              <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/5Ng6l0-NIts?si=WmDGZi5IF1rfeLM_" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+          <div className="flex justify-center">
+              <video controls width="400">
+                <source src="/how_to_buy.mp4" />
+              </video>
+              
+              {/* YouTube */}
+              {/* <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/5Ng6l0-NIts?si=WmDGZi5IF1rfeLM_" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> */}
           </div>
         </IonContent>
       </IonPage>
