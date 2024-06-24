@@ -130,34 +130,6 @@ export default function Home() {
               </IonItem>
             </IonMenuToggle>
 
-            <IonMenuToggle>
-              <IonItem routerLink="/app/how-to-sell">
-                <IonIcon slot="start" icon={cashOutline}></IonIcon>
-                <IonLabel>How To Sell</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-
-            <IonMenuToggle>
-              <IonItem routerLink="/app/how-to-buy">
-                <IonIcon slot="start" icon={basketOutline}></IonIcon>
-                <IonLabel>How To Buy</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-
-            {/* <IonMenuToggle>
-              <IonItem routerLink="/app/about-us">
-                <IonIcon slot="start" icon={alertCircleOutline}></IonIcon>
-                <IonLabel>About Us</IonLabel>
-              </IonItem>
-            </IonMenuToggle> */}
-
-            <IonMenuToggle>
-              <IonItem routerLink="/app/support-line">
-                <IonIcon slot="start" icon={callOutline}></IonIcon>
-                <IonLabel>Support Line</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-
             {user ? (
               <>
                 <IonMenuToggle>
@@ -177,6 +149,27 @@ export default function Home() {
                 ) : null}
 
                 <IonMenuToggle>
+                  <IonItem routerLink="/app/how-to-sell">
+                    <IonIcon slot="start" icon={cashOutline}></IonIcon>
+                    <IonLabel>How To Sell</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/how-to-buy">
+                    <IonIcon slot="start" icon={basketOutline}></IonIcon>
+                    <IonLabel>How To Buy</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/support-line">
+                    <IonIcon slot="start" icon={callOutline}></IonIcon>
+                    <IonLabel>Support Line</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
+                <IonMenuToggle>
                   <IonItem routerLink="/app/logout">
                     <IonIcon slot="start" icon={logOutOutline}></IonIcon>
                     <IonLabel>Logout</IonLabel>
@@ -185,6 +178,27 @@ export default function Home() {
               </>
             ) : (
               <>
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/how-to-sell">
+                    <IonIcon slot="start" icon={cashOutline}></IonIcon>
+                    <IonLabel>How To Sell</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/how-to-buy">
+                    <IonIcon slot="start" icon={basketOutline}></IonIcon>
+                    <IonLabel>How To Buy</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
+                <IonMenuToggle>
+                  <IonItem routerLink="/app/support-line">
+                    <IonIcon slot="start" icon={callOutline}></IonIcon>
+                    <IonLabel>Support Line</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+
                 <IonMenuToggle>
                   <IonItem routerLink="/app/login">
                     <IonIcon slot="start" icon={lockClosedOutline}></IonIcon>
