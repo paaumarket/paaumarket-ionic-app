@@ -33,10 +33,9 @@ export default function HowToSell() {
         </IonText>
 
         <div className="flex justify-center">
-          <iframe src="https://player.vimeo.com/video/966069545?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1096" height="2560" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="How To Sell on Paau Market"></iframe>
+          {/* <iframe src="https://player.vimeo.com/video/966069545?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1096" height="2560" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="How To Sell on Paau Market"></iframe> */}
 
-          {/* YouTube */}
-          {/* <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/I_l4QIR5D8Y?si=Y2IGG1OUbYw-P_xk" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> */}
+          <iframe className="w-full aspect-video" width="720" height="800"  src="https://player.vimeo.com/video/966069545?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </div>
       </IonContent>
     </IonPage>
