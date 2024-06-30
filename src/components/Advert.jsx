@@ -4,6 +4,10 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "@ionic/react/css/ionic-swiper.css";
 
+import DefaultCategoryImage from "@/assets/category.svg";
+import DefaultUserImage from "@/assets/user-avatar.svg";
+import clsx from "clsx";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import {
   IonAvatar,
   IonCard,
@@ -13,19 +17,10 @@ import {
   IonCardTitle,
   IonSkeletonText,
 } from "@ionic/react";
-
-import DefaultCategoryImage from "@/assets/category.svg";
-
-import { formatDistanceToNow } from "date-fns";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
-import clsx from "clsx";
-
-import DefaultUserImage from "@/assets/user-avatar.svg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 
 const Advert = ({ advert, full = false }) => {
@@ -67,9 +62,13 @@ const Advert = ({ advert, full = false }) => {
         >
           {advert["title"]}
         </IonCardTitle>
-        <IonCardSubtitle className="text-sm">
-          ₦{Intl.NumberFormat().format(advert["price"])}
-        </IonCardSubtitle>
+
+        {/* Price */}
+        {advert["price"] ? (
+          <IonCardSubtitle className="text-sm">
+            ₦{Intl.NumberFormat().format(advert["price"])}
+          </IonCardSubtitle>
+        ) : null}
       </IonCardHeader>
       {full ? (
         <IonCardContent>

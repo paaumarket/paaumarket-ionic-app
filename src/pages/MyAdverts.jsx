@@ -1,4 +1,10 @@
+import AdvertDetails from "@/components/AdvertDetails";
+import EditAdvertFormModal from "@/components/EditAdvertFormModal";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
+import clsx from "clsx";
+import useDeleteAlert from "@/hooks/useDeleteAlert";
 import {
   IonBackButton,
   IonButton,
@@ -21,17 +27,11 @@ import {
   useIonModal,
   useIonToast,
 } from "@ionic/react";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { useMemo } from "react";
-import AdvertDetails from "@/components/AdvertDetails";
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
-import useDeleteAlert from "@/hooks/useDeleteAlert";
-import EditAdvertFormModal from "@/components/EditAdvertFormModal";
-import InfiniteScroll from "@/components/InfiniteScroll";
-import Refresher from "@/components/Refresher";
-import clsx from "clsx";
 import { useHistory } from "react-router";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useState } from "react";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -261,7 +261,10 @@ const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
       </IonThumbnail>
       <IonLabel>
         <h4>{advert["title"]}</h4>
-        <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
+
+        {advert["price"] ? (
+          <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
+        ) : null}
         <p>
           <IonText
             color={
