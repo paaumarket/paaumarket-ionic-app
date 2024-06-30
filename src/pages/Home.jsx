@@ -259,12 +259,18 @@ export default function Home() {
             <IonRow>
               <IonCol>
                 <IonButton expand="block" routerLink="/app/sell">
-                  <IonIcon icon={addCircleOutline} slot="start" /> Post Ad
+                  <IonIcon icon={addCircleOutline} slot="start" />
+                  <div>Post ad</div>
                 </IonButton>
               </IonCol>
               <IonCol>
-                <IonButton expand="block" routerLink="/app/request">
-                  <IonIcon icon={megaphoneOutline} slot="start" /> Request Ad
+                <IonButton
+                  color="danger"
+                  expand="block"
+                  routerLink="/app/request"
+                >
+                  <IonIcon icon={megaphoneOutline} slot="start" />
+                  Request ad
                 </IonButton>
               </IonCol>
             </IonRow>
@@ -275,11 +281,11 @@ export default function Home() {
               <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
                 {!search ? (
                   <>
-                    <IonText>
+                    {/* <IonText>
                       <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
                         All category
                       </h4>
-                    </IonText>
+                    </IonText> */}
 
                     <Category />
                   </>
@@ -287,8 +293,8 @@ export default function Home() {
               </IonCol>
               <IonCol>
                 <IonText>
-                  <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
-                    {search ? `Search: ${search}` : "Trending Ads"}
+                  <h4 className="font-bold ion-padding ion-no-margin">
+                    {search ? `Search: ${search}` : "Trending ads"}
                   </h4>
                 </IonText>
 
