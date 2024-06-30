@@ -19,6 +19,7 @@ import {
   IonToolbar,
   useIonActionSheet,
   useIonModal,
+  useIonToast,
 } from "@ionic/react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -59,6 +60,7 @@ const MyAdverts = () => {
     [data]
   );
 
+  const handleRenewed = () => refetch();
   const handleEdited = () => refetch();
   const handleDeleted = () => refetch();
 
@@ -116,6 +118,7 @@ const MyAdverts = () => {
                 advert={advert}
                 onEdit={handleEdited}
                 onDelete={handleDeleted}
+                onRenewed={handleRenewed}
               />
             ))}
           </IonList>
@@ -131,7 +134,7 @@ const MyAdverts = () => {
   );
 };
 
-const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
+const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
   const history = useHistory();
 
   // Show Advert
@@ -141,8 +144,6 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
       dismiss();
     },
   });
-
-  const openAdvertModal = () => present();
 
   // Edit Advert
   const [presentEditAdvertModal, dismissEditAdvertModal] = useIonModal(
@@ -203,6 +204,31 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
     });
   };
 
+  // Renewal
+  const [presentToast, dismissToast] = useIonToast();
+  const renewalMutation = useAdvertRenewalMutation(advert["id"]);
+  const handleRenewalClick = (ev) => {
+    ev.stopPropagation();
+
+    renewalMutation.mutate(null, {
+      onSuccess(data) {
+        presentToast({
+          message: "Successfully renewed.",
+          color: "success",
+          duration: 2000,
+        });
+        onRenewed(data);
+      },
+      onError() {
+        presentToast({
+          message: "Failed to renew advert.",
+          color: "danger",
+          duration: 2000,
+        });
+      },
+    });
+  };
+
   return (
     <IonItem
       button
@@ -249,6 +275,18 @@ const MyAdvertItem = ({ advert, onEdit, onDelete }) => {
             {advert["status"].toUpperCase()}
           </IonText>
         </p>
+
+        {/* Renew button */}
+        {advert["status"] === "approved" && !advert["is_renewed"] ? (
+          <IonButton
+            fill="outline"
+            color="warning"
+            onClick={handleRenewalClick}
+            disabled={renewalMutation.isPending}
+          >
+            {renewalMutation.isPending ? "Renewing..." : "Renew"}
+          </IonButton>
+        ) : null}
       </IonLabel>
       <IonButton onClick={openActions}>
         <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
@@ -282,6 +320,13 @@ const useAdvertDeleteMutation = (advert) =>
     mutationKey: ["adverts", advert, "delete"],
     mutationFn: () =>
       api.delete(`/adverts/${advert}`).then((response) => response.data),
+  });
+
+const useAdvertRenewalMutation = (advert) =>
+  useMutation({
+    mutationKey: ["adverts", advert, "renew"],
+    mutationFn: () =>
+      api.put(`/adverts/${advert}/renew`).then((response) => response.data),
   });
 
 export default MyAdverts;

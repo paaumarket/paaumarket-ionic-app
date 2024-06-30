@@ -33,7 +33,6 @@ import AdvertList from "@/components/AdvertList";
 import { isPlatform } from "@ionic/react";
 import {
   addCircleOutline,
-  alertCircleOutline,
   barChartOutline,
   basketOutline,
   callOutline,
@@ -41,6 +40,7 @@ import {
   homeOutline,
   lockClosedOutline,
   logOutOutline,
+  megaphoneOutline,
   personCircleOutline,
 } from "ionicons/icons";
 import InfiniteScroll from "@/components/InfiniteScroll";
@@ -256,6 +256,21 @@ export default function Home() {
         </IonHeader>
 
         <IonContent>
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonButton expand="block" routerLink="/app/sell">
+                  <IonIcon icon={addCircleOutline} slot="start" /> Post Ad
+                </IonButton>
+              </IonCol>
+              <IonCol>
+                <IonButton expand="block" routerLink="/app/request">
+                  <IonIcon icon={megaphoneOutline} slot="start" /> Request Ad
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+
           <IonGrid>
             <IonRow className="ion-justify-content-center">
               <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
