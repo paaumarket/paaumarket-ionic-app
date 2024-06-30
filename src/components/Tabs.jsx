@@ -1,3 +1,24 @@
+import AdminAdverts from "@/pages/admin/AdminAdverts";
+import AdminCategories from "@/pages/admin/AdminCategories";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminProtectedRoute from "@/components/AdminProtectedRoute";
+import AdminSubCategories from "@/pages/admin/AdminSubCategories";
+import AdminUsers from "@/pages/admin/AdminUsers";
+import CategoryAdverts from "@/pages/CategoryAdverts";
+import EditProfile from "@/pages/EditProfile";
+import EditProfileDetails from "@/pages/EditProfileDetails";
+import EditProfilePassword from "@/pages/EditProfilePassword";
+import EditProfilePhoto from "@/pages/EditProfilePhoto";
+import Home from "@/pages/Home";
+import MyAdverts from "@/pages/MyAdverts";
+import Notifications from "@/pages/Notifications";
+import Profile from "@/pages/Profile";
+import Sell from "@/pages/sell/Sell";
+import SingleAdvertPage from "@/pages/SingleAdvertPage";
+import SubCategories from "@/pages/SubCategories";
+import TopUp from "@/pages/TopUp";
+import UserAdverts from "@/pages/UserAdverts";
+import useAuth from "@/hooks/useAuth";
 import {
   IonBadge,
   IonIcon,
@@ -8,50 +29,14 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { Redirect, Route } from "react-router-dom";
-
-import Home from "@/pages/Home";
-import SingleAdvertPage from "@/pages/SingleAdvertPage";
-import Sell from "@/pages/sell/Sell";
-import Profile from "@/pages/Profile";
-import ProtectedRoute from "./ProtectedRoute";
-import SubCategories from "@/pages/SubCategories";
-import MyAdverts from "@/pages/MyAdverts";
-import TopUp from "@/pages/TopUp";
-import CategoryAdverts from "@/pages/CategoryAdverts";
-import UserAdverts from "@/pages/UserAdverts";
-import useAuth from "@/hooks/useAuth";
-import EditProfile from "@/pages/EditProfile";
-import EditProfilePhoto from "@/pages/EditProfilePhoto";
-import EditProfilePassword from "@/pages/EditProfilePassword";
-import EditProfileDetails from "@/pages/EditProfileDetails";
-import Notifications from "@/pages/Notifications";
-import { useMemo } from "react";
-
-import AdminDashboard from "@/pages/admin/AdminDashboard";
-import AdminCategories from "@/pages/admin/AdminCategories";
-import AdminSubCategories from "@/pages/admin/AdminSubCategories";
-import AdminProtectedRoute from "@/components/AdminProtectedRoute";
-
-import AdminAdverts from "@/pages/admin/AdminAdverts";
-import AdminUsers from "@/pages/admin/AdminUsers";
-
 import {
   addCircleOutline,
   homeOutline,
   personCircleOutline,
 } from "ionicons/icons";
-import useRouteMatches from "@/hooks/useRouteMatches";
-import clsx from "clsx";
+import { useMemo } from "react";
 
-import Register from "@/pages/Register";
-import SignIn from "@/pages/SignIn";
-import Logout from "@/pages/Logout";
-
-import ForgotPassword from "@/pages/ForgotPassword";
-import AboutUs from "@/pages/AboutUs";
-import SupportLine from "@/pages/SupportLine";
-import HowToSell from "@/pages/HowToSell";
-import HowToBuy from "@/pages/HowToBuy";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function Tabs() {
   const { user } = useAuth();
@@ -62,20 +47,10 @@ export default function Tabs() {
     [user]
   );
 
-  const showTabBar = !useRouteMatches([
-    "/app/login",
-    "/app/register",
-    "/app/forgot-password",
-    "/app/support-line",
-    "/app/about-us",
-    "/app/how-to-sell",
-    "/app/how-to-buy",
-  ]).length;
-
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect exact path="/app" to="/app/adverts" />
+        <Redirect exact path="/app" to="/app/adverts" push={false} />
 
         {/* ------------------------ Adverts ----------------------- */}
         {/* Adverts */}
@@ -276,33 +251,15 @@ export default function Tabs() {
           )}
         />
 
-        {/* ------------------------ TABLESS PAGES ----------------------- */}
-        <Route
-          exact
-          path="/app/forgot-password"
-          render={() => <ForgotPassword />}
-        />
-
-        <Route exact path="/app/about-us" render={() => <AboutUs />} />
-        <Route exact path="/app/support-line" render={() => <SupportLine />} />
-        <Route exact path="/app/how-to-sell" render={() => <HowToSell />} />
-        <Route exact path="/app/how-to-buy" render={() => <HowToBuy />} />
-
-        <Route exact path="/app/register" render={() => <Register />} />
-        <Route exact path="/app/login" render={() => <SignIn />} />
-        <Route exact path="/app/logout" render={() => <Logout />} />
-
         {/* ------------------------ CORE ----------------------- */}
         <Route
           exact
           path="/app"
-          render={() => <Redirect to="/app/adverts" />}
+          render={() => <Redirect to="/app/adverts" push={false} />}
         />
-
-        <Route render={() => <Redirect to="/app/adverts" />} />
       </IonRouterOutlet>
 
-      <IonTabBar slot="bottom" className={clsx(!showTabBar ? "hidden" : null)}>
+      <IonTabBar slot="bottom">
         {/* Home */}
         <IonTabButton tab="adverts" href="/app/adverts">
           <IonIcon icon={homeOutline} />

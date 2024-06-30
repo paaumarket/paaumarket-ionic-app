@@ -1,3 +1,6 @@
+import api from "@/lib/api";
+import useAuth from "@/hooks/useAuth";
+import Advert, { AdvertPlaceholder } from "@/components/Advert";
 import {
   IonBackButton,
   IonButton,
@@ -19,13 +22,10 @@ import {
   IonToolbar,
   useIonLoading,
 } from "@ionic/react";
-import { useParams, useLocation } from "react-router-dom";
-import api from "@/lib/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Advert, { AdvertPlaceholder } from "@/components/Advert";
-import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
-import useAuth from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
+import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
+import { useLocation, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function SingleAdvertPage() {
   const { user } = useAuth();
@@ -129,7 +129,7 @@ const AdvertContact = ({ advert }) => {
           {!user ? (
             <p>
               You need to sign in first to see contact:{" "}
-              <Link to={`/app/login?return=${location.pathname}`}>Login</Link>
+              <Link to={`/login?return=${location.pathname}`}>Login</Link>
             </p>
           ) : isSuccess ? (
             <>

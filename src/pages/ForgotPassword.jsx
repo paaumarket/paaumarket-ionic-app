@@ -1,3 +1,8 @@
+import * as yup from "yup";
+import FormIonInput from "@/components/FormIonInput";
+import PasswordIonInput from "@/components/PasswordIonInput";
+import api from "@/lib/api";
+import useFormMutation from "@/hooks/useFormMutation";
 import {
   IonBackButton,
   IonButton,
@@ -13,18 +18,12 @@ import {
   IonToolbar,
   useIonToast,
 } from "@ionic/react";
-
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import useFormMutation from "@/hooks/useFormMutation";
-import api from "@/lib/api";
-import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
-import FormIonInput from "@/components/FormIonInput";
-import { useState } from "react";
-import { useMemo } from "react";
-import PasswordIonInput from "@/components/PasswordIonInput";
 import { useHistory } from "react-router";
+import { useMemo } from "react";
+import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
+import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function ForgotPassword() {
   const history = useHistory();
@@ -35,7 +34,7 @@ export default function ForgotPassword() {
       <IonHeader className="shadow-none">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/app/login"></IonBackButton>
+            <IonBackButton defaultHref="/login"></IonBackButton>
           </IonButtons>
           <IonTitle>Forgot Password</IonTitle>
         </IonToolbar>
@@ -46,7 +45,7 @@ export default function ForgotPassword() {
           {email ? (
             <ResetPasswordForm
               email={email}
-              onSuccess={() => history.replace("/app/login")}
+              onSuccess={() => history.replace("/login")}
             />
           ) : (
             <ForgotPasswordForm onSuccess={(data) => setEmail(data["email"])} />

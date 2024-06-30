@@ -1,3 +1,4 @@
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import useAuth from "@/hooks/useAuth";
 import {
   IonAvatar,
@@ -26,8 +27,6 @@ import {
   storefrontOutline,
   walletOutline,
 } from "ionicons/icons";
-
-import DefaultUserImage from "@/assets/user-avatar.svg";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -148,7 +147,7 @@ export default function Profile() {
                   ) : null}
                 </IonItem>
               ) : null}
-              <IonItem routerLink="/app/logout">
+              <IonItem routerLink="/logout">
                 <IonLabel>Logout</IonLabel>
               </IonItem>
             </IonItemGroup>

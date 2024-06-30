@@ -1,3 +1,10 @@
+import AdvertList from "@/components/AdvertList";
+import DefaultUserImage from "@/assets/user-avatar.svg";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
+import api from "@/lib/api";
+import clsx from "clsx";
+import useAuth from "@/hooks/useAuth";
 import {
   IonAvatar,
   IonButton,
@@ -24,13 +31,6 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import api from "@/lib/api";
-import { generatePath } from "react-router-dom";
-
-import { useState } from "react";
-import AdvertList from "@/components/AdvertList";
-import { isPlatform } from "@ionic/react";
 import {
   addCircleOutline,
   barChartOutline,
@@ -43,11 +43,10 @@ import {
   megaphoneOutline,
   personCircleOutline,
 } from "ionicons/icons";
-import InfiniteScroll from "@/components/InfiniteScroll";
-import Refresher from "@/components/Refresher";
-import clsx from "clsx";
-import useAuth from "@/hooks/useAuth";
-import DefaultUserImage from "@/assets/user-avatar.svg";
+import { generatePath } from "react-router-dom";
+import { isPlatform } from "@ionic/react";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function Home() {
   const { user } = useAuth();
@@ -149,28 +148,28 @@ export default function Home() {
                 ) : null}
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/how-to-sell">
+                  <IonItem routerLink="/how-to-sell">
                     <IonIcon slot="start" icon={cashOutline}></IonIcon>
                     <IonLabel>How To Sell</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/how-to-buy">
+                  <IonItem routerLink="/how-to-buy">
                     <IonIcon slot="start" icon={basketOutline}></IonIcon>
                     <IonLabel>How To Buy</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/support-line">
+                  <IonItem routerLink="/support-line">
                     <IonIcon slot="start" icon={callOutline}></IonIcon>
                     <IonLabel>Support Line</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/logout">
+                  <IonItem routerLink="/logout">
                     <IonIcon slot="start" icon={logOutOutline}></IonIcon>
                     <IonLabel>Logout</IonLabel>
                   </IonItem>
@@ -179,34 +178,34 @@ export default function Home() {
             ) : (
               <>
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/how-to-sell">
+                  <IonItem routerLink="/how-to-sell">
                     <IonIcon slot="start" icon={cashOutline}></IonIcon>
                     <IonLabel>How To Sell</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/how-to-buy">
+                  <IonItem routerLink="/how-to-buy">
                     <IonIcon slot="start" icon={basketOutline}></IonIcon>
                     <IonLabel>How To Buy</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/support-line">
+                  <IonItem routerLink="/support-line">
                     <IonIcon slot="start" icon={callOutline}></IonIcon>
                     <IonLabel>Support Line</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
 
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/login">
+                  <IonItem routerLink="/login">
                     <IonIcon slot="start" icon={lockClosedOutline}></IonIcon>
                     <IonLabel>Login</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
                 <IonMenuToggle>
-                  <IonItem routerLink="/app/register">
+                  <IonItem routerLink="/register">
                     <IonIcon slot="start" icon={personCircleOutline}></IonIcon>
                     <IonLabel>Register</IonLabel>
                   </IonItem>

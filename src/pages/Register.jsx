@@ -1,5 +1,11 @@
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
+import FormIonInput from "@/components/FormIonInput";
+import PasswordIonInput from "@/components/PasswordIonInput";
+import api from "@/lib/api";
+// Logo Image
+import logo from "@/assets/paaumarket.svg";
+import useAuth from "@/hooks/useAuth";
+import useFormMutation from "@/hooks/useFormMutation";
 import {
   IonBackButton,
   IonButton,
@@ -15,17 +21,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import api from "@/lib/api";
-// Logo Image
-import logo from "@/assets/paaumarket.svg";
-import useFormMutation from "@/hooks/useFormMutation";
-import useAuth from "@/hooks/useAuth";
+import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import FormIonInput from "@/components/FormIonInput";
-import PasswordIonInput from "@/components/PasswordIonInput";
 import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // Schema for form validation
 const schema = yup
@@ -160,7 +159,7 @@ const Register = () => {
 
         <IonText className="ion-text-center">
           <p>
-            Already have an account? <Link to="/app/login">Sign In</Link>
+            Already have an account? <Link to="/login">Sign In</Link>
           </p>
         </IonText>
       </IonContent>
