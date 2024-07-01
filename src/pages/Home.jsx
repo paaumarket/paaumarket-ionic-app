@@ -265,12 +265,12 @@ export default function Home() {
               </IonCol>
               <IonCol>
                 <IonButton
-                  color="danger"
+                  color="tertiary"
                   expand="block"
-                  routerLink="/app/request"
+                  routerLink="/app/requests"
                 >
                   <IonIcon icon={megaphoneOutline} slot="start" />
-                  Request ad
+                  Request Ad
                 </IonButton>
               </IonCol>
             </IonRow>

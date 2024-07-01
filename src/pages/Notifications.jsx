@@ -6,6 +6,10 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
   IonContent,
   IonFooter,
   IonHeader,
@@ -23,7 +27,8 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import { walletOutline } from "ionicons/icons";
+import { formatDistanceToNow } from "date-fns";
+import { megaphone, walletOutline } from "ionicons/icons";
 import { useMemo } from "react";
 
 const Notifications = () => {
@@ -153,6 +158,37 @@ const NotificationItem = ({ notification }) => {
   let content;
 
   switch (notification["type"]) {
+    case "system_notification":
+      let props = {};
+      let banner = notification["data"]["banner"];
+
+      if (notification["data"]["link"]) {
+        props.routerLink = notification["data"]["link"];
+      }
+
+      content = (
+        <IonCard {...props}>
+          {banner ? (
+            <img
+              src={banner["cache"]["medium"]}
+              className="object-cover object-center w-full max-h-56"
+            />
+          ) : null}
+          <IonCardHeader>
+            <IonCardSubtitle color={"d"}>
+              {formatDistanceToNow(notification["created_at"])}
+            </IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            {!notification["read_at"] ? (
+              <IonIcon icon={megaphone} color="danger" />
+            ) : undefined}{" "}
+            {notification["data"]["message"]}
+          </IonCardContent>
+        </IonCard>
+      );
+      break;
+
     case "wallet_top_up_notification":
       content = (
         <IonItem color={!notification["read_at"] ? "light" : undefined}>

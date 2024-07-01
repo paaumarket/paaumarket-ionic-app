@@ -24,7 +24,12 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useQuery } from "@tanstack/react-query";
-import { folderOutline, megaphoneOutline, personOutline } from "ionicons/icons";
+import {
+  alertOutline,
+  folderOutline,
+  megaphoneOutline,
+  personOutline,
+} from "ionicons/icons";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -132,6 +137,17 @@ const AdminDashboard = () => {
               color="primary"
             ></IonIcon>
             <IonLabel>Users</IonLabel>
+          </IonItem>
+
+          {/* Notifications */}
+          <IonItem routerLink="/app/me/admin/notifications">
+            <IonIcon
+              aria-hidden="true"
+              icon={alertOutline}
+              slot="start"
+              color="primary"
+            ></IonIcon>
+            <IonLabel>System Notifications</IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

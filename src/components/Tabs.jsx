@@ -1,6 +1,7 @@
 import AdminAdverts from "@/pages/admin/AdminAdverts";
 import AdminCategories from "@/pages/admin/AdminCategories";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminNotifications from "@/pages/admin/AdminNotifications";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
 import AdminUsers from "@/pages/admin/AdminUsers";
@@ -13,6 +14,7 @@ import Home from "@/pages/Home";
 import MyAdverts from "@/pages/MyAdverts";
 import Notifications from "@/pages/Notifications";
 import Profile from "@/pages/Profile";
+import Requests from "@/pages/Requests";
 import Sell from "@/pages/sell/Sell";
 import SingleAdvertPage from "@/pages/SingleAdvertPage";
 import SubCategories from "@/pages/SubCategories";
@@ -32,6 +34,7 @@ import { Redirect, Route } from "react-router-dom";
 import {
   addCircleOutline,
   homeOutline,
+  megaphoneOutline,
   personCircleOutline,
 } from "ionicons/icons";
 import { useMemo } from "react";
@@ -81,6 +84,18 @@ export default function Tabs() {
           exact
           path="/app/adverts/user/:user"
           render={() => <UserAdverts />}
+        />
+
+        {/* ------------------------ REQUESTS ----------------------- */}
+        {/* Requests */}
+        <Route
+          exact
+          path="/app/requests"
+          render={() => (
+            <ProtectedRoute>
+              <Requests />
+            </ProtectedRoute>
+          )}
         />
 
         {/* ------------------------ SELL ----------------------- */}
@@ -207,6 +222,17 @@ export default function Tabs() {
           )}
         />
 
+        {/* Admin Notifications */}
+        <Route
+          exact
+          path="/app/me/admin/notifications"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminNotifications />
+            </AdminProtectedRoute>
+          )}
+        />
+
         {/* Admin Adverts */}
         <Route
           exact
@@ -270,6 +296,12 @@ export default function Tabs() {
         <IonTabButton tab={"sell"} href={"/app/sell"}>
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
+        </IonTabButton>
+
+        {/* Requests */}
+        <IonTabButton tab={"requests"} href={"/app/requests"}>
+          <IonIcon icon={megaphoneOutline} />
+          <IonLabel>Requests</IonLabel>
         </IonTabButton>
 
         {/* Profile */}
