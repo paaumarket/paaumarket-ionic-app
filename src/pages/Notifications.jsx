@@ -10,15 +10,17 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
+  IonCol,
   IonContent,
   IonFooter,
+  IonGrid,
   IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
-  IonList,
   IonNote,
   IonPage,
+  IonRow,
   IonSpinner,
   IonThumbnail,
   IonTitle,
@@ -87,14 +89,18 @@ const Notifications = () => {
         ) : null}
 
         {isSuccess ? (
-          <IonList>
-            {notifications.map((notification) => (
-              <NotificationItem
-                key={notification["id"]}
-                notification={notification}
-              />
-            ))}
-          </IonList>
+          <IonGrid>
+            <IonRow className="ion-justify-content-center">
+              <IonCol sizeLg="6">
+                {notifications.map((notification) => (
+                  <NotificationItem
+                    key={notification["id"]}
+                    notification={notification}
+                  />
+                ))}
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         ) : null}
       </IonContent>
       {isSuccess && notifications.length ? (
@@ -181,7 +187,7 @@ const NotificationItem = ({ notification }) => {
           </IonCardHeader>
           <IonCardContent>
             {!notification["read_at"] ? (
-              <IonIcon icon={megaphone} color="danger" />
+              <IonIcon icon={megaphone} color="success" />
             ) : undefined}{" "}
             {notification["data"]["message"]}
           </IonCardContent>
@@ -191,54 +197,59 @@ const NotificationItem = ({ notification }) => {
 
     case "wallet_top_up_notification":
       content = (
-        <IonItem color={!notification["read_at"] ? "light" : undefined}>
-          <IonIcon slot="start" icon={walletOutline} />
-          <IonLabel color={"success"}>
-            <h4>Wallet Top Up</h4>
-            <p>
-              {" "}
-              {notification["data"]["reference"] === "WELCOME_BALANCE"
-                ? "Welcome Balance"
-                : notification["data"]["reference"]}
-            </p>
-          </IonLabel>
-          <IonNote slot="end" color={"success"}>
-            +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
-          </IonNote>
-        </IonItem>
+        <IonCard>
+          <IonItem color={!notification["read_at"] ? "light" : undefined}>
+            <IonIcon slot="start" icon={walletOutline} />
+            <IonLabel color={"success"}>
+              <h4>Wallet Top Up</h4>
+              <p>
+                {" "}
+                {notification["data"]["reference"] === "WELCOME_BALANCE"
+                  ? "Welcome Balance"
+                  : notification["data"]["reference"]}
+              </p>
+              <p>{formatDistanceToNow(notification["created_at"])}</p>
+            </IonLabel>
+            <IonNote slot="end" color={"success"}>
+              +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
+            </IonNote>
+          </IonItem>
+        </IonCard>
       );
       break;
 
     case "advert_approved_notification":
     case "advert_declined_notification":
       content = (
-        <IonItem
-          color={!notification["read_at"] ? "light" : undefined}
-          routerLink={"/app/adverts/ad/" + notification["data"]["advert_id"]}
-        >
-          <IonThumbnail
-            slot="start"
-            className="[--size:theme(spacing.10)] relative"
+        <IonCard>
+          <IonItem
+            color={!notification["read_at"] ? "light" : undefined}
+            routerLink={"/app/adverts/ad/" + notification["data"]["advert_id"]}
           >
-            <img
-              src={notification["data"]["advert_image"]["cache"]["small"]}
-              className="object-cover object-center w-full h-full"
-            />
-          </IonThumbnail>
-          <IonLabel
-            color={
-              notification["type"] === "advert_approved_notification"
-                ? "success"
-                : "danger"
-            }
-          >
-            Your advert <b>{notification["data"]["advert_title"]}</b> was{" "}
-            {notification["type"] === "advert_approved_notification"
-              ? "approved"
-              : "declined"}
-            !
-          </IonLabel>
-        </IonItem>
+            <IonThumbnail
+              slot="start"
+              className="[--size:theme(spacing.10)] relative"
+            >
+              <img
+                src={notification["data"]["advert_image"]["cache"]["small"]}
+                className="object-cover object-center w-full h-full"
+              />
+            </IonThumbnail>
+            <IonLabel
+              color={
+                notification["type"] === "advert_approved_notification"
+                  ? "success"
+                  : "danger"
+              }
+            >
+              Your advert <b>{notification["data"]["advert_title"]}</b> was{" "}
+              {notification["type"] === "advert_approved_notification"
+                ? "approved"
+                : "declined"}
+              !
+            </IonLabel>
+          </IonItem>
+        </IonCard>
       );
       break;
   }

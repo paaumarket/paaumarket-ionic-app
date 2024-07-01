@@ -265,7 +265,7 @@ export default function Home() {
               </IonCol>
               <IonCol>
                 <IonButton
-                  color="tertiary"
+                  color="dark"
                   expand="block"
                   routerLink="/app/requests"
                 >
