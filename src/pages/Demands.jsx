@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -6,16 +7,22 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-export default function Requests() {
+export default function Demands() {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Requests</IonTitle>
+          <IonTitle>Demands</IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
+      <IonContent className="ion-padding">
+        {import.meta.env.DEV ? (
+          <IonButton expand="block" routerLink="/app/demands/new">
+            Create Demand
+          </IonButton>
+        ) : null}
+
         <p className="ion-text-center ion-padding">Under Construction</p>
       </IonContent>
     </IonPage>

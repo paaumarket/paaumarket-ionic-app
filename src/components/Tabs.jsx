@@ -6,15 +6,17 @@ import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
 import AdminUsers from "@/pages/admin/AdminUsers";
 import CategoryAdverts from "@/pages/CategoryAdverts";
+import CreateDemand from "@/pages/CreateDemand";
+import Demands from "@/pages/Demands";
 import EditProfile from "@/pages/EditProfile";
 import EditProfileDetails from "@/pages/EditProfileDetails";
 import EditProfilePassword from "@/pages/EditProfilePassword";
 import EditProfilePhoto from "@/pages/EditProfilePhoto";
 import Home from "@/pages/Home";
 import MyAdverts from "@/pages/MyAdverts";
+import MyDemands from "@/pages/MyDemands";
 import Notifications from "@/pages/Notifications";
 import Profile from "@/pages/Profile";
-import Requests from "@/pages/Requests";
 import Sell from "@/pages/sell/Sell";
 import SingleAdvertPage from "@/pages/SingleAdvertPage";
 import SubCategories from "@/pages/SubCategories";
@@ -34,8 +36,8 @@ import { Redirect, Route } from "react-router-dom";
 import {
   addCircleOutline,
   homeOutline,
-  megaphoneOutline,
   personCircleOutline,
+  telescopeOutline,
 } from "ionicons/icons";
 import { useMemo } from "react";
 
@@ -86,14 +88,25 @@ export default function Tabs() {
           render={() => <UserAdverts />}
         />
 
-        {/* ------------------------ REQUESTS ----------------------- */}
-        {/* Requests */}
+        {/* ------------------------ DEMANDS ----------------------- */}
+        {/* Demands */}
         <Route
           exact
-          path="/app/requests"
+          path="/app/demands"
           render={() => (
             <ProtectedRoute>
-              <Requests />
+              <Demands />
+            </ProtectedRoute>
+          )}
+        />
+
+        {/* Create Demand */}
+        <Route
+          exact
+          path="/app/demands/new"
+          render={() => (
+            <ProtectedRoute>
+              <CreateDemand />
             </ProtectedRoute>
           )}
         />
@@ -129,6 +142,17 @@ export default function Tabs() {
           render={() => (
             <ProtectedRoute>
               <MyAdverts />
+            </ProtectedRoute>
+          )}
+        />
+
+        {/* My Demands */}
+        <Route
+          exact
+          path="/app/me/my-demands"
+          render={() => (
+            <ProtectedRoute>
+              <MyDemands />
             </ProtectedRoute>
           )}
         />
@@ -298,10 +322,10 @@ export default function Tabs() {
           <IonLabel>Sell</IonLabel>
         </IonTabButton>
 
-        {/* Requests */}
-        <IonTabButton tab={"requests"} href={"/app/requests"}>
-          <IonIcon icon={megaphoneOutline} />
-          <IonLabel>Requests</IonLabel>
+        {/* Demands */}
+        <IonTabButton tab={"demands"} href={"/app/demands"}>
+          <IonIcon icon={telescopeOutline} />
+          <IonLabel>Demands</IonLabel>
         </IonTabButton>
 
         {/* Profile */}

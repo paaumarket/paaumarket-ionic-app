@@ -25,6 +25,7 @@ import {
   megaphoneOutline,
   personOutline,
   storefrontOutline,
+  telescopeOutline,
   walletOutline,
 } from "ionicons/icons";
 
@@ -98,9 +99,24 @@ export default function Profile() {
                 <h3>
                   <IonText color={"primary"}>My Ads</IonText>
                 </h3>
-                <p>SEE ADS</p>
               </IonLabel>
             </IonItem>
+
+            {import.meta.env.DEV ? (
+              <IonItem routerLink="/app/me/my-demands">
+                <IonIcon
+                  icon={telescopeOutline}
+                  slot="start"
+                  color={"primary"}
+                />
+
+                <IonLabel>
+                  <h3>
+                    <IonText color={"primary"}>My Demands</IonText>
+                  </h3>
+                </IonLabel>
+              </IonItem>
+            ) : null}
 
             <IonItem routerLink="/app/me/notifications">
               <IonIcon icon={megaphoneOutline} slot="start" color={"primary"} />

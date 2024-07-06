@@ -267,10 +267,10 @@ export default function Home() {
                 <IonButton
                   color="dark"
                   expand="block"
-                  routerLink="/app/requests"
+                  routerLink="/app/demands"
                 >
                   <IonIcon icon={megaphoneOutline} slot="start" />
-                  Request Ad
+                  Demand
                 </IonButton>
               </IonCol>
             </IonRow>
