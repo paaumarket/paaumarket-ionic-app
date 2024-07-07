@@ -78,6 +78,8 @@ const AdminDashboard = () => {
                   </IonCardContent>
                 </IonCard>
               </IonCol>
+
+              {/* Adverts */}
               <IonCol>
                 <IonCard className="h-full m-0">
                   <IonCardHeader>
@@ -95,6 +97,29 @@ const AdminDashboard = () => {
                       </IonText>
                       <IonText color={"danger"}>
                         {data["adverts_count"]["declined"] || 0} - Declined
+                      </IonText>
+                    </div>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+
+              <IonCol>
+                <IonCard className="h-full m-0">
+                  <IonCardHeader>
+                    <IonCardTitle className="text-lg font-bold">
+                      Demands
+                    </IonCardTitle>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <div className="flex flex-col gap-1 truncate">
+                      <IonText color={"success"}>
+                        {data["demands_count"]["approved"] || 0} - Approved
+                      </IonText>
+                      <IonText color={"warning"}>
+                        {data["demands_count"]["reviewing"] || 0} - Reviewing
+                      </IonText>
+                      <IonText color={"danger"}>
+                        {data["demands_count"]["declined"] || 0} - Declined
                       </IonText>
                     </div>
                   </IonCardContent>

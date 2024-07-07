@@ -20,7 +20,10 @@ import {
 } from "@ionic/react";
 import {
   callOutline,
+  cogOutline,
+  constructOutline,
   createOutline,
+  exitOutline,
   mailOutline,
   megaphoneOutline,
   personOutline,
@@ -155,6 +158,11 @@ export default function Profile() {
             <IonItemGroup>
               {user["permissions"].includes("access-dashboard") ? (
                 <IonItem routerLink="/app/me/admin">
+                  <IonIcon
+                    icon={constructOutline}
+                    slot="start"
+                    color={"primary"}
+                  />
                   <IonLabel>Admin Panel</IonLabel>
                   {user?.["admin"]?.["reviewing_adverts_count"] ||
                   user?.["admin"]?.["reviewing_demands_count"] ? (
@@ -165,7 +173,12 @@ export default function Profile() {
                   ) : null}
                 </IonItem>
               ) : null}
+              <IonItem routerLink="/app/me/settings">
+                <IonIcon icon={cogOutline} slot="start" color={"primary"} />
+                <IonLabel>Settings</IonLabel>
+              </IonItem>
               <IonItem routerLink="/logout">
+                <IonIcon icon={exitOutline} slot="start" color={"primary"} />
                 <IonLabel>Logout</IonLabel>
               </IonItem>
             </IonItemGroup>

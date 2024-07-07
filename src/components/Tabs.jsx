@@ -20,6 +20,7 @@ import MyDemands from "@/pages/MyDemands";
 import Notifications from "@/pages/Notifications";
 import Profile from "@/pages/Profile";
 import Sell from "@/pages/sell/Sell";
+import Settings from "@/pages/Settings";
 import SingleAdvertPage from "@/pages/SingleAdvertPage";
 import SubCategories from "@/pages/SubCategories";
 import TopUp from "@/pages/TopUp";
@@ -134,6 +135,17 @@ export default function Tabs() {
           render={() => (
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          )}
+        />
+
+        {/* Settings */}
+        <Route
+          exact
+          path={"/app/me/settings"}
+          render={() => (
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           )}
         />
