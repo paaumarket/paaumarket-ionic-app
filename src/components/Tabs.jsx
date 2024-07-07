@@ -1,6 +1,8 @@
 import AdminAdverts from "@/pages/admin/AdminAdverts";
 import AdminCategories from "@/pages/admin/AdminCategories";
+import AdminCommand from "@/pages/admin/AdminCommand";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminDemands from "@/pages/admin/AdminDemands";
 import AdminNotifications from "@/pages/admin/AdminNotifications";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
@@ -48,7 +50,8 @@ export default function Tabs() {
   const hasNotifications = useMemo(
     () =>
       user?.["unread_notifications_count"] ||
-      user?.["admin"]?.["reviewing_adverts_count"],
+      user?.["admin"]?.["reviewing_adverts_count"] ||
+      user?.["admin"]?.["reviewing_demands_count"],
     [user]
   );
 
@@ -264,6 +267,28 @@ export default function Tabs() {
           render={() => (
             <AdminProtectedRoute>
               <AdminAdverts />
+            </AdminProtectedRoute>
+          )}
+        />
+
+        {/* Admin Demands */}
+        <Route
+          exact
+          path="/app/me/admin/demands"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminDemands />
+            </AdminProtectedRoute>
+          )}
+        />
+
+        {/* Admin Command */}
+        <Route
+          exact
+          path="/app/me/admin/command"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminCommand />
             </AdminProtectedRoute>
           )}
         />

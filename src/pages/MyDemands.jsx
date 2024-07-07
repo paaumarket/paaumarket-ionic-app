@@ -28,6 +28,7 @@ import { useHistory } from "react-router";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
+import { formatDate } from "date-fns";
 
 const MyDemands = () => {
   const [segment, setSegment] = useState("all");
@@ -201,7 +202,6 @@ const MyDemandItem = ({ demand, onEdit, onDelete, onRenewed }) => {
       <IonLabel>
         <h4>{demand["title"]}</h4>
         <p>{demand["description"] || "(No description)"}</p>
-
         <IonNote
           className="text-xs"
           color={
@@ -213,6 +213,9 @@ const MyDemandItem = ({ demand, onEdit, onDelete, onRenewed }) => {
           }
         >
           {demand["status"].toUpperCase()}
+        </IonNote>{" "}
+        <IonNote className="text-xs">
+          {formatDate(demand["created_at"], "PPp")}
         </IonNote>
       </IonLabel>
       <IonButton onClick={openActions}>
@@ -227,13 +230,6 @@ const useDemandDeleteMutation = (demand) =>
     mutationKey: ["demands", demand, "delete"],
     mutationFn: () =>
       api.delete(`/demands/${demand}`).then((response) => response.data),
-  });
-
-const useDemandRenewalMutation = (advert) =>
-  useMutation({
-    mutationKey: ["demands", advert, "renew"],
-    mutationFn: () =>
-      api.put(`/demands/${advert}/renew`).then((response) => response.data),
   });
 
 export default MyDemands;

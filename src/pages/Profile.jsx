@@ -156,9 +156,11 @@ export default function Profile() {
               {user["permissions"].includes("access-dashboard") ? (
                 <IonItem routerLink="/app/me/admin">
                   <IonLabel>Admin Panel</IonLabel>
-                  {user?.["admin"]?.["reviewing_adverts_count"] ? (
+                  {user?.["admin"]?.["reviewing_adverts_count"] ||
+                  user?.["admin"]?.["reviewing_demands_count"] ? (
                     <IonBadge color={"danger"}>
-                      {user?.["admin"]?.["reviewing_adverts_count"]}
+                      {user?.["admin"]?.["reviewing_adverts_count"] +
+                        user?.["admin"]?.["reviewing_demands_count"]}
                     </IonBadge>
                   ) : null}
                 </IonItem>

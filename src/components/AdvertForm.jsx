@@ -35,15 +35,15 @@ const MAX_IMAGE_DIMENSION = 1000;
 export default function AdvertForm({
   advert = null,
   isEditing = false,
-  isApproving = false,
+  isReviewing = false,
   onSuccess,
 }) {
-  const includeCategory = isApproving || !isEditing;
+  const includeCategory = isReviewing || !isEditing;
 
   const form = useAdvertHookForm({
     advert,
     includeCategory,
-    isApproving,
+    isReviewing,
     isEditing,
   });
 
@@ -55,7 +55,7 @@ export default function AdvertForm({
   const [presentLoading, dismissLoading] = useIonLoading();
   const advertMutation = useFormMutation({
     form,
-    mutationKey: isApproving
+    mutationKey: isReviewing
       ? ["adverts", advert["id"], "approve"]
       : isEditing
       ? ["adverts", advert["id"], "edit"]
@@ -63,23 +63,23 @@ export default function AdvertForm({
     mutationFn: (data) => {
       return api
         .post(
-          isApproving
+          isReviewing
             ? `/adverts/${advert["id"]}/approve`
             : isEditing
             ? `/adverts/${advert["id"]}`
             : "/adverts",
           serialize({
-            _method: isApproving || isEditing ? "put" : "post",
+            _method: isReviewing || isEditing ? "put" : "post",
             ...data,
 
             /** Images */
             images:
-              isApproving || isEditing
+              isReviewing || isEditing
                 ? data["images"].filter((image) => image instanceof File)
                 : data["images"],
 
             /** Deleted images */
-            ...(isApproving || isEditing
+            ...(isReviewing || isEditing
               ? {
                   /** Images that doesn't exist in the data array */
                   deleted_images: advert["images"]
@@ -102,7 +102,7 @@ export default function AdvertForm({
 
   const handleFormSubmit = (data) => {
     presentLoading({
-      message: isApproving
+      message: isReviewing
         ? "Approving..."
         : isEditing
         ? "Editing..."
@@ -195,12 +195,12 @@ export default function AdvertForm({
 
       {/* Submit Button */}
       <IonButton
-        color={isApproving ? "success" : "primary"}
+        color={isReviewing ? "success" : "primary"}
         type="submit"
         expand="block"
         className="ion-margin"
       >
-        {isApproving ? "Approve" : isEditing ? "Save" : "Post Advert"}
+        {isReviewing ? "Approve" : isEditing ? "Save" : "Post Advert"}
       </IonButton>
     </form>
   );
@@ -314,7 +314,7 @@ const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
 const useAdvertHookForm = ({
   advert,
   includeCategory,
-  isApproving,
+  isReviewing,
   isEditing,
 }) => {
   const schema = useMemo(
@@ -339,7 +339,7 @@ const useAdvertHookForm = ({
             .label("Images"),
         })
         .required(),
-    [advert, includeCategory, isApproving, isEditing]
+    [advert, includeCategory, isReviewing, isEditing]
   );
 
   return useHookForm({
@@ -347,14 +347,14 @@ const useAdvertHookForm = ({
       /** Category ID */
       ...(includeCategory
         ? {
-            category_id: isApproving ? advert["category_id"] : null,
+            category_id: isReviewing ? advert["category_id"] : null,
           }
         : null),
       /** Other attributes */
-      title: isApproving || isEditing ? advert["title"] : "",
-      description: isApproving || isEditing ? advert["description"] : "",
-      price: isApproving || isEditing ? advert["price"] : 0,
-      images: isApproving || isEditing ? advert["images"] : [],
+      title: isReviewing || isEditing ? advert["title"] : "",
+      description: isReviewing || isEditing ? advert["description"] : "",
+      price: isReviewing || isEditing ? advert["price"] : 0,
+      images: isReviewing || isEditing ? advert["images"] : [],
     },
     schema,
   });

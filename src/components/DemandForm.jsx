@@ -20,7 +20,7 @@ const schema = yup
   })
   .required();
 
-const DemandForm = ({ demand, onSuccess }) => {
+const DemandForm = ({ isReviewing, demand, onSuccess }) => {
   const [presentToast] = useIonToast();
   const form = useHookForm({
     schema,
@@ -37,7 +37,14 @@ const DemandForm = ({ demand, onSuccess }) => {
       : ["demands", "store"],
     mutationFn: (data) =>
       api
-        .post(demand ? `/demands/${demand["id"]}` : "/demands", data)
+        .post(
+          isReviewing
+            ? `/demands/${demand["id"]}/approve`
+            : demand
+            ? `/demands/${demand["id"]}`
+            : "/demands",
+          data
+        )
         .then((response) => response.data),
 
     onSuccess(data) {
@@ -95,6 +102,8 @@ const DemandForm = ({ demand, onSuccess }) => {
         >
           {demandMutation.isPending ? (
             <IonSpinner />
+          ) : isReviewing ? (
+            "Approve Demand"
           ) : demand ? (
             "Update Demand"
           ) : (

@@ -281,12 +281,6 @@ export default function Home() {
               <IonCol size="12" sizeLg="4" sizeXl="3" className="p-0">
                 {!search ? (
                   <>
-                    {/* <IonText>
-                      <h4 className="font-bold max-lg:text-center ion-padding ion-no-margin">
-                        All category
-                      </h4>
-                    </IonText> */}
-
                     <Category />
                   </>
                 ) : null}

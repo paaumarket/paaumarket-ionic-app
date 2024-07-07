@@ -1,5 +1,7 @@
-import AdvertForm from "@/components/AdvertForm";
+import DemandForm from "@/components/DemandForm";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import api from "@/lib/api";
+import clsx from "clsx";
 import {
   IonAvatar,
   IonButton,
@@ -14,25 +16,22 @@ import {
 } from "@ionic/react";
 import { useMutation } from "@tanstack/react-query";
 
-import DefaultUserImage from "@/assets/user-avatar.svg";
-import clsx from "clsx";
-
-const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
+const AdminDemandModal = ({ demand, onCancelled, onApproved, onDeclined }) => {
   const [presentAlert, dismissAlert] = useIonAlert();
   const [presentLoading, dismissLoading] = useIonLoading();
 
   const declineMutation = useMutation({
-    mutationKey: ["advert", advert["id"], "decline"],
+    mutationKey: ["demand", demand["id"], "decline"],
     mutationFn: () =>
       api
-        .post(`/adverts/${advert["id"]}/decline`)
+        .post(`/demands/${demand["id"]}/decline`)
         .then((response) => response.data),
   });
 
   const showDeclineAlert = () =>
     presentAlert({
-      header: "Decline Advert",
-      subHeader: advert["title"],
+      header: "Decline Demand",
+      subHeader: demand["title"],
       message: "Pick a reason for declining. (Under construction)",
       inputs: [
         {
@@ -55,12 +54,12 @@ const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
         {
           text: "OK",
           role: "confirm",
-          handler: (input) => declineAdvert(),
+          handler: (input) => declineDemand(),
         },
       ],
     });
 
-  const declineAdvert = () =>
+  const declineDemand = () =>
     /** Show Loading */
     presentLoading({
       message: "Declining...",
@@ -77,7 +76,7 @@ const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
           <IonButtons slot="start">
             <IonButton onClick={() => onCancelled()}>Cancel</IonButton>
           </IonButtons>
-          <IonTitle>{advert["title"]}</IonTitle>
+          <IonTitle>{demand["title"]}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -86,25 +85,27 @@ const AdminAdvertModal = ({ advert, onCancelled, onApproved, onDeclined }) => {
         <div className="flex flex-wrap items-center gap-2 ion-margin">
           <IonAvatar className={clsx("w-5 h-5", "inline-block")}>
             <img
-              alt={advert["user_name"]}
+              alt={demand["user_name"]}
               src={
-                advert["user_profile_photo"]?.["cache"]?.["extra-small"] ||
+                demand["user_profile_photo"]?.["cache"]?.["extra-small"] ||
                 DefaultUserImage
               }
               className="object-cover object-center w-full h-full"
             />
           </IonAvatar>{" "}
-          {advert["user_name"]}
+          {demand["user_name"]}
         </div>
 
-        <AdvertForm isReviewing advert={advert} onSuccess={onApproved} />
+        <DemandForm isReviewing demand={demand} onSuccess={onApproved} />
 
-        <IonButton expand="block" color={"danger"} onClick={showDeclineAlert}>
-          Decline
-        </IonButton>
+        <div className="ion-margin">
+          <IonButton expand="block" color={"danger"} onClick={showDeclineAlert}>
+            Decline
+          </IonButton>
+        </div>
       </IonContent>
     </IonPage>
   );
 };
 
-export default AdminAdvertModal;
+export default AdminDemandModal;

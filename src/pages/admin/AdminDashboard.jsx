@@ -14,8 +14,10 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
+  IonItemGroup,
   IonLabel,
   IonList,
+  IonListHeader,
   IonPage,
   IonRow,
   IonSpinner,
@@ -29,6 +31,8 @@ import {
   folderOutline,
   megaphoneOutline,
   personOutline,
+  skullOutline,
+  telescopeOutline,
 } from "ionicons/icons";
 
 const AdminDashboard = () => {
@@ -99,56 +103,98 @@ const AdminDashboard = () => {
             </IonRow>
           </IonGrid>
         ) : null}
+
         <IonList inset>
-          {/* Categories */}
-          <IonItem routerLink="/app/me/admin/categories">
-            <IonIcon
-              aria-hidden="true"
-              icon={folderOutline}
-              slot="start"
-              color="primary"
-            ></IonIcon>
-            <IonLabel>Categories</IonLabel>
-          </IonItem>
+          <IonListHeader>
+            <IonLabel>Marketplace</IonLabel>
+          </IonListHeader>
 
-          {/* Adverts */}
-          <IonItem routerLink="/app/me/admin/adverts">
-            <IonIcon
-              aria-hidden="true"
-              icon={megaphoneOutline}
-              slot="start"
-              color="primary"
-            ></IonIcon>
-            <IonLabel>Adverts</IonLabel>
+          <IonItemGroup>
+            {/* Categories */}
+            <IonItem routerLink="/app/me/admin/categories">
+              <IonIcon
+                aria-hidden="true"
+                icon={folderOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>Categories</IonLabel>
+            </IonItem>
 
-            {user?.["admin"]?.["reviewing_adverts_count"] ? (
-              <IonBadge color={"danger"}>
-                {user?.["admin"]?.["reviewing_adverts_count"]}
-              </IonBadge>
-            ) : null}
-          </IonItem>
+            {/* Adverts */}
+            <IonItem routerLink="/app/me/admin/adverts">
+              <IonIcon
+                aria-hidden="true"
+                icon={megaphoneOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>Adverts</IonLabel>
 
-          {/* Users */}
-          <IonItem routerLink="/app/me/admin/users">
-            <IonIcon
-              aria-hidden="true"
-              icon={personOutline}
-              slot="start"
-              color="primary"
-            ></IonIcon>
-            <IonLabel>Users</IonLabel>
-          </IonItem>
+              {user?.["admin"]?.["reviewing_adverts_count"] ? (
+                <IonBadge color={"danger"}>
+                  {user?.["admin"]?.["reviewing_adverts_count"]}
+                </IonBadge>
+              ) : null}
+            </IonItem>
 
-          {/* Notifications */}
-          <IonItem routerLink="/app/me/admin/notifications">
-            <IonIcon
-              aria-hidden="true"
-              icon={alertOutline}
-              slot="start"
-              color="primary"
-            ></IonIcon>
-            <IonLabel>System Notifications</IonLabel>
-          </IonItem>
+            {/* Demands */}
+            <IonItem routerLink="/app/me/admin/demands">
+              <IonIcon
+                aria-hidden="true"
+                icon={telescopeOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>Demands</IonLabel>
+
+              {user?.["admin"]?.["reviewing_demands_count"] ? (
+                <IonBadge color={"danger"}>
+                  {user?.["admin"]?.["reviewing_demands_count"]}
+                </IonBadge>
+              ) : null}
+            </IonItem>
+
+            {/* Users */}
+            <IonItem routerLink="/app/me/admin/users">
+              <IonIcon
+                aria-hidden="true"
+                icon={personOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>Users</IonLabel>
+            </IonItem>
+          </IonItemGroup>
+        </IonList>
+
+        <IonList inset>
+          <IonListHeader>
+            <IonLabel>System</IonLabel>
+          </IonListHeader>
+          <IonItemGroup>
+            {/* Notifications */}
+            <IonItem routerLink="/app/me/admin/notifications">
+              <IonIcon
+                aria-hidden="true"
+                icon={alertOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>System Notifications</IonLabel>
+            </IonItem>
+
+            {/* Command */}
+            <IonItem routerLink="/app/me/admin/command">
+              <IonIcon
+                aria-hidden="true"
+                icon={skullOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>System Command</IonLabel>
+            </IonItem>
+          </IonItemGroup>
         </IonList>
       </IonContent>
     </IonPage>
