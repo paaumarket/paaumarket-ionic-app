@@ -1,38 +1,48 @@
 export default function resizeImage(file, maxSize = 768) {
   return new Promise((res, rej) => {
-    const img = new Image();
+    try {
+      const img = new Image();
 
-    img.addEventListener("load", (ev) => {
-      URL.revokeObjectURL(ev.target.src);
+      img.addEventListener("load", (ev) => {
+        try {
+          URL.revokeObjectURL(ev.target.src);
 
-      let width = ev.target.naturalWidth;
-      let height = ev.target.naturalHeight;
+          let width = ev.target.naturalWidth;
+          let height = ev.target.naturalHeight;
 
-      if (width > maxSize || height > maxSize) {
-        let ratio = Math.min(maxSize / width, maxSize / height);
-        width *= ratio;
-        height *= ratio;
-      }
+          if (width > maxSize || height > maxSize) {
+            let ratio = Math.min(maxSize / width, maxSize / height);
+            width *= ratio;
+            height *= ratio;
+          }
 
-      const canvas = document.createElement("canvas");
+          const canvas = document.createElement("canvas");
 
-      canvas.width = width;
-      canvas.height = height;
+          canvas.width = width;
+          canvas.height = height;
 
-      const ctx = canvas.getContext("2d");
+          const ctx = canvas.getContext("2d");
 
-      ctx.drawImage(ev.target, 0, 0, width, height);
-      canvas.toBlob(
-        (blob) => {
-          res(new File([blob], Date.now() + ".webp"));
-        },
-        "image/webp",
-        0.9
-      );
-    });
+          ctx.drawImage(ev.target, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              res(new File([blob], Date.now() + ".webp"));
+            },
+            "image/webp",
+            0.9
+          );
+        } catch {
+          res(file);
+        }
+      });
 
-    img.addEventListener("error", rej);
+      img.addEventListener("error", () => {
+        res(file);
+      });
 
-    img.src = URL.createObjectURL(file);
+      img.src = URL.createObjectURL(file);
+    } catch {
+      res(file);
+    }
   });
 }
