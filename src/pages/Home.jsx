@@ -47,6 +47,7 @@ import { generatePath } from "react-router-dom";
 import { isPlatform } from "@ionic/react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import DefaultCategoryImage from "@/assets/category.svg";
 
 export default function Home() {
   const { user } = useAuth();
@@ -349,7 +350,10 @@ const Category = () => {
               >
                 <IonThumbnail className="[--size:theme(spacing.10)]">
                   <img
-                    src={category["image"]?.["cache"]?.["extra-small"]}
+                    src={
+                      category["image"]?.["cache"]?.["extra-small"] ||
+                      DefaultCategoryImage
+                    }
                     alt={category["name"]}
                     className="object-cover object-center w-full h-full"
                   />

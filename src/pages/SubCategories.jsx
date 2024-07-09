@@ -16,6 +16,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useRouteMatch, generatePath } from "react-router-dom";
+import DefaultCategoryImage from "@/assets/category.svg";
 
 export default () => {
   const match = useRouteMatch();
@@ -52,7 +53,10 @@ export default () => {
               >
                 <img
                   alt={category["name"]}
-                  src={category["image"]?.["cache"]?.["extra-small"]}
+                  src={
+                    category["image"]?.["cache"]?.["extra-small"] ||
+                    DefaultCategoryImage
+                  }
                   className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>
@@ -102,7 +106,10 @@ const SubCategoryList = ({ category }) => {
               <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
                 <img
                   alt={sub["name"]}
-                  src={sub["image"]?.["cache"]?.["extra-small"]}
+                  src={
+                    sub["image"]?.["cache"]?.["extra-small"] ||
+                    DefaultCategoryImage
+                  }
                   className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>

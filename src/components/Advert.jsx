@@ -3,9 +3,8 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "@ionic/react/css/ionic-swiper.css";
-
-import DefaultCategoryImage from "@/assets/category.svg";
 import DefaultUserImage from "@/assets/user-avatar.svg";
+import DefaultCategoryImage from "@/assets/category.svg";
 import clsx from "clsx";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import {
@@ -15,7 +14,12 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonItem,
+  IonLabel,
+  IonNote,
   IonSkeletonText,
+  IonText,
+  IonThumbnail,
 } from "@ionic/react";
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
@@ -23,39 +27,83 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 
-const Advert = ({ advert, full = false }) => {
+const Advert = ({ mode, ...props }) => {
+  return mode === "list" ? (
+    <AdvertStyleList {...props} />
+  ) : (
+    <AdvertStyleGrid {...props} />
+  );
+};
+
+const AdvertStyleList = ({ advert }) => {
+  return (
+    <IonItem key={advert["id"]} routerLink={"/app/adverts/ad/" + advert["id"]}>
+      <IonThumbnail
+        slot="start"
+        className="[--size:theme(spacing.32)] relative"
+      >
+        <img
+          alt={advert["title"]}
+          src={advert["preview_image"]["cache"]["medium"]}
+          width={advert["preview_image"]["width"]}
+          height={advert["preview_image"]["height"]}
+          className="object-cover object-center w-full h-full"
+        />
+
+        <span
+          className={clsx(
+            "absolute",
+            "bottom-0 right-0",
+            "bg-[var(--ion-color-tertiary)]",
+            "text-[var(--ion-color-tertiary-contrast)]",
+            "text-xs",
+            "p-1 rounded-tl",
+            "font-bold",
+            "leading-none"
+          )}
+        >
+          {advert["images_count"].length}
+        </span>
+      </IonThumbnail>
+      <IonLabel>
+        {advert["price"] ? (
+          <IonNote color={"primary"}>
+            ₦{Intl.NumberFormat().format(advert["price"])}
+          </IonNote>
+        ) : null}
+        <h3 className="!my-2">
+          <IonText className="font-bold">{advert["title"]}</IonText>
+        </h3>
+        <AdvertPreviewSeller advert={advert} />
+      </IonLabel>
+    </IonItem>
+  );
+};
+
+const AdvertPreviewSeller = ({ advert }) => (
+  <p className="flex flex-wrap items-center gap-2 text-xs">
+    <IonAvatar className="w-5 h-5">
+      <img
+        src={
+          advert["user_profile_photo"]?.["cache"]?.["extra-small"] ||
+          DefaultUserImage
+        }
+        className="object-cover object-center w-full h-full"
+      />
+    </IonAvatar>{" "}
+    {advert["user_name"]}
+  </p>
+);
+
+const AdvertStyleGrid = ({ advert, full = false }) => {
   return (
     <IonCard
       routerLink={!full ? "/app/adverts/ad/" + advert["id"] : undefined}
       className="h-full ion-no-margin"
     >
-      {advert["preview_image"] ? (
-        <div className="relative">
-          <img
-            alt={advert["title"]}
-            src={advert["preview_image"]["cache"]["medium"]}
-            width={advert["preview_image"]["width"]}
-            height={advert["preview_image"]["height"]}
-            className="object-cover object-center w-full h-52"
-          />
-          <span
-            className={clsx(
-              "absolute",
-              "bottom-0 right-0",
-              "bg-[var(--ion-color-tertiary)]",
-              "text-[var(--ion-color-tertiary-contrast)]",
-              "text-xs",
-              "p-1 rounded-tl",
-              "font-bold",
-              "leading-none"
-            )}
-          >
-            {advert["images_count"]}
-          </span>
-        </div>
-      ) : null}
-
+      {advert["preview_image"] ? <AdvertPreviewImage advert={advert} /> : null}
       {advert["images"] ? <AdvertImages advert={advert} /> : null}
+
       <IonCardHeader>
         <IonCardTitle
           className={clsx("text-sm font-bold", !full ? "truncate" : null)}
@@ -65,10 +113,12 @@ const Advert = ({ advert, full = false }) => {
 
         {/* Price */}
         {advert["price"] ? (
-          <IonCardSubtitle className="text-sm">
+          <IonCardSubtitle color={"primary"} className="text-sm">
             ₦{Intl.NumberFormat().format(advert["price"])}
           </IonCardSubtitle>
         ) : null}
+
+        {!full ? <AdvertPreviewSeller advert={advert} /> : null}
       </IonCardHeader>
       {full ? (
         <IonCardContent>
@@ -210,6 +260,32 @@ export const AdvertPlaceholder = () => (
       </IonCardSubtitle>
     </IonCardHeader>
   </IonCard>
+);
+
+const AdvertPreviewImage = ({ advert }) => (
+  <div className="relative">
+    <img
+      alt={advert["title"]}
+      src={advert["preview_image"]["cache"]["medium"]}
+      width={advert["preview_image"]["width"]}
+      height={advert["preview_image"]["height"]}
+      className="object-cover object-center w-full h-60"
+    />
+    <span
+      className={clsx(
+        "absolute",
+        "bottom-0 right-0",
+        "bg-[var(--ion-color-tertiary)]",
+        "text-[var(--ion-color-tertiary-contrast)]",
+        "text-xs",
+        "p-1 rounded-tl",
+        "font-bold",
+        "leading-none"
+      )}
+    >
+      {advert["images_count"]}
+    </span>
+  </div>
 );
 
 export default Advert;
