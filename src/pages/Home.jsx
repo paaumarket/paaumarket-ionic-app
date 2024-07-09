@@ -287,13 +287,8 @@ export default function Home() {
                 ) : null}
               </IonCol>
               <IonCol>
-                <IonText>
-                  <h4 className="font-bold ion-padding ion-no-margin">
-                    {search ? `Search: ${search}` : "Trending ads"}
-                  </h4>
-                </IonText>
-
                 <AdvertList
+                  title={search ? `Search: ${search}` : "Trending ads"}
                   isPending={isPending}
                   isSuccess={isSuccess}
                   data={data}
