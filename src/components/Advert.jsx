@@ -62,7 +62,7 @@ const AdvertStyleList = ({ advert }) => {
             "leading-none"
           )}
         >
-          {advert["images_count"].length}
+          {advert["images_count"]}
         </span>
       </IonThumbnail>
       <IonLabel>
