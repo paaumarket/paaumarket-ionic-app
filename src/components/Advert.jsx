@@ -24,7 +24,7 @@ import {
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { formatDistanceToNow } from "date-fns";
+import { formatDate } from "date-fns";
 import { useState } from "react";
 
 const Advert = ({ mode, ...props }) => {
@@ -75,6 +75,11 @@ const AdvertStyleList = ({ advert }) => {
           <IonText className="font-bold">{advert["title"]}</IonText>
         </h3>
         <AdvertPreviewSeller advert={advert} />
+        <p>
+          <IonNote className="text-xs">
+            {formatDate(advert["created_at"], "PPp")}
+          </IonNote>
+        </p>
       </IonLabel>
     </IonItem>
   );
@@ -119,6 +124,13 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
         ) : null}
 
         {!full ? <AdvertPreviewSeller advert={advert} /> : null}
+        {!full ? (
+          <p className="ion-no-margin">
+            <IonNote className="text-xs">
+              {formatDate(advert["created_at"], "PPp")}
+            </IonNote>
+          </p>
+        ) : null}
       </IonCardHeader>
       {full ? (
         <IonCardContent>
@@ -163,7 +175,7 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
               {advert["category"]["name"]}
             </Link>
 
-            <p>{formatDistanceToNow(advert["created_at"])}</p>
+            <p>{formatDate(advert["created_at"], "PPp")}</p>
             <p>{advert["description"]}</p>
           </div>
         </IonCardContent>

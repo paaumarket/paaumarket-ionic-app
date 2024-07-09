@@ -15,11 +15,11 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonNote,
   IonPage,
   IonSegment,
   IonSegmentButton,
   IonSpinner,
-  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -32,6 +32,7 @@ import { useHistory } from "react-router";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
+import { formatDate } from "date-fns";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -260,13 +261,17 @@ const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
         </span>
       </IonThumbnail>
       <IonLabel>
+        {advert["price"] ? (
+          <IonNote color={"primary"}>
+            ₦{Intl.NumberFormat().format(advert["price"])}
+          </IonNote>
+        ) : null}
+
         <h4>{advert["title"]}</h4>
 
-        {advert["price"] ? (
-          <p>₦{Intl.NumberFormat().format(advert["price"])}</p>
-        ) : null}
         <p>
-          <IonText
+          <IonNote
+            className="text-xs"
             color={
               advert["status"] === "approved"
                 ? "success"
@@ -276,7 +281,10 @@ const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
             }
           >
             {advert["status"].toUpperCase()}
-          </IonText>
+          </IonNote>{" "}
+          <IonNote className="text-xs">
+            {formatDate(advert["created_at"], "PPp")}
+          </IonNote>
         </p>
 
         {/* Renew button */}

@@ -29,9 +29,10 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import { formatDistanceToNow } from "date-fns";
+import { formatDate } from "date-fns";
 import { megaphone, walletOutline } from "ionicons/icons";
 import { useMemo } from "react";
+import Logo from "@/assets/paaumarket.svg";
 
 const Notifications = () => {
   const { user, login } = useAuth();
@@ -177,18 +178,23 @@ const NotificationItem = ({ notification }) => {
           {banner ? (
             <img
               src={banner["cache"]["medium"]}
-              className="object-cover object-center w-full max-h-56"
+              className="object-cover object-center w-full"
             />
           ) : null}
           <IonCardHeader>
             <IonCardSubtitle color={"d"}>
-              {formatDistanceToNow(notification["created_at"])}
+              {formatDate(notification["created_at"], "PPp")}
             </IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
             {!notification["read_at"] ? (
-              <IonIcon icon={megaphone} color="success" />
+              <IonIcon
+                icon={megaphone}
+                color="success"
+                className="align-middle"
+              />
             ) : undefined}{" "}
+            <img src={Logo} className="w-4 h-4 align-middle" />{" "}
             {notification["data"]["message"]}
           </IonCardContent>
         </IonCard>
@@ -208,7 +214,7 @@ const NotificationItem = ({ notification }) => {
                   ? "Welcome Balance"
                   : notification["data"]["reference"]}
               </p>
-              <p>{formatDistanceToNow(notification["created_at"])}</p>
+              <p> {formatDate(notification["created_at"], "PPp")}</p>
             </IonLabel>
             <IonNote slot="end" color={"success"}>
               +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
