@@ -17,7 +17,6 @@ import {
   IonIcon,
   IonPage,
   IonRow,
-  IonText,
   IonTitle,
   IonToolbar,
   useIonLoading,
@@ -25,7 +24,8 @@ import {
 import { Link } from "react-router-dom";
 import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
 import { useLocation, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
+import AdvertList from "@/components/AdvertList";
 
 export default function SingleAdvertPage() {
   const { user } = useAuth();
@@ -61,29 +61,24 @@ export default function SingleAdvertPage() {
                 <AdvertPlaceholder />
               ) : (
                 <div className="flex flex-col gap-4">
-                  {user?.["id"] === advert["user_id"] ? (
-                    <div>
-                      <IonText
-                        color={
-                          advert["status"] === "approved"
-                            ? "success"
-                            : advert["status"] === "declined"
-                            ? "danger"
-                            : "warning"
-                        }
-                      >
-                        {advert["status"].toUpperCase()}
-                      </IonText>
-                    </div>
-                  ) : null}
                   <Advert full advert={advert} />
                 </div>
               )}
             </IonCol>
             <IonCol size="12" sizeXl="4">
-              {isSuccess ? <AdvertContact advert={advert} /> : null}
+              {isSuccess && advert["user_id"] !== user["id"] ? (
+                <AdvertContact advert={advert} />
+              ) : null}
             </IonCol>
           </IonRow>
+
+          {isSuccess && advert["status"] === "approved" ? (
+            <IonRow className="ion-justify-start">
+              <IonCol size="12" sizeXl="8">
+                <SimilarAdverts advert={advert} />
+              </IonCol>
+            </IonRow>
+          ) : null}
         </IonGrid>
       </IonContent>
     </IonPage>
@@ -190,5 +185,36 @@ const AdvertContact = ({ advert }) => {
         </div>
       </IonCardContent>
     </IonCard>
+  );
+};
+
+const SimilarAdverts = ({ advert }) => {
+  const {
+    data,
+    isPending,
+    isSuccess,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    initialPageParam: "",
+    queryKey: ["advert", advert["id"], "similar"],
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(`/adverts/${advert["id"]}/similar?cursor=${pageParam}`, { signal })
+        .then((response) => response.data),
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+  });
+
+  return (
+    <>
+      <AdvertList
+        title={"Similar or Related"}
+        isPending={isPending}
+        isSuccess={isSuccess}
+        data={data}
+      />
+    </>
   );
 };

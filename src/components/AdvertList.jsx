@@ -13,6 +13,7 @@ import { gridOutline, listOutline } from "ionicons/icons";
 import useApp from "@/hooks/useApp";
 
 export default function AdvertList({
+  title,
   isPending = true,
   isSuccess = false,
   data,
@@ -25,24 +26,27 @@ export default function AdvertList({
 
   return (
     <>
-      <div className="flex justify-end">
-        {/* List Toggle */}
-        <IonButton
-          color={mode === "list" ? "primary" : "dark"}
-          onClick={() => setAdvertListStyle("list")}
-          fill="clear"
-        >
-          <IonIcon icon={listOutline} />
-        </IonButton>
+      <div className="flex items-center gap-4">
+        {title ? <h5 className="font-bold grow">{title}</h5> : null}
+        <div className="ml-auto">
+          {/* List Toggle */}
+          <IonButton
+            color={mode === "list" ? "primary" : "dark"}
+            onClick={() => setAdvertListStyle("list")}
+            fill="clear"
+          >
+            <IonIcon icon={listOutline} />
+          </IonButton>
 
-        {/* Grid Toggle */}
-        <IonButton
-          color={mode === "grid" ? "primary" : "dark"}
-          onClick={() => setAdvertListStyle("grid")}
-          fill="clear"
-        >
-          <IonIcon icon={gridOutline} />
-        </IonButton>
+          {/* Grid Toggle */}
+          <IonButton
+            color={mode === "grid" ? "primary" : "dark"}
+            onClick={() => setAdvertListStyle("grid")}
+            fill="clear"
+          >
+            <IonIcon icon={gridOutline} />
+          </IonButton>
+        </div>
       </div>
 
       {mode === "list" ? (
@@ -67,7 +71,7 @@ export default function AdvertList({
           <IonRow className="[--ion-grid-column-padding:theme(spacing.2)] -mx-[var(--ion-grid-column-padding)]">
             {isPending
               ? repeatComponent(
-                  <AdvertCol>
+                  <AdvertCol mode={mode}>
                     <AdvertPlaceholder />
                   </AdvertCol>,
                   10

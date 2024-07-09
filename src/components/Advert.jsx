@@ -249,30 +249,60 @@ export const AdvertImages = ({ advert }) => {
   );
 };
 
-export const AdvertPlaceholder = () => (
-  <IonCard className="ion-no-margin">
-    <IonSkeletonText
-      animated={true}
-      className="h-52 ion-no-margin aspect-square"
-    ></IonSkeletonText>
-    <IonCardHeader>
-      <IonCardTitle>
+export const AdvertPlaceholder = ({ mode }) => {
+  return mode === "list" ? (
+    <IonItem>
+      <IonThumbnail
+        slot="start"
+        className="[--size:theme(spacing.32)] relative"
+      >
+        <IonSkeletonText animated={true}></IonSkeletonText>
+      </IonThumbnail>
+      <IonLabel>
+        <IonSkeletonText
+          animated={true}
+          style={{ width: "20%" }}
+        ></IonSkeletonText>
         <IonSkeletonText
           animated={true}
           style={{ width: "80%" }}
-          className="ion-no-margin"
         ></IonSkeletonText>
-      </IonCardTitle>
-      <IonCardSubtitle>
         <IonSkeletonText
           animated={true}
-          style={{ width: "60%" }}
-          className="ion-no-margin"
+          style={{ width: "50%" }}
         ></IonSkeletonText>
-      </IonCardSubtitle>
-    </IonCardHeader>
-  </IonCard>
-);
+      </IonLabel>
+    </IonItem>
+  ) : (
+    <IonCard className="ion-no-margin">
+      <IonSkeletonText
+        animated={true}
+        className="h-52 ion-no-margin aspect-square"
+      ></IonSkeletonText>
+      <IonCardHeader>
+        <IonCardTitle>
+          <IonSkeletonText
+            animated={true}
+            style={{ width: "80%" }}
+            className="ion-no-margin"
+          ></IonSkeletonText>
+        </IonCardTitle>
+        <IonCardSubtitle>
+          <IonSkeletonText
+            animated={true}
+            style={{ width: "60%" }}
+            className="ion-no-margin"
+          ></IonSkeletonText>
+          <IonSkeletonText
+            animated={true}
+            style={{ width: "40%" }}
+            className="ion-no-margin"
+          ></IonSkeletonText>
+        </IonCardSubtitle>
+      </IonCardHeader>
+    </IonCard>
+  );
+};
 
 const AdvertPreviewImage = ({ advert }) => (
   <div className="relative">
