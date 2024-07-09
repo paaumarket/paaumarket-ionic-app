@@ -68,7 +68,7 @@ export default function AdvertList({
         </IonList>
       ) : (
         <IonGrid className="w-full p-0">
-          <IonRow className="[--ion-grid-column-padding:theme(spacing.2)] -mx-[var(--ion-grid-column-padding)]">
+          <IonRow className="-mx-[var(--ion-grid-column-padding)]">
             {isPending
               ? repeatComponent(
                   <AdvertCol mode={mode}>

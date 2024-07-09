@@ -53,7 +53,7 @@ export default function SingleAdvertPage() {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent fullscreen>
         <IonGrid>
           <IonRow className="ion-justify-start">
             <IonCol size="12" sizeXl="8">
