@@ -1,3 +1,7 @@
+import DemandList from "@/components/DemandList";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
+import api from "@/lib/api";
 import {
   IonButton,
   IonContent,
@@ -6,8 +10,29 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export default function Demands() {
+  const {
+    isPending,
+    isSuccess,
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["demands"],
+    initialPageParam: "",
+    queryFn: ({ signal, pageParam }) =>
+      api
+        .get(`/demands?cursor=${pageParam}`, {
+          signal,
+        })
+        .then((response) => response.data),
+    getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
+  });
+
   return (
     <IonPage>
       <IonHeader>
@@ -18,9 +43,23 @@ export default function Demands() {
 
       <IonContent className="ion-padding">
         {import.meta.env.DEV ? (
-          <IonButton expand="block" routerLink="/app/demands/new">
-            Create Demand
-          </IonButton>
+          <>
+            <IonButton expand="block" routerLink="/app/demands/new">
+              Create Demand
+            </IonButton>
+
+            <Refresher refresh={refetch} />
+            <DemandList
+              isPending={isPending}
+              isSuccess={isSuccess}
+              data={data}
+            />
+            <InfiniteScroll
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+          </>
         ) : null}
 
         <p className="ion-text-center ion-padding">Under Construction</p>

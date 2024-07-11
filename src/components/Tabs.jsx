@@ -22,6 +22,7 @@ import Profile from "@/pages/Profile";
 import Sell from "@/pages/sell/Sell";
 import Settings from "@/pages/Settings";
 import SingleAdvertPage from "@/pages/SingleAdvertPage";
+import SingleDemandPage from "@/pages/SingleDemandPage";
 import SubCategories from "@/pages/SubCategories";
 import TopUp from "@/pages/TopUp";
 import UserAdverts from "@/pages/UserAdverts";
@@ -113,6 +114,13 @@ export default function Tabs() {
               <CreateDemand />
             </ProtectedRoute>
           )}
+        />
+
+        {/* Demand - Single */}
+        <Route
+          exact
+          path="/app/demands/:id"
+          render={() => <SingleDemandPage />}
         />
 
         {/* ------------------------ SELL ----------------------- */}

@@ -40,7 +40,7 @@ const AdvertStyleList = ({ advert }) => {
     <IonItem
       key={advert["id"]}
       routerLink={"/app/adverts/ad/" + advert["id"]}
-      className="[--padding-start:4px]"
+      className="[--padding-start:8px]"
     >
       <IonThumbnail
         slot="start"
@@ -255,7 +255,7 @@ export const AdvertImages = ({ advert }) => {
 
 export const AdvertPlaceholder = ({ mode }) => {
   return mode === "list" ? (
-    <IonItem className="[--padding-start:4px]">
+    <IonItem className="[--padding-start:8px]">
       <IonThumbnail
         slot="start"
         className="[--size:theme(spacing.32)] relative"

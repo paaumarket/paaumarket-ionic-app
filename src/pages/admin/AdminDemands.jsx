@@ -2,6 +2,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
 import {
+  IonAvatar,
   IonBackButton,
   IonButtons,
   IonContent,
@@ -14,7 +15,6 @@ import {
   IonSegment,
   IonSegmentButton,
   IonSpinner,
-  IonThumbnail,
   IonTitle,
   IonToolbar,
   useIonModal,
@@ -152,20 +152,18 @@ const AdminDemandItem = ({ demand, onApproved, onDeclined }) => {
       onClick={() => openDemandModal()}
       className="ion-align-items-start"
     >
-      <IonThumbnail
-        slot="start"
-        className="[--size:theme(spacing.10)] relative"
-      >
+      <IonAvatar className="w-9 h-9" slot="start">
         <img
           src={
-            demand["user_profile_photo"]?.["image"]?.["cache"]?.["small"] ||
+            demand["user_profile_photo"]?.["cache"]?.["extra-small"] ||
             DefaultUserImage
           }
           className="object-cover object-center w-full h-full"
         />
-      </IonThumbnail>
+      </IonAvatar>
+
       <IonLabel>
-        <h3>{demand["title"]}</h3>
+        <h3 style={{ fontWeight: "bold" }}>{demand["title"]}</h3>
         <p>{demand["description"] || "(No description)"}</p>
         <p>
           <IonNote color={"tertiary"}>{demand["user_name"]}</IonNote>
