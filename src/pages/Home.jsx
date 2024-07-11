@@ -48,6 +48,7 @@ import { isPlatform } from "@ionic/react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import DefaultCategoryImage from "@/assets/category.svg";
+import DemandSlides from "@/components/DemandSlides";
 
 export default function Home() {
   const { user } = useAuth();
@@ -287,6 +288,7 @@ export default function Home() {
                 ) : null}
               </IonCol>
               <IonCol>
+                {!search ? <DemandSlides /> : null}
                 <AdvertList
                   title={search ? `Search: ${search}` : "Trending ads"}
                   isPending={isPending}

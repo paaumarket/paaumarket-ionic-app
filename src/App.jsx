@@ -15,6 +15,10 @@ import "@ionic/react/css/display.css";
 /* import '@ionic/react/css/palettes/dark.always.css'; */
 /* import "@ionic/react/css/palettes/dark.system.css"; */
 import "@ionic/react/css/palettes/dark.class.css";
+/** Slides */
+import "swiper/css";
+import "swiper/css/bundle";
+import "@ionic/react/css/ionic-swiper.css";
 
 import "./index.css";
 /* Theme variables */

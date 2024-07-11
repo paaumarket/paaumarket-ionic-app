@@ -1,8 +1,3 @@
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import "@ionic/react/css/ionic-swiper.css";
 import DefaultUserImage from "@/assets/user-avatar.svg";
 import DefaultCategoryImage from "@/assets/category.svg";
 import clsx from "clsx";
