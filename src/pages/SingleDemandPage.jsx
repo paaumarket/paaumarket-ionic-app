@@ -1,11 +1,16 @@
+import AdvertList from "@/components/AdvertList";
+import DefaultUserImage from "@/assets/user-avatar.svg";
+import InfiniteScroll from "@/components/InfiniteScroll";
 import api from "@/lib/api";
 import useAuth from "@/hooks/useAuth";
+import { DemandPlaceholder } from "@/components/DemandList";
 import {
   IonAvatar,
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -14,13 +19,10 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { eyeOutline } from "ionicons/icons";
+import { formatDate } from "date-fns";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { DemandPlaceholder } from "@/components/DemandList";
-import DefaultUserImage from "@/assets/user-avatar.svg";
-import { formatDate } from "date-fns";
-import AdvertList from "@/components/AdvertList";
-import InfiniteScroll from "@/components/InfiniteScroll";
 
 export default function SingleDemandPage() {
   const { user } = useAuth();
@@ -71,9 +73,15 @@ export default function SingleDemandPage() {
                 <p>
                   <IonNote color={"tertiary"}>{demand["user"]["name"]}</IonNote>
                 </p>
-                <IonNote className="text-xs">
-                  {formatDate(demand["created_at"], "PPp")}
-                </IonNote>
+                <p>
+                  <IonNote className="text-xs" color={"tertiary"}>
+                    <IonIcon icon={eyeOutline} /> {demand["views_count"]}
+                  </IonNote>{" "}
+                  -{" "}
+                  <IonNote className="text-xs">
+                    {formatDate(demand["created_at"], "PPp")}
+                  </IonNote>{" "}
+                </p>
               </IonLabel>
             </IonItem>
           ) : (

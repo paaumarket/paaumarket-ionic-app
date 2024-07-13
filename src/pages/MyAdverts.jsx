@@ -27,12 +27,16 @@ import {
   useIonModal,
   useIonToast,
 } from "@ionic/react";
-import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
+import {
+  ellipsisHorizontal,
+  ellipsisVertical,
+  eyeOutline,
+} from "ionicons/icons";
+import { formatDate } from "date-fns";
 import { useHistory } from "react-router";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
-import { formatDate } from "date-fns";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -284,6 +288,10 @@ const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
           </IonNote>{" "}
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
+          </IonNote>{" "}
+          -{" "}
+          <IonNote className="text-xs" color={"tertiary"}>
+            <IonIcon icon={eyeOutline} /> {advert["views_count"]}
           </IonNote>
         </p>
 

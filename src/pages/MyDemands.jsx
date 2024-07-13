@@ -23,12 +23,16 @@ import {
   useIonActionSheet,
   useIonModal,
 } from "@ionic/react";
-import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
+import {
+  ellipsisHorizontal,
+  ellipsisVertical,
+  eyeOutline,
+} from "ionicons/icons";
+import { formatDate } from "date-fns";
 import { useHistory } from "react-router";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
-import { formatDate } from "date-fns";
 
 const MyDemands = () => {
   const [segment, setSegment] = useState("all");
@@ -216,6 +220,10 @@ const MyDemandItem = ({ demand, onEdit, onDelete, onRenewed }) => {
         </IonNote>{" "}
         <IonNote className="text-xs">
           {formatDate(demand["created_at"], "PPp")}
+        </IonNote>{" "}
+        -{" "}
+        <IonNote className="text-xs" color={"tertiary"}>
+          <IonIcon icon={eyeOutline} /> {demand["views_count"]}
         </IonNote>
       </IonLabel>
       <IonButton onClick={openActions}>

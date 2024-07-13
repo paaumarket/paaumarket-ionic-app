@@ -1,13 +1,14 @@
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import api from "@/lib/api";
-import { IonAvatar, IonItem, IonLabel, IonList, IonNote } from "@ionic/react";
+import { Autoplay } from "swiper/modules";
+import { IonAvatar, IonIcon, IonItem, IonLabel, IonNote } from "@ionic/react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { eyeOutline } from "ionicons/icons";
+import { formatDate } from "date-fns";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { formatDate } from "date-fns";
-import DefaultUserImage from "@/assets/user-avatar.svg";
+
 import { DemandPlaceholder } from "./DemandList";
-import { Autoplay, Pagination } from "swiper/modules";
-import { IonicSlides } from "@ionic/react";
 
 export default function DemandSlides() {
   const {
@@ -39,11 +40,7 @@ export default function DemandSlides() {
     <>
       <h5 className="font-bold">Demands</h5>
       {isPending ? (
-        <Swiper
-          modules={[Autoplay, Pagination, IonicSlides]}
-          autoplay={true}
-          pagination={true}
-        >
+        <Swiper modules={[Autoplay]} autoplay={{ delay: 5000 }}>
           {Array.from({ length: 10 }).map((_, i) => (
             <SwiperSlide key={i}>
               <DemandSlidePlaceholder />
@@ -51,11 +48,7 @@ export default function DemandSlides() {
           ))}
         </Swiper>
       ) : isSuccess ? (
-        <Swiper
-          modules={[Autoplay, Pagination, IonicSlides]}
-          autoplay={true}
-          pagination={true}
-        >
+        <Swiper modules={[Autoplay]} autoplay={{ delay: 5000 }}>
           {demands.map((demand) => (
             <SwiperSlide key={demand["id"]}>
               <DemandSlide demand={demand} />
@@ -68,7 +61,7 @@ export default function DemandSlides() {
 }
 
 const DemandSlide = ({ demand }) => (
-  <IonList className="w-full">
+  <div className="w-full pb-8">
     <IonItem
       routerLink={`/app/demands/${demand["id"]}`}
       className="ion-align-items-start"
@@ -89,16 +82,22 @@ const DemandSlide = ({ demand }) => (
         <p>
           <IonNote color={"tertiary"}>{demand["user_name"]}</IonNote>
         </p>
-        <IonNote className="text-xs">
-          {formatDate(demand["created_at"], "PPp")}
-        </IonNote>
+        <p>
+          <IonNote className="text-xs" color={"tertiary"}>
+            <IonIcon icon={eyeOutline} /> {demand["views_count"]}
+          </IonNote>{" "}
+          -{" "}
+          <IonNote className="text-xs">
+            {formatDate(demand["created_at"], "PPp")}
+          </IonNote>{" "}
+        </p>
       </IonLabel>
     </IonItem>
-  </IonList>
+  </div>
 );
 
 const DemandSlidePlaceholder = () => (
-  <IonList className="w-full">
+  <div className="w-full pb-8">
     <DemandPlaceholder />
-  </IonList>
+  </div>
 );

@@ -1,15 +1,17 @@
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import repeatComponent from "@/utils/repeatComponent";
 import {
   IonAvatar,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
   IonNote,
   IonSkeletonText,
 } from "@ionic/react";
-import { useMemo } from "react";
-import DefaultUserImage from "@/assets/user-avatar.svg";
+import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
+import { useMemo } from "react";
 
 export default function DemandList({
   isPending = true,
@@ -56,9 +58,15 @@ const Demand = ({ demand }) => {
         <p>
           <IonNote color={"tertiary"}>{demand["user_name"]}</IonNote>
         </p>
-        <IonNote className="text-xs">
-          {formatDate(demand["created_at"], "PPp")}
-        </IonNote>
+        <p>
+          <IonNote className="text-xs" color={"tertiary"}>
+            <IonIcon icon={eyeOutline} /> {demand["views_count"]}
+          </IonNote>{" "}
+          -{" "}
+          <IonNote className="text-xs">
+            {formatDate(demand["created_at"], "PPp")}
+          </IonNote>{" "}
+        </p>
       </IonLabel>
     </IonItem>
   );

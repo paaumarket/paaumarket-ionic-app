@@ -1,31 +1,34 @@
+import InfiniteScroll from "@/components/InfiniteScroll";
+import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
+import clsx from "clsx";
 import {
   IonBackButton,
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
+  IonNote,
   IonPage,
   IonSegment,
   IonSegmentButton,
   IonSpinner,
-  IonNote,
   IonThumbnail,
   IonTitle,
   IonToolbar,
   useIonModal,
   useIonToast,
 } from "@ionic/react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { useMemo } from "react";
-import AdminAdvertModal from "./AdminAdvertModal";
-import InfiniteScroll from "@/components/InfiniteScroll";
-import Refresher from "@/components/Refresher";
-import clsx from "clsx";
+import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useState } from "react";
+
+import AdminAdvertModal from "./AdminAdvertModal";
 
 const AdminAdverts = () => {
   const [segment, setSegment] = useState("reviewing");
@@ -188,6 +191,10 @@ const AdminAdvertItem = ({ advert, onApproved, onDeclined }) => {
           </IonNote>{" "}
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
+          </IonNote>{" "}
+          -{" "}
+          <IonNote className="text-xs" color={"tertiary"}>
+            <IonIcon icon={eyeOutline} /> {advert["views_count"]}
           </IonNote>
         </p>
       </IonLabel>

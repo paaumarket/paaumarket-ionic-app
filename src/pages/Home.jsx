@@ -1,5 +1,7 @@
 import AdvertList from "@/components/AdvertList";
+import DefaultCategoryImage from "@/assets/category.svg";
 import DefaultUserImage from "@/assets/user-avatar.svg";
+import DemandSlides from "@/components/DemandSlides";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
@@ -42,13 +44,12 @@ import {
   logOutOutline,
   megaphoneOutline,
   personCircleOutline,
+  telescopeOutline,
 } from "ionicons/icons";
 import { generatePath } from "react-router-dom";
 import { isPlatform } from "@ionic/react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import DefaultCategoryImage from "@/assets/category.svg";
-import DemandSlides from "@/components/DemandSlides";
 
 export default function Home() {
   const { user } = useAuth();
@@ -128,6 +129,13 @@ export default function Home() {
               <IonItem routerLink="/app/sell">
                 <IonIcon slot="start" icon={addCircleOutline}></IonIcon>
                 <IonLabel>Sell</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+
+            <IonMenuToggle>
+              <IonItem routerLink="/app/demands">
+                <IonIcon slot="start" icon={telescopeOutline}></IonIcon>
+                <IonLabel>Demands</IonLabel>
               </IonItem>
             </IonMenuToggle>
 
@@ -288,7 +296,7 @@ export default function Home() {
                 ) : null}
               </IonCol>
               <IonCol>
-                {!search ? <DemandSlides /> : null}
+                {!search && import.meta.env.DEV ? <DemandSlides /> : null}
                 <AdvertList
                   title={search ? `Search: ${search}` : "Trending ads"}
                   isPending={isPending}

@@ -1,5 +1,5 @@
-import DefaultUserImage from "@/assets/user-avatar.svg";
 import DefaultCategoryImage from "@/assets/category.svg";
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import clsx from "clsx";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import {
@@ -9,6 +9,7 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonIcon,
   IonItem,
   IonLabel,
   IonNote,
@@ -19,6 +20,7 @@ import {
 import { IonicSlides } from "@ionic/react";
 import { Link, generatePath } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
 import { useState } from "react";
 
@@ -74,10 +76,15 @@ const AdvertStyleList = ({ advert }) => {
           <IonText className="font-bold">{advert["title"]}</IonText>
         </h3>
         <AdvertPreviewSeller advert={advert} />
+
         <p>
+          <IonNote className="text-xs" color={"tertiary"}>
+            <IonIcon icon={eyeOutline} /> {advert["views_count"]}
+          </IonNote>{" "}
+          -{" "}
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
-          </IonNote>
+          </IonNote>{" "}
         </p>
       </IonLabel>
     </IonItem>
@@ -125,9 +132,13 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
         {!full ? <AdvertPreviewSeller advert={advert} /> : null}
         {!full ? (
           <p className="ion-no-margin">
+            <IonNote className="text-xs" color={"tertiary"}>
+              <IonIcon icon={eyeOutline} /> {advert["views_count"]}
+            </IonNote>{" "}
+            -{" "}
             <IonNote className="text-xs">
               {formatDate(advert["created_at"], "PPp")}
-            </IonNote>
+            </IonNote>{" "}
           </p>
         ) : null}
       </IonCardHeader>
@@ -174,7 +185,13 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
               {advert["category"]["name"]}
             </Link>
 
-            <p>{formatDate(advert["created_at"], "PPp")}</p>
+            <p>
+              {" "}
+              <IonNote color={"tertiary"}>
+                <IonIcon icon={eyeOutline} /> {advert["views_count"]}
+              </IonNote>{" "}
+              - {formatDate(advert["created_at"], "PPp")}
+            </p>
             <p>{advert["description"]}</p>
           </div>
         </IonCardContent>

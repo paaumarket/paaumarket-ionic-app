@@ -1,3 +1,4 @@
+import AdvertList from "@/components/AdvertList";
 import api from "@/lib/api";
 import useAuth from "@/hooks/useAuth";
 import Advert, { AdvertPlaceholder } from "@/components/Advert";
@@ -23,9 +24,8 @@ import {
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
-import { useLocation, useParams } from "react-router-dom";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import AdvertList from "@/components/AdvertList";
+import { useLocation, useParams } from "react-router-dom";
 
 export default function SingleAdvertPage() {
   const { user } = useAuth();
@@ -66,7 +66,7 @@ export default function SingleAdvertPage() {
               )}
             </IonCol>
             <IonCol size="12" sizeXl="4">
-              {isSuccess && advert["user_id"] !== user["id"] ? (
+              {isSuccess && advert["user_id"] !== user?.["id"] ? (
                 <AdvertContact advert={advert} />
               ) : null}
             </IonCol>

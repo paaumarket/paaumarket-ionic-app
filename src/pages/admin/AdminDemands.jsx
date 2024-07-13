@@ -1,3 +1,4 @@
+import DefaultUserImage from "@/assets/user-avatar.svg";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import api from "@/lib/api";
@@ -7,6 +8,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -20,13 +22,13 @@ import {
   useIonModal,
   useIonToast,
 } from "@ionic/react";
+import { eyeOutline } from "ionicons/icons";
+import { formatDate } from "date-fns";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
 
 import AdminDemandModal from "./AdminDemandModal";
-import { formatDate } from "date-fns";
-import DefaultUserImage from "@/assets/user-avatar.svg";
 
 const AdminDemands = () => {
   const [segment, setSegment] = useState("reviewing");
@@ -182,6 +184,10 @@ const AdminDemandItem = ({ demand, onApproved, onDeclined }) => {
         </IonNote>{" "}
         <IonNote className="text-xs">
           {formatDate(demand["created_at"], "PPp")}
+        </IonNote>{" "}
+        -{" "}
+        <IonNote className="text-xs" color={"tertiary"}>
+          <IonIcon icon={eyeOutline} /> {demand["views_count"]}
         </IonNote>
       </IonLabel>
     </IonItem>
