@@ -217,12 +217,15 @@ export const AdvertImages = ({ advert }) => {
       >
         {advert["images"].map((advertImage) => (
           <SwiperSlide key={advertImage["id"]}>
-            <img
-              alt={advert["title"]}
-              src={advertImage["image"]["cache"]["large"]}
-              width={advertImage["image"]["width"]}
-              height={advertImage["image"]["height"]}
-            />
+            <div className="flex justify-center w-full">
+              <img
+                alt={advert["title"]}
+                src={advertImage["image"]["cache"]["large"]}
+                width={advertImage["image"]["width"]}
+                height={advertImage["image"]["height"]}
+                className="max-w-full !max-h-[500px]"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -235,7 +238,7 @@ export const AdvertImages = ({ advert }) => {
           slidesPerView={4}
           freeMode={true}
           watchSlidesProgress={true}
-          modules={[FreeMode, Navigation, Thumbs]}
+          modules={[FreeMode, Navigation, Thumbs, IonicSlides]}
           className={clsx(
             "[&.swiper_.swiper-slide]:h-auto",
             "[&.swiper_.swiper-slide]:items-stretch"
@@ -251,7 +254,9 @@ export const AdvertImages = ({ advert }) => {
               )}
             >
               <img
-                className={clsx("w-full h-full object-cover object-center")}
+                className={clsx(
+                  "w-full h-full !max-h-16 object-cover object-center"
+                )}
                 alt={advert["title"]}
                 src={advertImage["image"]["cache"]["small"]}
                 width={advertImage["image"]["width"]}

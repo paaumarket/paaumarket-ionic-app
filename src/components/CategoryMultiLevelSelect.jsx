@@ -1,3 +1,4 @@
+import DefaultCategoryImage from "@/assets/category.svg";
 import api from "@/lib/api";
 import {
   IonIcon,
@@ -50,7 +51,10 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
             <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
               <img
                 alt={selected["name"]}
-                src={selected["image"]?.["cache"]?.["extra-small"]}
+                src={
+                  selected["image"]?.["cache"]?.["extra-small"] ||
+                  DefaultCategoryImage
+                }
                 className="object-cover object-center w-full h-full"
               />
             </IonThumbnail>
@@ -111,7 +115,10 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
               <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
                 <img
                   alt={item["name"]}
-                  src={item["image"]?.["cache"]?.["extra-small"]}
+                  src={
+                    item["image"]?.["cache"]?.["extra-small"] ||
+                    DefaultCategoryImage
+                  }
                   className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>

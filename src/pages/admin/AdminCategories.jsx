@@ -1,3 +1,4 @@
+import DefaultCategoryImage from "@/assets/category.svg";
 import api from "@/lib/api";
 import {
   IonBackButton,
@@ -75,7 +76,10 @@ const AdminCategories = () => {
                 >
                   <img
                     alt={category["name"]}
-                    src={category["image"]?.["cache"]?.["extra-small"]}
+                    src={
+                      category["image"]?.["cache"]?.["extra-small"] ||
+                      DefaultCategoryImage
+                    }
                     className="object-cover object-center w-full h-full"
                   />
                 </IonThumbnail>

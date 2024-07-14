@@ -20,7 +20,7 @@
 /* Slides */
 @import "swiper/css";
 @import "swiper/css/bundle";
-/* @import "@ionic/react/css/ionic-swiper.css"; */
+@import "@ionic/react/css/ionic-swiper.css";
 
 /* Theme variables */
 @import "./theme/variables.css";

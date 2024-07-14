@@ -1,3 +1,4 @@
+import DefaultCategoryImage from "@/assets/category.svg";
 import api from "@/lib/api";
 import {
   IonBackButton,
@@ -94,7 +95,10 @@ const AdminSubCategories = () => {
               >
                 <img
                   alt={category["name"]}
-                  src={category["image"]?.["cache"]?.["extra-small"]}
+                  src={
+                    category["image"]?.["cache"]?.["extra-small"] ||
+                    DefaultCategoryImage
+                  }
                   className="object-cover object-center w-full h-full"
                 />
               </IonThumbnail>
@@ -254,7 +258,10 @@ const SubCategoryItem = ({ category, onEdit, onDelete }) => {
       <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">
         <img
           alt={category["name"]}
-          src={category["image"]?.["cache"]?.["extra-small"]}
+          src={
+            category["image"]?.["cache"]?.["extra-small"] ||
+            DefaultCategoryImage
+          }
           className="object-cover object-center w-full h-full"
         />
       </IonThumbnail>

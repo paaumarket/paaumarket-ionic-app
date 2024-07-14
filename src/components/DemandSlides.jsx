@@ -2,6 +2,7 @@ import DefaultUserImage from "@/assets/user-avatar.svg";
 import api from "@/lib/api";
 import { Autoplay } from "swiper/modules";
 import { IonAvatar, IonIcon, IonItem, IonLabel, IonNote } from "@ionic/react";
+import { IonicSlides } from "@ionic/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
@@ -40,7 +41,7 @@ export default function DemandSlides() {
     <>
       <h5 className="font-bold">Demands</h5>
       {isPending ? (
-        <Swiper modules={[Autoplay]} autoplay={{ delay: 5000 }}>
+        <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
           {Array.from({ length: 10 }).map((_, i) => (
             <SwiperSlide key={i}>
               <DemandSlidePlaceholder />
@@ -48,7 +49,7 @@ export default function DemandSlides() {
           ))}
         </Swiper>
       ) : isSuccess ? (
-        <Swiper modules={[Autoplay]} autoplay={{ delay: 5000 }}>
+        <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
           {demands.map((demand) => (
             <SwiperSlide key={demand["id"]}>
               <DemandSlide demand={demand} />

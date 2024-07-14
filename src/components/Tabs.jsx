@@ -105,6 +105,13 @@ export default function Tabs() {
           )}
         />
 
+        {/* Demand - Single */}
+        <Route
+          exact
+          path="/app/demands/:id"
+          render={() => <SingleDemandPage />}
+        />
+
         {/* Create Demand */}
         <Route
           exact
@@ -114,13 +121,6 @@ export default function Tabs() {
               <CreateDemand />
             </ProtectedRoute>
           )}
-        />
-
-        {/* Demand - Single */}
-        <Route
-          exact
-          path="/app/demands/:id"
-          render={() => <SingleDemandPage />}
         />
 
         {/* ------------------------ SELL ----------------------- */}

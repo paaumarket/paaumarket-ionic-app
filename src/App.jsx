@@ -1,5 +1,4 @@
 import "./index.css";
-
 import AboutUs from "@/pages/AboutUs";
 import ForgotPassword from "@/pages/ForgotPassword";
 import HowToBuy from "@/pages/HowToBuy";
@@ -12,7 +11,6 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import { useEffect } from "react";
-
 import Tabs from "./components/Tabs";
 import useApp from "./hooks/useApp";
 import { ProfileUpdater } from "./ProfileUpdater";
@@ -32,6 +30,7 @@ const App = () => {
   useEffect(() => {
     document.documentElement.classList.toggle("ion-palette-dark", darkMode);
   }, [darkMode]);
+
   return (
     <>
       <IonApp>

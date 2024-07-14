@@ -298,7 +298,7 @@ const ImagesInput = ({ images, appendImage, removeImage, errorText }) => {
                         ? (ev) => URL.revokeObjectURL(ev.target.src)
                         : null
                     }
-                    className="w-full h-40"
+                    className="object-cover object-center w-full h-40"
                   />
                 </IonCard>
               </IonCol>
