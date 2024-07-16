@@ -1,3 +1,5 @@
+import AdvertForm from "@/components/AdvertForm";
+import useAuth from "@/hooks/useAuth";
 import {
   IonButton,
   IonCard,
@@ -13,11 +15,8 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-
-import useAuth from "@/hooks/useAuth";
 import { useHistory } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import AdvertForm from "@/components/AdvertForm";
 import { walletOutline } from "ionicons/icons";
 
 export default function Sell() {
@@ -80,7 +79,7 @@ export default function Sell() {
             </IonButton>
           </IonItem>
         </IonList>
-        <IonCard color={"warning"}>
+        <IonCard color={"tertiary"}>
           <IonCardContent>
             Please ensure to post in the right category
           </IonCardContent>

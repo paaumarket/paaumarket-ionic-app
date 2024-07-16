@@ -7,8 +7,10 @@ import { DemandPlaceholder } from "@/components/DemandList";
 import {
   IonAvatar,
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
+  IonFooter,
   IonHeader,
   IonIcon,
   IonItem,
@@ -18,11 +20,17 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonModal,
 } from "@ionic/react";
 import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import AdvertPicker from "@/components/AdvertPicker";
 
 export default function SingleDemandPage() {
   const { user } = useAuth();
@@ -92,9 +100,32 @@ export default function SingleDemandPage() {
           <Submissions demand={demand} />
         ) : null}
       </IonContent>
+      <IonFooter className="ion-padding">
+        {isSuccess && user ? <SubmissionButton demand={demand} /> : null}
+      </IonFooter>
     </IonPage>
   );
 }
+
+const SubmissionButton = ({ demand, onSuccess }) => {
+  const queryClient = useQueryClient();
+  const [presentModal, dismissModal] = useIonModal(AdvertPicker, {
+    demand,
+    onCancelled: () => dismissModal(),
+    onSuccess: () => {
+      dismissModal();
+      queryClient.resetQueries({
+        queryKey: ["demand", demand["id"], "submissions"],
+      });
+    },
+  });
+
+  return (
+    <IonButton expand="block" onClick={presentModal}>
+      Add Submission
+    </IonButton>
+  );
+};
 
 const Submissions = ({ demand }) => {
   const {

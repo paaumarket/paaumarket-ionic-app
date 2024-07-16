@@ -258,6 +258,32 @@ const NotificationItem = ({ notification }) => {
         </IonCard>
       );
       break;
+
+    case "demand_approved_notification":
+    case "demand_declined_notification":
+      content = (
+        <IonCard>
+          <IonItem
+            color={!notification["read_at"] ? "light" : undefined}
+            routerLink={"/app/demands/" + notification["data"]["demand_id"]}
+          >
+            <IonLabel
+              color={
+                notification["type"] === "demand_approved_notification"
+                  ? "success"
+                  : "danger"
+              }
+            >
+              Your demand <b>{notification["data"]["demand_title"]}</b> was{" "}
+              {notification["type"] === "demand_approved_notification"
+                ? "approved"
+                : "declined"}
+              !
+            </IonLabel>
+          </IonItem>
+        </IonCard>
+      );
+      break;
   }
 
   return content;
