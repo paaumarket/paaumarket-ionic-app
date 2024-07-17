@@ -29,6 +29,7 @@ import {
 } from "@ionic/react";
 import {
   alertOutline,
+  atOutline,
   chevronCollapseOutline,
   folderOutline,
   megaphoneOutline,
@@ -239,6 +240,7 @@ const AdminDashboard = () => {
         </IonList>
 
         {hasAnyPermission([
+          "create-role",
           "send-system-notification",
           "run-system-notification",
         ]) ? (
@@ -252,7 +254,7 @@ const AdminDashboard = () => {
                 <IonItem routerLink="/app/me/admin/roles">
                   <IonIcon
                     aria-hidden="true"
-                    icon={alertOutline}
+                    icon={atOutline}
                     slot="start"
                     color="primary"
                   ></IonIcon>

@@ -199,7 +199,7 @@ const NotificationItem = ({ notification }) => {
 
     case "wallet_top_up_notification":
       content = (
-        <IonItem color={!notification["read_at"] ? "light" : undefined}>
+        <IonItem>
           <IonIcon slot="start" icon={walletOutline} />
           <IonLabel color={"success"}>
             <h4>

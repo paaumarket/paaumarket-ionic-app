@@ -6,6 +6,8 @@ import useFormMutation from "@/hooks/useFormMutation";
 import useHookForm from "@/hooks/useHookForm";
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
   IonItem,
   IonList,
   IonSpinner,
@@ -70,6 +72,14 @@ const DemandForm = ({ isReviewing, demand, onSuccess }) => {
 
   return (
     <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+      {demand && !isReviewing ? (
+        <IonCard color={"warning"}>
+          <IonCardContent>
+            Editing this demand will remove all submissions under it.
+          </IonCardContent>
+        </IonCard>
+      ) : null}
+
       <IonList>
         {/* Title */}
         <IonItem>

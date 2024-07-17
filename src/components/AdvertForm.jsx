@@ -1,6 +1,7 @@
 import {
   IonButton,
   IonCard,
+  IonCardContent,
   IonCol,
   IonGrid,
   IonItem,
@@ -117,6 +118,13 @@ export default function AdvertForm({
 
   return (
     <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+      {isEditing ? (
+        <IonCard color={"warning"}>
+          <IonCardContent>
+            Editing this advert will cause it to be removed from all demands.
+          </IonCardContent>
+        </IonCard>
+      ) : null}
       <IonList inset>
         {/* Category */}
         {includeCategory ? (

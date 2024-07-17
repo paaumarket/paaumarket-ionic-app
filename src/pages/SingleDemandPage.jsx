@@ -99,7 +99,9 @@ export default withIonPageQueryRefetch(function SingleDemandPage() {
         ) : null}
       </IonContent>
       <IonFooter className="ion-padding">
-        {isSuccess && user ? <SubmissionButton demand={demand} /> : null}
+        {isSuccess && user && user["id"] !== demand["user_id"] ? (
+          <SubmissionButton demand={demand} />
+        ) : null}
       </IonFooter>
     </IonPage>
   );
