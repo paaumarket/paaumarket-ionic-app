@@ -24,11 +24,12 @@ import {
 } from "@ionic/react";
 import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
 
 import AdminDemandModal from "./AdminDemandModal";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const AdminDemands = () => {
   const [segment, setSegment] = useState("reviewing");
@@ -41,7 +42,7 @@ const AdminDemands = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["demands", "approval", segment],
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
@@ -194,4 +195,4 @@ const AdminDemandItem = ({ demand, onApproved, onDeclined }) => {
   );
 };
 
-export default AdminDemands;
+export default withIonPageQueryRefetch(AdminDemands);

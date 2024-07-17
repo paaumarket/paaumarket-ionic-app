@@ -1,6 +1,8 @@
 import DemandList from "@/components/DemandList";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 import api from "@/lib/api";
 import {
   IonButton,
@@ -10,9 +12,8 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useInfiniteQuery } from "@tanstack/react-query";
 
-export default function Demands() {
+export default withIonPageQueryRefetch(function Demands() {
   const {
     isPending,
     isSuccess,
@@ -21,7 +22,7 @@ export default function Demands() {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     queryKey: ["demands"],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>
@@ -56,4 +57,4 @@ export default function Demands() {
       </IonContent>
     </IonPage>
   );
-}
+});

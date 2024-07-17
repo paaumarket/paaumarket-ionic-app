@@ -19,10 +19,11 @@ import {
   IonToolbar,
   useIonModal,
 } from "@ionic/react";
-import { useQuery } from "@tanstack/react-query";
 import { add } from "ionicons/icons";
 import AdminCategoryFormModal from "./AdminCategoryFormModal";
 import { useHistory } from "react-router-dom";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const AdminCategories = () => {
   const history = useHistory();
@@ -34,7 +35,7 @@ const AdminCategories = () => {
     },
   });
 
-  const { isPending, isSuccess, data } = useQuery({
+  const { isPending, isSuccess, data } = useApiQuery({
     queryKey: ["categories", "index"],
     queryFn: ({ signal }) =>
       api.get("/categories", { signal }).then((response) => response.data),
@@ -100,4 +101,4 @@ const AdminCategories = () => {
   );
 };
 
-export default AdminCategories;
+export default withIonPageQueryRefetch(AdminCategories);

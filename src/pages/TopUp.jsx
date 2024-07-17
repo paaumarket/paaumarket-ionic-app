@@ -26,11 +26,13 @@ import useAuth from "@/hooks/useAuth";
 import WemaLogo from "@/assets/banks/wema.png";
 import MoniepointLogo from "@/assets/banks/moniepoint.png";
 import api from "@/lib/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { usePaystackPayment } from "react-paystack";
 import CurrencyInput from "react-currency-input-field";
 import { useMemo } from "react";
 import FormIonInput from "@/components/FormIonInput";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const BANKS_LOGO = {
   "035": WemaLogo,
@@ -175,7 +177,7 @@ const AccountsTopUp = () => {
     isSuccess,
     data: accounts,
     refetch,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["my-top-up-accounts"],
     queryFn: ({ signal }) =>
       api
@@ -264,4 +266,4 @@ const RequestAccounts = ({ onSuccess }) => {
   );
 };
 
-export default TopUp;
+export default withIonPageQueryRefetch(TopUp);

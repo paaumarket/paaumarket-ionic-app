@@ -24,17 +24,19 @@ import {
 } from "@ionic/react";
 import { Link } from "react-router-dom";
 import { callOutline, logoWhatsapp, warningOutline } from "ionicons/icons";
-import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useLocation, useParams } from "react-router-dom";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
-export default function SingleAdvertPage() {
+export default withIonPageQueryRefetch(function SingleAdvertPage() {
   const { user } = useAuth();
   const { id } = useParams();
   const {
     isPending,
     isSuccess,
     data: advert,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["advert", id],
     queryFn: ({ signal }) =>
       api.get(`/adverts/${id}`, { signal }).then((response) => response.data),
@@ -83,7 +85,7 @@ export default function SingleAdvertPage() {
       </IonContent>
     </IonPage>
   );
-}
+});
 
 const AdvertContact = ({ advert }) => {
   const location = useLocation();
@@ -197,7 +199,7 @@ const SimilarAdverts = ({ advert }) => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["advert", advert["id"], "similar"],
     queryFn: ({ signal, pageParam }) =>

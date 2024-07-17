@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
 import { yupResolver } from "@hookform/resolvers/yup";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
 // Schema for form validation
 const schema = yup
@@ -167,4 +168,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withIonPageQueryRefetch(Register);

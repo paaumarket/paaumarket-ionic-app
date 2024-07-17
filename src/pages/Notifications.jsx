@@ -24,7 +24,7 @@ import {
   useIonLoading,
   useIonToast,
 } from "@ionic/react";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { formatDate } from "date-fns";
 import {
   checkmarkDoneCircleOutline,
@@ -35,6 +35,8 @@ import {
 } from "ionicons/icons";
 import { useMemo } from "react";
 import Logo from "@/assets/paaumarket.svg";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const Notifications = () => {
   const { user, login } = useAuth();
@@ -46,7 +48,7 @@ const Notifications = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["notifications"],
     queryFn: ({ signal, pageParam }) =>
@@ -380,4 +382,4 @@ const NotificationBadge = ({ notification }) => {
   );
 };
 
-export default Notifications;
+export default withIonPageQueryRefetch(Notifications);

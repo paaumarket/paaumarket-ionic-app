@@ -1,4 +1,5 @@
 import DefaultUserImage from "@/assets/user-avatar.svg";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import useAuth from "@/hooks/useAuth";
 import {
   IonAvatar,
@@ -32,7 +33,7 @@ import {
   walletOutline,
 } from "ionicons/icons";
 
-export default function Profile() {
+export default withIonPageQueryRefetch(function Profile() {
   const { user } = useAuth();
   return (
     <IonPage>
@@ -181,4 +182,4 @@ export default function Profile() {
       </IonContent>
     </IonPage>
   );
-}
+});

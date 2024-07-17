@@ -21,7 +21,7 @@ import {
   useIonActionSheet,
   useIonModal,
 } from "@ionic/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import {
   add,
   createOutline,
@@ -34,6 +34,8 @@ import { useHistory } from "react-router";
 import clsx from "clsx";
 import AdminCategoryFormModal from "./AdminCategoryFormModal";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const AdminSubCategories = () => {
   const history = useHistory();
@@ -44,7 +46,7 @@ const AdminSubCategories = () => {
     isPending,
     isSuccess,
     data: category,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["category", match.params.category],
     queryFn: ({ signal }) =>
       api
@@ -139,7 +141,7 @@ const SubCategoryList = ({ category }) => {
     isSuccess,
     data: subCategories,
     refetch,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["category", category["slug"], "children"],
     queryFn: ({ signal }) =>
       api
@@ -284,4 +286,4 @@ const useCategoryDeleteMutation = (category) =>
       api.delete(`/categories/${category}`).then((response) => response.data),
   });
 
-export default AdminSubCategories;
+export default withIonPageQueryRefetch(AdminSubCategories);

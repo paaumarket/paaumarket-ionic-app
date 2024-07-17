@@ -1,3 +1,4 @@
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonBackButton,
   IonButtons,
@@ -13,7 +14,7 @@ import {
 } from "@ionic/react";
 import { imageOutline, lockClosedOutline, personOutline } from "ionicons/icons";
 
-const EditProfile = () => {
+const EditProfile = withIonPageQueryRefetch(() => {
   return (
     <IonPage>
       <IonHeader>
@@ -44,6 +45,6 @@ const EditProfile = () => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 export default EditProfile;

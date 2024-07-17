@@ -22,7 +22,7 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { isPlatform } from "@ionic/react";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
 
@@ -31,6 +31,7 @@ import { AdvertPlaceholder } from "./Advert";
 import { formatDate } from "date-fns";
 import { eyeOutline } from "ionicons/icons";
 import clsx from "clsx";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 export default function AdvertPicker({ demand, onSuccess, onCancelled }) {
   const { user } = useAuth();
@@ -44,7 +45,7 @@ export default function AdvertPicker({ demand, onSuccess, onCancelled }) {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     queryKey: ["adverts", "user", user["id"], search],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>

@@ -34,9 +34,11 @@ import {
 } from "ionicons/icons";
 import { formatDate } from "date-fns";
 import { useHistory } from "react-router";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const MyAdverts = () => {
   const [segment, setSegment] = useState("all");
@@ -48,7 +50,7 @@ const MyAdverts = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["my-adverts", "approval", segment],
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
@@ -348,4 +350,4 @@ const useAdvertRenewalMutation = (advert) =>
       api.put(`/adverts/${advert}/renew`).then((response) => response.data),
   });
 
-export default MyAdverts;
+export default withIonPageQueryRefetch(MyAdverts);

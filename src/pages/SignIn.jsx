@@ -13,6 +13,7 @@ import {
 import logo from "@/assets/paaumarket.svg";
 import SignInForm from "@/components/SignInForm";
 import { useHistory } from "react-router-dom";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
 const SignIn = () => {
   const history = useHistory();
@@ -47,4 +48,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default withIonPageQueryRefetch(SignIn);

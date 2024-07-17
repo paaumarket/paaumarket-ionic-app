@@ -9,18 +9,18 @@ import {
   IonText,
   IonThumbnail,
 } from "@ionic/react";
-import { useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
 import { useMemo } from "react";
 import { useId } from "react";
 import MultiLevelSelect from "./MultiLevelSelect";
 import { checkmark } from "ionicons/icons";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
   const id = "category-multilevel-select-" + useId();
   const modalRef = useRef();
 
-  const { isPending, data } = useQuery({
+  const { isPending, data } = useApiQuery({
     queryKey: ["categories", "index", "all"],
     queryFn: ({ signal }) =>
       api

@@ -13,19 +13,20 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useRouteMatch, generatePath } from "react-router-dom";
 import DefaultCategoryImage from "@/assets/category.svg";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
-export default () => {
+export default withIonPageQueryRefetch(() => {
   const match = useRouteMatch();
 
   const {
     isPending,
     isSuccess,
     data: category,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["category", match.params.category],
     queryFn: ({ signal }) =>
       api
@@ -69,14 +70,14 @@ export default () => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 const SubCategoryList = ({ category }) => {
   const {
     isPending,
     isSuccess,
     data: subCategories,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["category", category["slug"], "children", { counts: true }],
     queryFn: ({ signal }) =>
       api

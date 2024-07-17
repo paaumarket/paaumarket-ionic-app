@@ -1,3 +1,5 @@
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiQuery } from "@/hooks/useApiQuery";
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
 import {
@@ -25,7 +27,6 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useQuery } from "@tanstack/react-query";
 import {
   alertOutline,
   chevronCollapseOutline,
@@ -39,7 +40,7 @@ import {
 const AdminDashboard = () => {
   const { user } = useAuth();
 
-  const { isPending, isSuccess, data } = useQuery({
+  const { isPending, isSuccess, data } = useApiQuery({
     queryKey: ["admin", "dashboard"],
     queryFn: ({ signal }) =>
       api.get("/admin/dashboard", { signal }).then((response) => response.data),
@@ -270,4 +271,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default withIonPageQueryRefetch(AdminDashboard);

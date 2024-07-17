@@ -1,4 +1,5 @@
 import useApp from "@/hooks/useApp";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonBackButton,
   IonButtons,
@@ -15,7 +16,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-export default function Settings() {
+export default withIonPageQueryRefetch(function Settings() {
   const { darkMode, toggleDarkMode } = useApp();
 
   return (
@@ -49,4 +50,4 @@ export default function Settings() {
       </IonContent>
     </IonPage>
   );
-}
+});

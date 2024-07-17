@@ -19,8 +19,9 @@ import useFormMutation from "@/hooks/useFormMutation";
 import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
 import FormIonInput from "@/components/FormIonInput";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
-const EditProfileDetails = () => {
+const EditProfileDetails = withIonPageQueryRefetch(() => {
   return (
     <IonPage>
       <IonHeader>
@@ -38,7 +39,7 @@ const EditProfileDetails = () => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 const schema = yup
   .object({

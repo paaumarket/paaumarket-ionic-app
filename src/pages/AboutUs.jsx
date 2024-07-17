@@ -1,3 +1,4 @@
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonBackButton,
   IonButtons,
@@ -11,7 +12,7 @@ import {
 } from "@ionic/react";
 import { alertCircleOutline } from "ionicons/icons";
 
-export default function AboutUs() {
+export default withIonPageQueryRefetch(function AboutUs() {
   return (
     <IonPage>
       <IonHeader className="shadow-none">
@@ -49,4 +50,4 @@ export default function AboutUs() {
       </IonContent>
     </IonPage>
   );
-}
+});

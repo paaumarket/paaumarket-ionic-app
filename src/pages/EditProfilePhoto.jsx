@@ -19,8 +19,9 @@ import resizeImage from "@/utils/resizeImage";
 import { useMutation } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { serialize } from "object-to-formdata";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
-const EditProfilePhoto = () => {
+const EditProfilePhoto = withIonPageQueryRefetch(() => {
   return (
     <IonPage>
       <IonHeader>
@@ -38,7 +39,7 @@ const EditProfilePhoto = () => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 /** Profile Photo Edit */
 const ProfilePhotoEdit = () => {

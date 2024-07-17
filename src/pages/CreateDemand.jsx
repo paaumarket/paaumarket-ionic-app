@@ -1,5 +1,6 @@
 import DemandForm from "@/components/DemandForm";
 import useAuth from "@/hooks/useAuth";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonBackButton,
   IonButtons,
@@ -18,7 +19,7 @@ import { IonButton, IonItem, IonList } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { walletOutline } from "ionicons/icons";
 
-export default function CreateDemand() {
+export default withIonPageQueryRefetch(function CreateDemand() {
   const { user, login } = useAuth();
   const history = useHistory();
 
@@ -88,4 +89,4 @@ export default function CreateDemand() {
       </IonContent>
     </IonPage>
   );
-}
+});

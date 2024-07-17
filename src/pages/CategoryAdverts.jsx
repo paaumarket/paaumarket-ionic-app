@@ -15,19 +15,20 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { generatePath, useRouteMatch } from "react-router-dom";
 import DefaultCategoryImage from "@/assets/category.svg";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
-export default () => {
+export default withIonPageQueryRefetch(() => {
   const match = useRouteMatch();
 
   const {
     isPending,
     isSuccess,
     data: category,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["category", match.params.category, "sub", match.params.sub],
     queryFn: ({ signal }) =>
       api
@@ -83,7 +84,7 @@ export default () => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 const CategoryAdvertList = ({ category }) => {
   const {
@@ -94,7 +95,7 @@ const CategoryAdvertList = ({ category }) => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     queryKey: ["adverts", "category", category["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>

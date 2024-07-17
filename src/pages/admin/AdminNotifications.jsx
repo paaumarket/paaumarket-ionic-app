@@ -26,6 +26,7 @@ import resizeImage from "@/utils/resizeImage";
 import { Controller } from "react-hook-form";
 
 import { serialize } from "object-to-formdata";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
 const AdminNotifications = () => {
   return (
@@ -182,4 +183,4 @@ const NotificationForm = () => {
     </form>
   );
 };
-export default AdminNotifications;
+export default withIonPageQueryRefetch(AdminNotifications);

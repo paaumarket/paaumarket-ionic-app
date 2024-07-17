@@ -30,9 +30,11 @@ import {
 } from "ionicons/icons";
 import { formatDate } from "date-fns";
 import { useHistory } from "react-router";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const MyDemands = () => {
   const [segment, setSegment] = useState("all");
@@ -44,7 +46,7 @@ const MyDemands = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["my-demands", "approval", segment],
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
@@ -240,4 +242,4 @@ const useDemandDeleteMutation = (demand) =>
       api.delete(`/demands/${demand}`).then((response) => response.data),
   });
 
-export default MyDemands;
+export default withIonPageQueryRefetch(MyDemands);

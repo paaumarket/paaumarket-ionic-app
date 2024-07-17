@@ -1,3 +1,4 @@
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonBackButton,
   IonButtons,
@@ -23,7 +24,7 @@ import {
   mailOutline,
 } from "ionicons/icons";
 
-export default function SupportLine() {
+export default withIonPageQueryRefetch(function SupportLine() {
   return (
     <IonPage>
       <IonHeader className="shadow-none">
@@ -101,4 +102,4 @@ export default function SupportLine() {
       </IonContent>
     </IonPage>
   );
-}
+});

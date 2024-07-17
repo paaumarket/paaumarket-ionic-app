@@ -24,8 +24,9 @@ import { useMemo } from "react";
 import { useOTPVerification } from "@/components/OTPVerification/useOTPVerification";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
-export default function ForgotPassword() {
+export default withIonPageQueryRefetch(function ForgotPassword() {
   const history = useHistory();
   const [email, setEmail] = useState(null);
 
@@ -54,7 +55,7 @@ export default function ForgotPassword() {
       </IonContent>
     </IonPage>
   );
-}
+});
 
 const ForgotPasswordForm = ({ onSuccess }) => {
   // Schema for form validation

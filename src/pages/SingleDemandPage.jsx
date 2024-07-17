@@ -24,22 +24,20 @@ import {
 } from "@ionic/react";
 import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import AdvertPicker from "@/components/AdvertPicker";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
-export default function SingleDemandPage() {
+export default withIonPageQueryRefetch(function SingleDemandPage() {
   const { user } = useAuth();
   const { id } = useParams();
   const {
     isPending,
     isSuccess,
     data: demand,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["demand", id],
     queryFn: ({ signal }) =>
       api.get(`/demands/${id}`, { signal }).then((response) => response.data),
@@ -105,7 +103,7 @@ export default function SingleDemandPage() {
       </IonFooter>
     </IonPage>
   );
-}
+});
 
 const SubmissionButton = ({ demand, onSuccess }) => {
   const queryClient = useQueryClient();
@@ -136,7 +134,7 @@ const Submissions = ({ demand }) => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["demand", demand["id"], "submissions"],
     queryFn: ({ signal, pageParam }) =>

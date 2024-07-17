@@ -1,11 +1,12 @@
-import useAuth from "@/hooks/useAuth";
 import api from "@/lib/api";
+import useAuth from "@/hooks/useAuth";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import { IonContent, IonPage, useIonLoading } from "@ionic/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function () {
+export default withIonPageQueryRefetch(function () {
   const { user, logout } = useAuth();
   const queryClient = useQueryClient();
   const history = useHistory();
@@ -34,4 +35,4 @@ export default function () {
       <IonContent></IonContent>
     </IonPage>
   );
-}
+});

@@ -1,5 +1,6 @@
 import AdvertForm from "@/components/AdvertForm";
 import useAuth from "@/hooks/useAuth";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import {
   IonButton,
   IonCard,
@@ -19,7 +20,7 @@ import { useHistory } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { walletOutline } from "ionicons/icons";
 
-export default function Sell() {
+export default withIonPageQueryRefetch(function Sell() {
   const queryClient = useQueryClient();
   const history = useHistory();
   const { user, login } = useAuth();
@@ -88,4 +89,4 @@ export default function Sell() {
       </IonContent>
     </IonPage>
   );
-}
+});

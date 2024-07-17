@@ -20,8 +20,9 @@ import {
   IonSpinner,
   useIonToast,
 } from "@ionic/react";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
-export default function AdminCommand() {
+export default withIonPageQueryRefetch(function AdminCommand() {
   const handleSuccess = (data) => {};
 
   return (
@@ -40,7 +41,7 @@ export default function AdminCommand() {
       </IonContent>
     </IonPage>
   );
-}
+});
 
 const schema = yup
   .object({

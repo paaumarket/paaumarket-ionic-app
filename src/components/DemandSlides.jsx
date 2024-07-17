@@ -6,10 +6,10 @@ import { IonicSlides } from "@ionic/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { eyeOutline } from "ionicons/icons";
 import { formatDate } from "date-fns";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 import { DemandPlaceholder } from "./DemandList";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 export default function DemandSlides() {
   const {
@@ -20,7 +20,7 @@ export default function DemandSlides() {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     queryKey: ["demands"],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>

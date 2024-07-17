@@ -24,12 +24,13 @@ import {
   useIonToast,
 } from "@ionic/react";
 import { formatDate } from "date-fns";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useState } from "react";
 
 import clsx from "clsx";
 import AdminSubmissionModal from "./AdminSubmissionModal";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const AdminSubmissions = () => {
   const [segment, setSegment] = useState("reviewing");
@@ -42,7 +43,7 @@ const AdminSubmissions = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: ["submissions", "approval", segment],
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
@@ -255,4 +256,4 @@ const AdminSubmissionItem = ({ submission, onApproved, onDeclined }) => {
   );
 };
 
-export default AdminSubmissions;
+export default withIonPageQueryRefetch(AdminSubmissions);

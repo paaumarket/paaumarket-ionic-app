@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   IonButton,
   IonContent,
@@ -17,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
 import clsx from "clsx";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
 // Schema for form validation
 const schema = yup
@@ -26,7 +25,7 @@ const schema = yup
   })
   .required();
 
-export default function NewPassword() {
+export default withIonPageQueryRefetch(function NewPassword() {
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -126,4 +125,4 @@ export default function NewPassword() {
       </IonContent>
     </IonPage>
   );
-}
+});

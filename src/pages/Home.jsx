@@ -48,10 +48,11 @@ import {
 } from "ionicons/icons";
 import { generatePath } from "react-router-dom";
 import { isPlatform } from "@ionic/react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
-export default function Home() {
+export default withIonPageQueryRefetch(function Home() {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const {
@@ -62,7 +63,7 @@ export default function Home() {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: search ? ["adverts", "list", search] : ["adverts", "list"],
     queryFn: ({ signal, pageParam }) =>
@@ -316,10 +317,10 @@ export default function Home() {
       </IonPage>
     </>
   );
-}
+});
 
 const Category = () => {
-  const { isPending, isSuccess, data } = useQuery({
+  const { isPending, isSuccess, data } = useApiQuery({
     queryKey: ["categories", "index"],
     queryFn: ({ signal }) =>
       api.get("/categories", { signal }).then((response) => response.data),

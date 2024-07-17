@@ -22,7 +22,7 @@ import {
   useIonModal,
   useIonToast,
 } from "@ionic/react";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useMemo } from "react";
 import DefaultUserImage from "@/assets/user-avatar.svg";
@@ -38,6 +38,8 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import { format } from "date-fns";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
@@ -49,7 +51,7 @@ const AdminUsers = () => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     initialPageParam: "",
     queryKey: search ? ["users", "list", search] : ["users", "list"],
     queryFn: ({ signal, pageParam }) =>
@@ -372,4 +374,4 @@ const useTopUpMutation = (user, options) =>
       api.put(`/users/${user}/top-up`, data).then((response) => response.data),
   });
 
-export default AdminUsers;
+export default withIonPageQueryRefetch(AdminUsers);

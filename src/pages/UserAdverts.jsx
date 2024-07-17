@@ -13,7 +13,6 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useRouteMatch } from "react-router-dom";
 
@@ -21,15 +20,17 @@ import DefaultUserImage from "@/assets/user-avatar.svg";
 import { isPlatform } from "@ionic/react";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import Refresher from "@/components/Refresher";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
-export default ({ backButtonHref }) => {
+export default withIonPageQueryRefetch(({ backButtonHref }) => {
   const match = useRouteMatch();
 
   const {
     isPending,
     isSuccess,
     data: user,
-  } = useQuery({
+  } = useApiQuery({
     queryKey: ["user", match.params.user],
     queryFn: ({ signal }) =>
       api
@@ -99,7 +100,7 @@ export default ({ backButtonHref }) => {
       </IonContent>
     </IonPage>
   );
-};
+});
 
 const UserAdvertList = ({ user }) => {
   const {
@@ -110,7 +111,7 @@ const UserAdvertList = ({ user }) => {
     fetchNextPage,
     isFetchingNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useApiInfiniteQuery({
     queryKey: ["adverts", "user", user["id"]],
     initialPageParam: "",
     queryFn: ({ signal, pageParam }) =>

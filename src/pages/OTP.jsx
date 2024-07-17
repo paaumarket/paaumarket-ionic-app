@@ -1,22 +1,17 @@
-import React from "react";
-
 import {
   IonButton,
   IonContent,
-  IonInput,
-  IonItem,
-  IonList,
   IonPage,
   IonSpinner,
   IonText,
 } from "@ionic/react";
 
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useFormMutation from "@/hooks/useFormMutation";
 import api from "@/lib/api";
-import clsx from "clsx";
+import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 
 // Schema for form validation
 const schema = yup
@@ -31,7 +26,7 @@ const schema = yup
   })
   .required();
 
-export default function OTP() {
+export default withIonPageQueryRefetch(function OTP() {
   const form = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -83,4 +78,4 @@ export default function OTP() {
       </IonContent>
     </IonPage>
   );
-}
+});
