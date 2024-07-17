@@ -5,6 +5,7 @@ import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminDemands from "@/pages/admin/AdminDemands";
 import AdminNotifications from "@/pages/admin/AdminNotifications";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
+import AdminRoles from "@/pages/admin/AdminRoles";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
 import AdminSubmissions from "@/pages/admin/AdminSubmissions";
 import AdminUsers from "@/pages/admin/AdminUsers";
@@ -275,8 +276,19 @@ export default function Tabs() {
           exact
           path="/app/me/admin/notifications"
           render={() => (
-            <AdminProtectedRoute>
+            <AdminProtectedRoute permissions={["send-system-notification"]}>
               <AdminNotifications />
+            </AdminProtectedRoute>
+          )}
+        />
+
+        {/* Admin Roles */}
+        <Route
+          exact
+          path="/app/me/admin/roles"
+          render={() => (
+            <AdminProtectedRoute permissions={["create-role"]}>
+              <AdminRoles />
             </AdminProtectedRoute>
           )}
         />

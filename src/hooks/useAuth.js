@@ -1,6 +1,6 @@
 import { login, logout, selectUser } from "@/app/features/auth/authSlice";
-import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from "react";
 
 export default function useAuth() {
   const dispatch = useDispatch();
@@ -16,6 +16,19 @@ export default function useAuth() {
       },
       logout: () => {
         return dispatch(logout());
+      },
+      hasPermission(permission = "") {
+        return user?.["permissions"]?.includes(permission);
+      },
+      hasAnyPermission(permissions = []) {
+        return permissions.some((permission) =>
+          user?.["permissions"]?.includes(permission)
+        );
+      },
+      hasAllPermission(permissions = []) {
+        return permissions.every((permission) =>
+          user?.["permissions"]?.includes(permission)
+        );
       },
     }),
     [user, dispatch]

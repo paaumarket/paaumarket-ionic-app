@@ -38,7 +38,7 @@ import {
 } from "ionicons/icons";
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, hasPermission, hasAnyPermission } = useAuth();
 
   const { isPending, isSuccess, data } = useApiQuery({
     queryKey: ["admin", "dashboard"],
@@ -238,34 +238,56 @@ const AdminDashboard = () => {
           </IonItemGroup>
         </IonList>
 
-        <IonList inset>
-          <IonListHeader>
-            <IonLabel>System</IonLabel>
-          </IonListHeader>
-          <IonItemGroup>
-            {/* Notifications */}
-            <IonItem routerLink="/app/me/admin/notifications">
-              <IonIcon
-                aria-hidden="true"
-                icon={alertOutline}
-                slot="start"
-                color="primary"
-              ></IonIcon>
-              <IonLabel>System Notifications</IonLabel>
-            </IonItem>
+        {hasAnyPermission([
+          "send-system-notification",
+          "run-system-notification",
+        ]) ? (
+          <IonList inset>
+            <IonListHeader>
+              <IonLabel>System</IonLabel>
+            </IonListHeader>
+            <IonItemGroup>
+              {/* Roles */}
+              {hasPermission("create-role") ? (
+                <IonItem routerLink="/app/me/admin/roles">
+                  <IonIcon
+                    aria-hidden="true"
+                    icon={alertOutline}
+                    slot="start"
+                    color="primary"
+                  ></IonIcon>
+                  <IonLabel>Roles</IonLabel>
+                </IonItem>
+              ) : null}
 
-            {/* Command */}
-            <IonItem routerLink="/app/me/admin/command">
-              <IonIcon
-                aria-hidden="true"
-                icon={skullOutline}
-                slot="start"
-                color="primary"
-              ></IonIcon>
-              <IonLabel>System Command</IonLabel>
-            </IonItem>
-          </IonItemGroup>
-        </IonList>
+              {/* Notifications */}
+              {hasPermission("send-system-notification") ? (
+                <IonItem routerLink="/app/me/admin/notifications">
+                  <IonIcon
+                    aria-hidden="true"
+                    icon={alertOutline}
+                    slot="start"
+                    color="primary"
+                  ></IonIcon>
+                  <IonLabel>System Notifications</IonLabel>
+                </IonItem>
+              ) : null}
+
+              {/* Command */}
+              {hasPermission("run-system-command") ? (
+                <IonItem routerLink="/app/me/admin/command">
+                  <IonIcon
+                    aria-hidden="true"
+                    icon={skullOutline}
+                    slot="start"
+                    color="primary"
+                  ></IonIcon>
+                  <IonLabel>System Command</IonLabel>
+                </IonItem>
+              ) : null}
+            </IonItemGroup>
+          </IonList>
+        ) : null}
       </IonContent>
     </IonPage>
   );

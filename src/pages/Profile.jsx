@@ -34,7 +34,7 @@ import {
 } from "ionicons/icons";
 
 export default withIonPageQueryRefetch(function Profile() {
-  const { user } = useAuth();
+  const { user, hasPermission } = useAuth();
   return (
     <IonPage>
       <IonHeader>
@@ -151,7 +151,7 @@ export default withIonPageQueryRefetch(function Profile() {
 
           <IonList>
             <IonItemGroup>
-              {user["permissions"].includes("access-dashboard") ? (
+              {hasPermission("access-dashboard") ? (
                 <IonItem routerLink="/app/me/admin">
                   <IonIcon
                     icon={constructOutline}

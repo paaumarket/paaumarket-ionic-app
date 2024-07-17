@@ -2,6 +2,7 @@ import api from "@/lib/api";
 import {
   IonAvatar,
   IonBackButton,
+  IonBadge,
   IonButton,
   IonButtons,
   IonContent,
@@ -11,6 +12,8 @@ import {
   IonLabel,
   IonList,
   IonPage,
+  IonRadio,
+  IonRadioGroup,
   IonSearchbar,
   IonSpinner,
   IonText,
@@ -39,7 +42,8 @@ import Refresher from "@/components/Refresher";
 import clsx from "clsx";
 import { format } from "date-fns";
 import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
-import { useApiInfiniteQuery } from "@/hooks/useApiQuery";
+import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
+import useAuth from "@/hooks/useAuth";
 
 const AdminUsers = () => {
   const [search, setSearch] = useState("");
@@ -72,6 +76,7 @@ const AdminUsers = () => {
   );
 
   const handleTopUp = () => refetch();
+  const handleRoleAssigned = () => refetch();
 
   return (
     <IonPage>
@@ -106,6 +111,7 @@ const AdminUsers = () => {
                 key={user["id"]}
                 user={user}
                 onTopUp={handleTopUp}
+                onRoleAssigned={handleRoleAssigned}
               />
             ))}
           </IonList>
@@ -121,11 +127,24 @@ const AdminUsers = () => {
   );
 };
 
-const AdminUserItem = ({ user, onTopUp }) => {
+const AdminUserItem = ({ user, onRoleAssigned, onTopUp }) => {
+  const { hasPermission } = useAuth();
   const [presentModal, dismissModal] = useIonModal(AdminUserDetailsModal, {
     user,
     onDismissed: () => dismissModal(),
   });
+
+  const [presentAssignRoleModal, dismissAssignRoleModal] = useIonModal(
+    AdminAssignRoleModal,
+    {
+      user,
+      onSuccess: (data) => {
+        dismissAssignRoleModal();
+        onRoleAssigned(data);
+      },
+      onDismissed: () => dismissAssignRoleModal(),
+    }
+  );
 
   const openTopUpAlert = useTopUpAlert({
     user,
@@ -134,6 +153,30 @@ const AdminUserItem = ({ user, onTopUp }) => {
 
   // Action sheet
   const [presentActionSheet, dismissActionSheet] = useIonActionSheet();
+
+  const roleButton = hasPermission("assign-role")
+    ? [
+        {
+          text: "Assign Role",
+          data: {
+            action: "assign-role",
+          },
+          handler: () => presentAssignRoleModal(),
+        },
+      ]
+    : [];
+
+  const topUpButton = hasPermission("top-up-user")
+    ? [
+        {
+          text: "Top Up",
+          data: {
+            action: "top-up",
+          },
+          handler: openTopUpAlert,
+        },
+      ]
+    : [];
 
   const openActions = () =>
     presentActionSheet({
@@ -145,13 +188,8 @@ const AdminUserItem = ({ user, onTopUp }) => {
           },
           handler: () => presentModal(),
         },
-        {
-          text: "Top Up",
-          data: {
-            action: "top-up",
-          },
-          handler: openTopUpAlert,
-        },
+        ...roleButton,
+        ...topUpButton,
         {
           text: "Cancel",
           role: "cancel",
@@ -176,6 +214,7 @@ const AdminUserItem = ({ user, onTopUp }) => {
       <IonLabel>
         <h4>{user["name"]}</h4>
         <p>{user["email"]}</p>
+
         <p>
           <IonText
             slot="start"
@@ -190,6 +229,7 @@ const AdminUserItem = ({ user, onTopUp }) => {
             ₦{Intl.NumberFormat().format(user["wallet_balance"])}
           </IonText>
         </p>
+
         <p>
           <Link
             to={generatePath("/app/me/admin/adverts/user/:id", {
@@ -199,11 +239,100 @@ const AdminUserItem = ({ user, onTopUp }) => {
             {user["adverts_count"]} ads
           </Link>
         </p>
+        <AdminUserRoles user={user} />
       </IonLabel>
       <IonButton slot="end" onClick={openActions}>
         <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
       </IonButton>
     </IonItem>
+  );
+};
+
+const AdminAssignRoleModal = ({ user, onSuccess, onDismissed }) => {
+  const [role, setRole] = useState(user["roles"][0]?.["id"]);
+  const {
+    isPending,
+    isSuccess,
+    data: roles,
+    refetch,
+  } = useApiQuery({
+    queryKey: ["roles", "index"],
+    queryFn: ({ signal }) =>
+      api.get("roles", { signal }).then((response) => response.data),
+  });
+
+  const [presentToast, dismissToast] = useIonToast();
+  const [presentLoading, dismissLoading] = useIonLoading();
+
+  const assignRoleMutation = useAssignRoleMutation(user["id"], {
+    onSuccess() {
+      presentToast({
+        message: "Successfully Assigned.",
+        color: "success",
+        duration: 2000,
+      });
+    },
+    onError(error) {
+      presentToast({
+        message: error?.response?.data?.message || "Failed to assign role...",
+        color: "danger",
+        duration: 2000,
+      });
+    },
+  });
+
+  const assignRole = () => {
+    presentLoading("Please Wait...")
+      .then(() =>
+        assignRoleMutation.mutateAsync(
+          {
+            role,
+          },
+          { onSuccess }
+        )
+      )
+      .finally(() => dismissLoading());
+  };
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={() => onDismissed()}>Cancel</IonButton>
+          </IonButtons>
+          <IonTitle>{user["name"]}</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        {isPending ? (
+          <div className="ion-padding ion-text-center">
+            <IonSpinner />
+          </div>
+        ) : null}
+        {isSuccess ? (
+          <IonList>
+            <IonRadioGroup
+              value={role}
+              onIonChange={(ev) => setRole(ev.detail.value)}
+            >
+              {roles.map((role) => (
+                <IonItem key={role["id"]}>
+                  <IonRadio value={role["id"]}>{role["name"]}</IonRadio>
+                </IonItem>
+              ))}
+              <IonItem>
+                <IonRadio value={null}>(None)</IonRadio>
+              </IonItem>
+            </IonRadioGroup>
+          </IonList>
+        ) : null}
+
+        <IonButton className="ion-margin" onClick={assignRole}>
+          Save
+        </IonButton>
+      </IonContent>
+    </IonPage>
   );
 };
 
@@ -307,11 +436,30 @@ const AdminUserDetailsModal = ({ user, onDismissed }) => {
               <p>{format(user["created_at"], "PPp")}</p>
             </IonLabel>
           </IonItem>
+
+          {/* Roles */}
+          <IonItem>
+            <IonLabel>
+              <h3>Roles</h3>
+              <AdminUserRoles user={user} />
+            </IonLabel>
+          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>
   );
 };
+
+const AdminUserRoles = ({ user }) =>
+  user["roles"].length ? (
+    <p>
+      {user["roles"].map((role) => (
+        <IonBadge key={role} color={"tertiary"}>
+          {role["name"]}
+        </IonBadge>
+      ))}
+    </p>
+  ) : null;
 
 /** Top Up Alert */
 const useTopUpAlert = ({ user, onSuccess }) => {
@@ -372,6 +520,17 @@ const useTopUpMutation = (user, options) =>
     mutationKey: ["top-up", user],
     mutationFn: (data) =>
       api.put(`/users/${user}/top-up`, data).then((response) => response.data),
+  });
+
+/** Assign role Mutation */
+const useAssignRoleMutation = (user, options) =>
+  useMutation({
+    ...options,
+    mutationKey: ["assign-role", user],
+    mutationFn: (data) =>
+      api
+        .post(`/users/${user}/assign-role`, data)
+        .then((response) => response.data),
   });
 
 export default withIonPageQueryRefetch(AdminUsers);
