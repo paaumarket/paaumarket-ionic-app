@@ -1,7 +1,15 @@
 import DefaultUserImage from "@/assets/user-avatar.svg";
 import api from "@/lib/api";
 import { Autoplay } from "swiper/modules";
-import { IonAvatar, IonIcon, IonItem, IonLabel, IonNote } from "@ionic/react";
+import {
+  IonAvatar,
+  IonCard,
+  IonCardContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonNote,
+} from "@ionic/react";
 import { IonicSlides } from "@ionic/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { eyeOutline } from "ionicons/icons";
@@ -49,13 +57,19 @@ export default function DemandSlides() {
           ))}
         </Swiper>
       ) : isSuccess ? (
-        <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
-          {demands.map((demand) => (
-            <SwiperSlide key={demand["id"]}>
-              <DemandSlide demand={demand} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        demands.length ? (
+          <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
+            {demands.map((demand) => (
+              <SwiperSlide key={demand["id"]}>
+                <DemandSlide demand={demand} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <IonCard color={"tertiary"} className="ion-no-margin">
+            <IonCardContent>No demands to show</IonCardContent>
+          </IonCard>
+        )
       ) : null}
     </>
   );

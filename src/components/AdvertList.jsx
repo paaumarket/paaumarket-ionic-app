@@ -3,6 +3,8 @@ import repeatComponent from "@/utils/repeatComponent";
 import { useMemo } from "react";
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
   IonCol,
   IonGrid,
   IonIcon,
@@ -51,10 +53,11 @@ export default function AdvertList({
 
       {mode === "list" ? (
         <IonList>
-          {isPending
-            ? repeatComponent(<AdvertPlaceholder mode={mode} />, 10)
-            : isSuccess
-            ? adverts.map((advert) => {
+          {isPending ? (
+            repeatComponent(<AdvertPlaceholder mode={mode} />, 10)
+          ) : isSuccess ? (
+            adverts.length ? (
+              adverts.map((advert) => {
                 return (
                   <Advert
                     key={advert["id"]}
@@ -64,7 +67,12 @@ export default function AdvertList({
                   />
                 );
               })
-            : null}
+            ) : (
+              <IonCard color={"tertiary"} className="ion-no-margin">
+                <IonCardContent>No advert to show</IonCardContent>
+              </IonCard>
+            )
+          ) : null}
         </IonList>
       ) : (
         <IonGrid className="w-full p-0">

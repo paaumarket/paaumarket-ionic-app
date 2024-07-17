@@ -2,6 +2,8 @@ import DefaultUserImage from "@/assets/user-avatar.svg";
 import repeatComponent from "@/utils/repeatComponent";
 import {
   IonAvatar,
+  IonCard,
+  IonCardContent,
   IonIcon,
   IonItem,
   IonLabel,
@@ -25,13 +27,19 @@ export default function DemandList({
 
   return (
     <IonList>
-      {isPending
-        ? repeatComponent(<DemandPlaceholder />, 10)
-        : isSuccess
-        ? demands.map((demand) => {
+      {isPending ? (
+        repeatComponent(<DemandPlaceholder />, 10)
+      ) : isSuccess ? (
+        demands.length ? (
+          demands.map((demand) => {
             return <Demand key={demand["id"]} demand={demand} />;
           })
-        : null}
+        ) : (
+          <IonCard color={"tertiary"} className="ion-no-margin">
+            <IonCardContent>No demand to show</IonCardContent>
+          </IonCard>
+        )
+      ) : null}
     </IonList>
   );
 }
