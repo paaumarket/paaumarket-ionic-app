@@ -97,15 +97,7 @@ export default function Tabs() {
 
         {/* ------------------------ DEMANDS ----------------------- */}
         {/* Demands */}
-        <Route
-          exact
-          path="/app/demands"
-          render={() => (
-            <ProtectedRoute>
-              <Demands />
-            </ProtectedRoute>
-          )}
-        />
+        <Route exact path="/app/demands" render={() => <Demands />} />
 
         {/* Demand - Single */}
         <Route
