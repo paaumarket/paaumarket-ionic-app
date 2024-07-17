@@ -296,7 +296,7 @@ export default withIonPageQueryRefetch(function Home() {
                   </>
                 ) : null}
               </IonCol>
-              <IonCol>
+              <IonCol size="12" sizeLg="8" sizeXl="9">
                 {!search ? <DemandSlides /> : null}
                 <AdvertList
                   title={search ? `Search: ${search}` : "Trending ads"}
