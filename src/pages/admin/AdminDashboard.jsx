@@ -28,6 +28,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import {
   alertOutline,
+  chevronCollapseOutline,
   folderOutline,
   megaphoneOutline,
   personOutline,
@@ -103,6 +104,7 @@ const AdminDashboard = () => {
                 </IonCard>
               </IonCol>
 
+              {/* Demands */}
               <IonCol>
                 <IonCard className="h-full m-0">
                   <IonCardHeader>
@@ -120,6 +122,31 @@ const AdminDashboard = () => {
                       </IonText>
                       <IonText color={"danger"}>
                         {data["demands_count"]["declined"] || 0} - Declined
+                      </IonText>
+                    </div>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+
+              {/* Submissions */}
+              <IonCol>
+                <IonCard className="h-full m-0">
+                  <IonCardHeader>
+                    <IonCardTitle className="text-lg font-bold">
+                      Submissions
+                    </IonCardTitle>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <div className="flex flex-col gap-1 truncate">
+                      <IonText color={"success"}>
+                        {data["submissions_count"]["approved"] || 0} - Approved
+                      </IonText>
+                      <IonText color={"warning"}>
+                        {data["submissions_count"]["reviewing"] || 0} -
+                        Reviewing
+                      </IonText>
+                      <IonText color={"danger"}>
+                        {data["submissions_count"]["declined"] || 0} - Declined
                       </IonText>
                     </div>
                   </IonCardContent>
@@ -176,6 +203,23 @@ const AdminDashboard = () => {
               {user?.["admin"]?.["reviewing_demands_count"] ? (
                 <IonBadge color={"danger"}>
                   {user?.["admin"]?.["reviewing_demands_count"]}
+                </IonBadge>
+              ) : null}
+            </IonItem>
+
+            {/* Submissions */}
+            <IonItem routerLink="/app/me/admin/submissions">
+              <IonIcon
+                aria-hidden="true"
+                icon={chevronCollapseOutline}
+                slot="start"
+                color="primary"
+              ></IonIcon>
+              <IonLabel>Submissions</IonLabel>
+
+              {user?.["admin"]?.["reviewing_submissions_count"] ? (
+                <IonBadge color={"danger"}>
+                  {user?.["admin"]?.["reviewing_submissions_count"]}
                 </IonBadge>
               ) : null}
             </IonItem>

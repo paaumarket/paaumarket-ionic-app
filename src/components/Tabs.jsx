@@ -6,6 +6,7 @@ import AdminDemands from "@/pages/admin/AdminDemands";
 import AdminNotifications from "@/pages/admin/AdminNotifications";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import AdminSubCategories from "@/pages/admin/AdminSubCategories";
+import AdminSubmissions from "@/pages/admin/AdminSubmissions";
 import AdminUsers from "@/pages/admin/AdminUsers";
 import CategoryAdverts from "@/pages/CategoryAdverts";
 import CreateDemand from "@/pages/CreateDemand";
@@ -298,6 +299,17 @@ export default function Tabs() {
           render={() => (
             <AdminProtectedRoute>
               <AdminDemands />
+            </AdminProtectedRoute>
+          )}
+        />
+
+        {/* Admin Submissions */}
+        <Route
+          exact
+          path="/app/me/admin/submissions"
+          render={() => (
+            <AdminProtectedRoute>
+              <AdminSubmissions />
             </AdminProtectedRoute>
           )}
         />

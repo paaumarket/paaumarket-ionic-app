@@ -105,21 +105,15 @@ export default function Profile() {
               </IonLabel>
             </IonItem>
 
-            {import.meta.env.DEV ? (
-              <IonItem routerLink="/app/me/my-demands">
-                <IonIcon
-                  icon={telescopeOutline}
-                  slot="start"
-                  color={"primary"}
-                />
+            <IonItem routerLink="/app/me/my-demands">
+              <IonIcon icon={telescopeOutline} slot="start" color={"primary"} />
 
-                <IonLabel>
-                  <h3>
-                    <IonText color={"primary"}>My Demands</IonText>
-                  </h3>
-                </IonLabel>
-              </IonItem>
-            ) : null}
+              <IonLabel>
+                <h3>
+                  <IonText color={"primary"}>My Demands</IonText>
+                </h3>
+              </IonLabel>
+            </IonItem>
 
             <IonItem routerLink="/app/me/notifications">
               <IonIcon icon={megaphoneOutline} slot="start" color={"primary"} />

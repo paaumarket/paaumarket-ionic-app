@@ -296,7 +296,7 @@ export default function Home() {
                 ) : null}
               </IonCol>
               <IonCol>
-                {!search && import.meta.env.DEV ? <DemandSlides /> : null}
+                {!search ? <DemandSlides /> : null}
                 <AdvertList
                   title={search ? `Search: ${search}` : "Trending ads"}
                   isPending={isPending}

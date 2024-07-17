@@ -7,21 +7,17 @@ import {
   IonButton,
   IonButtons,
   IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCol,
   IonContent,
   IonFooter,
-  IonGrid,
   IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
+  IonList,
   IonNote,
   IonPage,
-  IonRow,
   IonSpinner,
+  IonText,
   IonThumbnail,
   IonTitle,
   IonToolbar,
@@ -30,7 +26,13 @@ import {
 } from "@ionic/react";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { formatDate } from "date-fns";
-import { megaphone, walletOutline } from "ionicons/icons";
+import {
+  checkmarkDoneCircleOutline,
+  notificationsOutline,
+  radioButtonOffOutline,
+  telescopeOutline,
+  walletOutline,
+} from "ionicons/icons";
 import { useMemo } from "react";
 import Logo from "@/assets/paaumarket.svg";
 
@@ -90,18 +92,14 @@ const Notifications = () => {
         ) : null}
 
         {isSuccess ? (
-          <IonGrid>
-            <IonRow className="ion-justify-content-center">
-              <IonCol sizeLg="6">
-                {notifications.map((notification) => (
-                  <NotificationItem
-                    key={notification["id"]}
-                    notification={notification}
-                  />
-                ))}
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+          <IonList>
+            {notifications.map((notification) => (
+              <NotificationItem
+                key={notification["id"]}
+                notification={notification}
+              />
+            ))}
+          </IonList>
         ) : null}
       </IonContent>
       {isSuccess && notifications.length ? (
@@ -162,7 +160,7 @@ const NotificationsReadAllButton = ({ onSuccess }) => {
 };
 
 const NotificationItem = ({ notification }) => {
-  let content;
+  let type, content;
 
   switch (notification["type"]) {
     case "system_notification":
@@ -174,62 +172,62 @@ const NotificationItem = ({ notification }) => {
       }
 
       content = (
-        <IonCard {...props}>
-          {banner ? (
-            <img
-              src={banner["cache"]["medium"]}
-              className="object-cover object-center w-full"
-            />
-          ) : null}
-          <IonCardHeader>
-            <IonCardSubtitle color={"d"}>
-              {formatDate(notification["created_at"], "PPp")}
-            </IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent>
-            {!notification["read_at"] ? (
-              <IonIcon
-                icon={megaphone}
-                color="success"
-                className="align-middle"
+        <IonItem {...props} className="ion-align-items-start">
+          <IonIcon slot="start" icon={notificationsOutline} />
+          <IonLabel>
+            {banner ? (
+              <img
+                src={banner["cache"]["medium"]}
+                className="object-cover object-center w-full rounded-lg max-h-96"
               />
-            ) : undefined}{" "}
-            <img src={Logo} className="w-4 h-4 align-middle" />{" "}
-            {notification["data"]["message"]}
-          </IonCardContent>
-        </IonCard>
+            ) : null}
+            <p className="py-2">
+              <IonText color={"tertiary"}>
+                <b>[SYSTEM NOTIFICATION]</b>
+              </IonText>{" "}
+              <img src={Logo} className="w-4 h-4 align-middle" />{" "}
+              {notification["data"]["message"]}
+            </p>
+            <NotificationDate notification={notification} />
+          </IonLabel>
+          <NotificationBadge notification={notification} />
+        </IonItem>
       );
       break;
 
     case "wallet_top_up_notification":
       content = (
-        <IonCard>
-          <IonItem color={!notification["read_at"] ? "light" : undefined}>
-            <IonIcon slot="start" icon={walletOutline} />
-            <IonLabel color={"success"}>
-              <h4>Wallet Top Up</h4>
-              <p>
-                {" "}
-                {notification["data"]["reference"] === "WELCOME_BALANCE"
-                  ? "Welcome Balance"
-                  : notification["data"]["reference"]}
-              </p>
-              <p> {formatDate(notification["created_at"], "PPp")}</p>
-            </IonLabel>
-            <IonNote slot="end" color={"success"}>
-              +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
-            </IonNote>
-          </IonItem>
-        </IonCard>
+        <IonItem color={!notification["read_at"] ? "light" : undefined}>
+          <IonIcon slot="start" icon={walletOutline} />
+          <IonLabel color={"success"}>
+            <h4>
+              <b>[WALLET TOP UP]</b>
+            </h4>
+            <p>
+              {" "}
+              {notification["data"]["reference"] === "WELCOME_BALANCE"
+                ? "Welcome Balance"
+                : notification["data"]["reference"]}
+            </p>
+            <NotificationDate notification={notification} />
+          </IonLabel>
+          <IonNote slot="end" color={"success"}>
+            +₦{Intl.NumberFormat().format(notification["data"]["amount"])}
+          </IonNote>
+          <NotificationBadge notification={notification} />
+        </IonItem>
       );
       break;
 
     case "advert_approved_notification":
     case "advert_declined_notification":
+      type =
+        notification["type"] === "advert_approved_notification"
+          ? "approved"
+          : "declined";
       content = (
         <IonCard>
           <IonItem
-            color={!notification["read_at"] ? "light" : undefined}
             routerLink={"/app/adverts/ad/" + notification["data"]["advert_id"]}
           >
             <IonThumbnail
@@ -241,19 +239,16 @@ const NotificationItem = ({ notification }) => {
                 className="object-cover object-center w-full h-full"
               />
             </IonThumbnail>
-            <IonLabel
-              color={
-                notification["type"] === "advert_approved_notification"
-                  ? "success"
-                  : "danger"
-              }
-            >
-              Your advert <b>{notification["data"]["advert_title"]}</b> was{" "}
-              {notification["type"] === "advert_approved_notification"
-                ? "approved"
-                : "declined"}
-              !
+            <IonLabel>
+              <p>
+                <IonText color={type === "approved" ? "success" : "danger"}>
+                  <b>[DEMAND {type.toUpperCase()}]</b>
+                </IonText>{" "}
+                <b>{notification["data"]["advert_title"]}</b>
+              </p>
+              <NotificationDate notification={notification} />
             </IonLabel>
+            <NotificationBadge notification={notification} />
           </IonItem>
         </IonCard>
       );
@@ -261,32 +256,128 @@ const NotificationItem = ({ notification }) => {
 
     case "demand_approved_notification":
     case "demand_declined_notification":
+      type =
+        notification["type"] === "demand_approved_notification"
+          ? "approved"
+          : "declined";
       content = (
-        <IonCard>
-          <IonItem
-            color={!notification["read_at"] ? "light" : undefined}
-            routerLink={"/app/demands/" + notification["data"]["demand_id"]}
+        <IonItem
+          routerLink={"/app/demands/" + notification["data"]["demand_id"]}
+        >
+          <IonIcon slot="start" icon={telescopeOutline} />
+
+          <IonLabel
+            color={
+              notification["type"] === "demand_approved_notification"
+                ? "success"
+                : "danger"
+            }
           >
-            <IonLabel
-              color={
-                notification["type"] === "demand_approved_notification"
-                  ? "success"
-                  : "danger"
-              }
-            >
-              Your demand <b>{notification["data"]["demand_title"]}</b> was{" "}
-              {notification["type"] === "demand_approved_notification"
-                ? "approved"
-                : "declined"}
-              !
-            </IonLabel>
-          </IonItem>
-        </IonCard>
+            <p>
+              <IonText color={type === "approved" ? "success" : "danger"}>
+                <b>[DEMAND {type.toUpperCase()}]</b>
+              </IonText>{" "}
+              <b>{notification["data"]["demand_title"]}</b>
+            </p>
+            <NotificationDate notification={notification} />
+          </IonLabel>
+          <NotificationBadge notification={notification} />
+        </IonItem>
+      );
+      break;
+
+    case "submission_approved_notification":
+    case "submission_declined_notification":
+      type =
+        notification["type"] === "submission_approved_notification"
+          ? "approved"
+          : "declined";
+
+      content = (
+        <IonItem
+          routerLink={"/app/demands/" + notification["data"]["demand_id"]}
+        >
+          <IonThumbnail
+            slot="start"
+            className="[--size:theme(spacing.10)] relative"
+          >
+            <img
+              src={notification["data"]["advert_image"]["cache"]["small"]}
+              className="object-cover object-center w-full h-full"
+            />
+          </IonThumbnail>
+          <IonLabel>
+            <p>
+              <IonText color={type === "approved" ? "success" : "danger"}>
+                <b>[SUBMISSION {type.toUpperCase()}]</b>
+              </IonText>{" "}
+              <b>{notification["data"]["advert_title"]}</b> {type} for{" "}
+              <b>{notification["data"]["demand_title"]}</b>!
+            </p>
+            <NotificationDate notification={notification} />
+          </IonLabel>
+
+          <NotificationBadge notification={notification} />
+        </IonItem>
+      );
+      break;
+
+    case "new_submission_notification":
+      content = (
+        <IonItem
+          routerLink={"/app/demands/" + notification["data"]["demand_id"]}
+        >
+          <IonThumbnail
+            slot="start"
+            className="[--size:theme(spacing.10)] relative"
+          >
+            <img
+              src={notification["data"]["advert_image"]["cache"]["small"]}
+              className="object-cover object-center w-full h-full"
+            />
+          </IonThumbnail>
+          <IonLabel>
+            <p>
+              <IonText color={"success"}>
+                <b>[NEW SUBMISSION]</b>
+              </IonText>{" "}
+              <b>{notification["data"]["advert_title"]}</b> for{" "}
+              <b>{notification["data"]["demand_title"]}</b>
+            </p>
+            <NotificationDate notification={notification} />
+          </IonLabel>
+
+          <NotificationBadge notification={notification} />
+        </IonItem>
       );
       break;
   }
 
   return content;
+};
+
+const NotificationDate = ({ notification }) => {
+  return (
+    <p>
+      <IonNote className="text-xs">
+        {formatDate(notification["created_at"], "PPp")}
+      </IonNote>
+    </p>
+  );
+};
+
+const NotificationBadge = ({ notification }) => {
+  return (
+    <IonIcon
+      slot="end"
+      icon={
+        notification["read_at"]
+          ? checkmarkDoneCircleOutline
+          : radioButtonOffOutline
+      }
+      color={notification["read_at"] ? "success" : undefined}
+    ></IonIcon>
+  );
 };
 
 export default Notifications;

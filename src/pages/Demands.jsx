@@ -42,27 +42,17 @@ export default function Demands() {
       </IonHeader>
 
       <IonContent className="ion-padding">
-        {import.meta.env.DEV ? (
-          <>
-            <IonButton expand="block" routerLink="/app/demands/new">
-              Create Demand
-            </IonButton>
+        <IonButton expand="block" routerLink="/app/demands/new">
+          Create Demand
+        </IonButton>
 
-            <Refresher refresh={refetch} />
-            <DemandList
-              isPending={isPending}
-              isSuccess={isSuccess}
-              data={data}
-            />
-            <InfiniteScroll
-              hasNextPage={hasNextPage}
-              fetchNextPage={fetchNextPage}
-              isFetchingNextPage={isFetchingNextPage}
-            />
-          </>
-        ) : null}
-
-        <p className="ion-text-center ion-padding">Under Construction</p>
+        <Refresher refresh={refetch} />
+        <DemandList isPending={isPending} isSuccess={isSuccess} data={data} />
+        <InfiniteScroll
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
       </IonContent>
     </IonPage>
   );
