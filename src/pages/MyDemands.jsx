@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import useDeleteAlert from "@/hooks/useDeleteAlert";
 import {
   IonBackButton,
+  IonBadge,
   IonButton,
   IonButtons,
   IonContent,
@@ -228,7 +229,10 @@ const MyDemandItem = ({ demand, onEdit, onDelete, onRenewed }) => {
           <IonIcon icon={eyeOutline} /> {demand["views_count"]}
         </IonNote>
       </IonLabel>
-      <IonButton onClick={openActions}>
+      <IonBadge slot="end" color={"tertiary"}>
+        {demand["submissions_count"]}
+      </IonBadge>
+      <IonButton slot="end" onClick={openActions}>
         <IonIcon ios={ellipsisHorizontal} md={ellipsisVertical}></IonIcon>
       </IonButton>
     </IonItem>

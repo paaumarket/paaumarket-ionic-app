@@ -48,7 +48,7 @@ export default withIonPageQueryRefetch(function SingleDemandPage() {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/app"></IonBackButton>
+            <IonBackButton defaultHref="/app/demands"></IonBackButton>
           </IonButtons>
           <IonTitle>
             {isPending ? "Loading..." : isSuccess ? demand["title"] : "Error!"}

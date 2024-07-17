@@ -2,6 +2,7 @@ import DefaultUserImage from "@/assets/user-avatar.svg";
 import repeatComponent from "@/utils/repeatComponent";
 import {
   IonAvatar,
+  IonBadge,
   IonCard,
   IonCardContent,
   IonIcon,
@@ -76,6 +77,10 @@ const Demand = ({ demand }) => {
           </IonNote>{" "}
         </p>
       </IonLabel>
+
+      <IonBadge slot="end" color={"tertiary"}>
+        {demand["submissions_count"]}
+      </IonBadge>
     </IonItem>
   );
 };
