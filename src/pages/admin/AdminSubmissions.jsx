@@ -151,14 +151,10 @@ const AdminSubmissionItem = ({ submission, onApproved, onDeclined }) => {
   const openDemandModal = () => present();
 
   return (
-    <IonItem
-      key={submission["id"]}
-      onClick={() => openDemandModal()}
-      className="ion-align-items-start"
-    >
+    <IonItem key={submission["id"]} onClick={() => openDemandModal()}>
       <IonThumbnail
         slot="start"
-        className="[--size:theme(spacing.32)] relative"
+        className="[--size:theme(spacing.32)] relative ion-align-self-start"
       >
         <img
           alt={submission["advert_title"]}

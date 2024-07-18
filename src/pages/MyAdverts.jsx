@@ -291,7 +291,6 @@ const MyAdvertItem = ({ advert, onEdit, onDelete, onRenewed }) => {
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
           </IonNote>{" "}
-          -{" "}
           <IonNote className="text-xs" color={"tertiary"}>
             <IonIcon icon={eyeOutline} /> {advert["views_count"]}
           </IonNote>

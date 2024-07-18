@@ -86,8 +86,8 @@ const AdminSubmissionModal = ({
             <IonLabel>Demand</IonLabel>
           </IonListHeader>
           <IonItemGroup>
-            <IonItem className="ion-align-items-start">
-              <IonAvatar className="w-9 h-9" slot="start">
+            <IonItem>
+              <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
                 <img
                   src={
                     submission["demand_user_profile_photo"]?.["cache"]?.[
@@ -124,10 +124,10 @@ const AdminSubmissionModal = ({
             <IonLabel>Submission</IonLabel>
           </IonListHeader>
           <IonItemGroup>
-            <IonItem className="ion-align-items-start">
+            <IonItem>
               <IonThumbnail
                 slot="start"
-                className="[--size:theme(spacing.32)] relative"
+                className="[--size:theme(spacing.32)] relative ion-align-self-start"
               >
                 <img
                   alt={submission["advert_title"]}

@@ -77,22 +77,30 @@ export default function AdvertList({
       ) : (
         <IonGrid className="w-full p-0">
           <IonRow className="-mx-[var(--ion-grid-column-padding)]">
-            {isPending
-              ? repeatComponent(
-                  <AdvertCol mode={mode}>
-                    <AdvertPlaceholder />
-                  </AdvertCol>,
-                  10
-                )
-              : isSuccess
-              ? adverts.map((advert) => {
+            {isPending ? (
+              repeatComponent(
+                <AdvertCol mode={mode}>
+                  <AdvertPlaceholder />
+                </AdvertCol>,
+                10
+              )
+            ) : isSuccess ? (
+              adverts.length ? (
+                adverts.map((advert) => {
                   return (
                     <AdvertCol key={advert["id"]} mode={mode}>
                       <Advert advert={advert} className="h-full" mode={mode} />
                     </AdvertCol>
                   );
                 })
-              : null}
+              ) : (
+                <IonCol size="12">
+                  <IonCard color={"tertiary"} className="ion-no-margin">
+                    <IonCardContent>No advert to show</IonCardContent>
+                  </IonCard>
+                </IonCol>
+              )
+            ) : null}
           </IonRow>
         </IonGrid>
       )}

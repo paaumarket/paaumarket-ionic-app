@@ -182,7 +182,6 @@ const AdvertItem = ({ demand, advert, onSuccess }) => {
           <IonNote className="text-xs" color={"tertiary"}>
             <IonIcon icon={eyeOutline} /> {advert["views_count"]}
           </IonNote>{" "}
-          -{" "}
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
           </IonNote>{" "}

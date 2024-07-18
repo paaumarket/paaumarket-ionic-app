@@ -81,7 +81,6 @@ const AdvertStyleList = ({ advert }) => {
           <IonNote className="text-xs" color={"tertiary"}>
             <IonIcon icon={eyeOutline} /> {advert["views_count"]}
           </IonNote>{" "}
-          -{" "}
           <IonNote className="text-xs">
             {formatDate(advert["created_at"], "PPp")}
           </IonNote>{" "}
@@ -135,7 +134,6 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
             <IonNote className="text-xs" color={"tertiary"}>
               <IonIcon icon={eyeOutline} /> {advert["views_count"]}
             </IonNote>{" "}
-            -{" "}
             <IonNote className="text-xs">
               {formatDate(advert["created_at"], "PPp")}
             </IonNote>{" "}
@@ -190,7 +188,7 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
               <IonNote color={"tertiary"}>
                 <IonIcon icon={eyeOutline} /> {advert["views_count"]}
               </IonNote>{" "}
-              - {formatDate(advert["created_at"], "PPp")}
+              {formatDate(advert["created_at"], "PPp")}
             </p>
             <p>{advert["description"]}</p>
           </div>

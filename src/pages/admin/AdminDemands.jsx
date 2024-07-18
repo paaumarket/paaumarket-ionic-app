@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import {
   IonAvatar,
   IonBackButton,
+  IonBadge,
   IonButtons,
   IonContent,
   IonHeader,
@@ -150,12 +151,8 @@ const AdminDemandItem = ({ demand, onApproved, onDeclined }) => {
   const openDemandModal = () => present();
 
   return (
-    <IonItem
-      key={demand["id"]}
-      onClick={() => openDemandModal()}
-      className="ion-align-items-start"
-    >
-      <IonAvatar className="w-9 h-9" slot="start">
+    <IonItem key={demand["id"]} onClick={() => openDemandModal()}>
+      <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
         <img
           src={
             demand["user_profile_photo"]?.["cache"]?.["extra-small"] ||
@@ -186,11 +183,13 @@ const AdminDemandItem = ({ demand, onApproved, onDeclined }) => {
         <IonNote className="text-xs">
           {formatDate(demand["created_at"], "PPp")}
         </IonNote>{" "}
-        -{" "}
         <IonNote className="text-xs" color={"tertiary"}>
           <IonIcon icon={eyeOutline} /> {demand["views_count"]}
         </IonNote>
       </IonLabel>
+      <IonBadge slot="end" color={"tertiary"}>
+        {demand["submissions_count"]}
+      </IonBadge>
     </IonItem>
   );
 };

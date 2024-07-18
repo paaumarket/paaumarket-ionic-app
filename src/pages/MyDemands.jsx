@@ -224,7 +224,6 @@ const MyDemandItem = ({ demand, onEdit, onDelete, onRenewed }) => {
         <IonNote className="text-xs">
           {formatDate(demand["created_at"], "PPp")}
         </IonNote>{" "}
-        -{" "}
         <IonNote className="text-xs" color={"tertiary"}>
           <IonIcon icon={eyeOutline} /> {demand["views_count"]}
         </IonNote>

@@ -3,6 +3,7 @@ import api from "@/lib/api";
 import { Autoplay } from "swiper/modules";
 import {
   IonAvatar,
+  IonBadge,
   IonCard,
   IonCardContent,
   IonIcon,
@@ -58,7 +59,7 @@ export default function DemandSlides() {
         </Swiper>
       ) : isSuccess ? (
         demands.length ? (
-          <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
+          <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 7000 }}>
             {demands.map((demand) => (
               <SwiperSlide key={demand["id"]}>
                 <DemandSlide demand={demand} />
@@ -77,11 +78,8 @@ export default function DemandSlides() {
 
 const DemandSlide = ({ demand }) => (
   <div className="w-full pb-8">
-    <IonItem
-      routerLink={`/app/demands/${demand["id"]}`}
-      className="ion-align-items-start"
-    >
-      <IonAvatar className="w-9 h-9" slot="start">
+    <IonItem routerLink={`/app/demands/${demand["id"]}`}>
+      <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
         <img
           src={
             demand["user_profile_photo"]?.["cache"]?.["extra-small"] ||
@@ -101,12 +99,14 @@ const DemandSlide = ({ demand }) => (
           <IonNote className="text-xs" color={"tertiary"}>
             <IonIcon icon={eyeOutline} /> {demand["views_count"]}
           </IonNote>{" "}
-          -{" "}
           <IonNote className="text-xs">
             {formatDate(demand["created_at"], "PPp")}
           </IonNote>{" "}
         </p>
       </IonLabel>
+      <IonBadge slot="end" color={"tertiary"}>
+        {demand["submissions_count"]}
+      </IonBadge>
     </IonItem>
   </div>
 );

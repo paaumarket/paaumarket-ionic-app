@@ -61,8 +61,8 @@ export default withIonPageQueryRefetch(function SingleDemandPage() {
           {isPending ? (
             <DemandPlaceholder />
           ) : isSuccess ? (
-            <IonItem className="ion-align-items-start">
-              <IonAvatar className="w-9 h-9" slot="start">
+            <IonItem>
+              <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
                 <img
                   src={
                     demand["user"]["profile_photo"]?.["cache"]?.[
@@ -83,7 +83,6 @@ export default withIonPageQueryRefetch(function SingleDemandPage() {
                   <IonNote className="text-xs" color={"tertiary"}>
                     <IonIcon icon={eyeOutline} /> {demand["views_count"]}
                   </IonNote>{" "}
-                  -{" "}
                   <IonNote className="text-xs">
                     {formatDate(demand["created_at"], "PPp")}
                   </IonNote>{" "}
