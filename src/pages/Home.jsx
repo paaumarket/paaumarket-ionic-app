@@ -52,6 +52,8 @@ import { useState } from "react";
 import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
+import Logo from "@/assets/paaumarket.svg";
+
 export default withIonPageQueryRefetch(function Home() {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
@@ -80,7 +82,7 @@ export default withIonPageQueryRefetch(function Home() {
 
   return (
     <>
-      <IonMenu contentId="main-content">
+      <IonMenu contentId="main-content" side="end">
         <IonHeader>
           <IonToolbar>
             <IonTitle>Paau Market</IonTitle>
@@ -230,8 +232,15 @@ export default withIonPageQueryRefetch(function Home() {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
+              <IonButton
+                routerLink={"/support-line"}
+                fill="clear"
+                color={"primary"}
+              >
+                <IonIcon icon={Logo} size="large" />
+              </IonButton>
             </IonButtons>
+
             {isPlatform("ios") ? (
               <IonTitle>Paau Market</IonTitle>
             ) : (
@@ -246,9 +255,7 @@ export default withIonPageQueryRefetch(function Home() {
             )}
 
             <IonButtons slot="end">
-              <IonButton routerLink={"/app/me"} fill="clear" color={"primary"}>
-                <IonIcon icon={personCircleOutline} size="large" />
-              </IonButton>
+              <IonMenuButton></IonMenuButton>
             </IonButtons>
           </IonToolbar>
           {isPlatform("ios") ? (
