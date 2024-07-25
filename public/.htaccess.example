@@ -5,7 +5,7 @@ RewriteEngine On
 RewriteCond %{HTTPS} off 
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet)
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit/[0-9]|Twitterbot|Pinterest|Google.*snippet|LinkedInBot|Slackbot|Discordbot|WhatsApp|TelegramBot|Applebot|Bingbot|YandexBot|DuckDuckGo-Favicons-Bot|Sogou|Exabot|Baiduspider|SeznamBot|ahrefsbot|MJ12bot|DotBot|ia_archiver|Embedly|W3C_Validator) [NC]
 RewriteRule ^(.*)$ https://backend.example.com/og/$1 [L,R=301]
 
 RewriteCond %{REQUEST_FILENAME} !-f
