@@ -47,7 +47,7 @@ export default function DemandList({
 
 const Demand = ({ demand }) => {
   return (
-    <IonItem routerLink={`/app/demands/${demand["id"]}`} className="">
+    <IonItem routerLink={`/app/demands/${demand["id"]}`} className="rounded-md">
       <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
         <img
           src={
@@ -57,7 +57,6 @@ const Demand = ({ demand }) => {
           className="object-cover object-center w-full h-full"
         />
       </IonAvatar>
-
       <IonLabel>
         <h3 style={{ fontWeight: "bold" }}>{demand["title"]}</h3>
         <p>{demand["description"] || "(No description)"}</p>
@@ -73,7 +72,6 @@ const Demand = ({ demand }) => {
           </IonNote>{" "}
         </p>
       </IonLabel>
-
       <IonBadge slot="end" color={"tertiary"}>
         {demand["submissions_count"]}
       </IonBadge>

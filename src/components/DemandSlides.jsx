@@ -78,8 +78,8 @@ export default function DemandSlides() {
 
 const DemandSlide = ({ demand }) => (
   <div className="w-full pb-8">
-    <IonItem routerLink={`/app/demands/${demand["id"]}`}>
-      <IonAvatar className="w-9 h-9 ion-align-self-start" slot="start">
+    <IonItem routerLink={`/app/demands/${demand["id"]}`} className="rounded-md">
+      <IonAvatar className="w-9 h-9 ion-align-self-center" slot="start">
         <img
           src={
             demand["user_profile_photo"]?.["cache"]?.["extra-small"] ||
