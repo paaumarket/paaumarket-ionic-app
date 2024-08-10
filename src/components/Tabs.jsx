@@ -48,6 +48,7 @@ import {
 import { useMemo } from "react";
 
 import ProtectedRoute from "./ProtectedRoute";
+import SignIn from "@/pages/SignIn";
 
 export default function Tabs() {
   const { user } = useAuth();

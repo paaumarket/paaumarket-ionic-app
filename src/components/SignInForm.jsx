@@ -82,12 +82,6 @@ const SignInForm = ({ onSuccess }) => {
       >
         {logInMutation.isPending ? <IonSpinner /> : <>Sign In</>}
       </IonButton>
-
-      <IonText className="ion-text-center">
-        <p>
-          Create an account? <Link to="/register">Sign Up</Link>
-        </p>
-      </IonText>
     </form>
   );
 };

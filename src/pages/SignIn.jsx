@@ -14,6 +14,7 @@ import logo from "@/assets/paaumarket.svg";
 import SignInForm from "@/components/SignInForm";
 import { useHistory } from "react-router-dom";
 import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const history = useHistory();
@@ -43,6 +44,12 @@ const SignIn = () => {
         </div>
 
         <SignInForm onSuccess={() => history.replace("/app")} />
+
+        <IonText className="ion-text-center">
+          <p>
+            Create an account? <Link to="/register">Sign Up</Link>
+          </p>
+        </IonText>
       </IonContent>
     </IonPage>
   );
