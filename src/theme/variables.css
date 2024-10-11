@@ -6,5 +6,17 @@ ion-card {
 }
 
 .header-md {
-  box-shadow: none;
+  /* box-shadow: none; */
+  box-shadow: 2px 4px 5px #f7f7f7;
+  /* 0 4px 5px 0 rgba(224, 224, 224, 0.14), 0 1px 10px 0 rgba(224, 224, 224, 0.12); */
+}
+
+ion-searchbar,
+.sc-ion-searchbar-md-h {
+  --box-shadow: none;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+  background-color: #f7f7f7;
+  border-radius: 10px;
 }
