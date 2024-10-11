@@ -66,6 +66,7 @@ const AdvertStyleList = ({ advert }) => {
           {advert["images_count"]}
         </span>
       </IonThumbnail>
+
       <IonLabel>
         {advert["price"] ? (
           <IonNote color={"primary"}>
@@ -75,7 +76,7 @@ const AdvertStyleList = ({ advert }) => {
         <h3 className="!my-2">
           <IonText className="font-bold">{advert["title"]}</IonText>
         </h3>
-        <AdvertPreviewSeller advert={advert} />
+        {/* <AdvertPreviewSeller advert={advert} /> */}
 
         <p>
           <IonNote className="text-xs" color={"tertiary"}>
@@ -90,6 +91,15 @@ const AdvertStyleList = ({ advert }) => {
   );
 };
 
+/***
+ * 
+ * 
+ * Display Seller and Image
+ * 
+ * 
+ * /
+
+/*
 const AdvertPreviewSeller = ({ advert }) => (
   <p className="flex flex-wrap items-center gap-2 text-xs">
     <IonAvatar className="w-5 h-5">
@@ -104,8 +114,9 @@ const AdvertPreviewSeller = ({ advert }) => (
     {advert["user_name"]}
   </p>
 );
+*/
 
-const AdvertStyleGrid = ({ advert, full = false }) => {
+const AdvertStyleGrid = ({ advert, full = false, ...props }) => {
   return (
     <IonCard
       routerLink={!full ? "/app/adverts/ad/" + advert["id"] : undefined}
@@ -120,6 +131,7 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
         >
           {advert["title"]}
         </IonCardTitle>
+        {/* <p>{advert["description"]}</p> */}
 
         {/* Price */}
         {advert["price"] ? (
@@ -128,8 +140,10 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
           </IonCardSubtitle>
         ) : null}
 
-        {!full ? <AdvertPreviewSeller advert={advert} /> : null}
-        {!full ? (
+        {/* {!full ? <AdvertPreviewSeller advert={advert} /> : null} */}
+
+        {/* View Count and Dated Posted */}
+        {/* {!full ? (
           <p className="ion-no-margin">
             <IonNote className="text-xs" color={"tertiary"}>
               <IonIcon icon={eyeOutline} /> {advert["views_count"]}
@@ -138,8 +152,9 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
               {formatDate(advert["created_at"], "PPp")}
             </IonNote>{" "}
           </p>
-        ) : null}
+        ) : null} */}
       </IonCardHeader>
+
       {full ? (
         <IonCardContent>
           <div className="flex flex-col gap-2">
@@ -162,6 +177,7 @@ const AdvertStyleGrid = ({ advert, full = false }) => {
               </IonAvatar>{" "}
               {advert["user"]["name"]}
             </Link>
+
             {/* Category */}
             <Link
               to={generatePath("/app/adverts/categories/:parent/:sub", {
