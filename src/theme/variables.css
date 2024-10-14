@@ -6,7 +6,7 @@ ion-card {
 }
 
 .header-md {
-  box-shadow: 2px 4px 5px #f7f7f7;
+  box-shadow: 2px 4px 5px #f7f7f700;
 }
 
 ion-searchbar,
@@ -15,6 +15,5 @@ ion-searchbar,
 }
 
 .searchbar-input.sc-ion-searchbar-md {
-  background-color: #f7f7f7;
   border-radius: 10px;
 }
