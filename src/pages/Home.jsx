@@ -53,6 +53,54 @@ import withIonPageQueryRefetch from "@/hoc/withIonPageQueryRefetch";
 import { useApiInfiniteQuery, useApiQuery } from "@/hooks/useApiQuery";
 
 import Logo from "@/assets/paaumarket.svg";
+import Joyride from "react-joyride";
+import { useEffect } from "react";
+
+const steps = [
+  {
+    target: "body",
+    title: <b>Welcome to Paau Market! 🎉</b>,
+    content: (
+      <p>
+        We’re thrilled to have you here! Let’s take a quick tour to help you get
+        started and make the most out of your experience.
+      </p>
+    ),
+    placement: "center",
+  },
+  {
+    target: ".post-ad",
+    content: <p>Sell your products and services to wider audiences.</p>,
+  },
+  {
+    target: ".demand",
+    content: (
+      <p>
+        Create a demand for what you're looking for and our agents will help you
+        find it.
+      </p>
+    ),
+  },
+  {
+    target: ".category",
+    content: (
+      <p>All the categories. Click a category and see other subcategory.</p>
+    ),
+  },
+  {
+    target: ".demand-list",
+    content: <p>See what students are looking for.</p>,
+  },
+  {
+    target: ".advert-list",
+    content: (
+      <p>
+        Browse the <b>Trending ad</b> list to find a product that meet your
+        need. Start shopping today!
+      </p>
+    ),
+  },
+];
 
 export default withIonPageQueryRefetch(function Home() {
   const { user } = useAuth();
@@ -79,9 +127,41 @@ export default withIonPageQueryRefetch(function Home() {
         .then((response) => response.data),
     getNextPageParam: (lastPage) => lastPage["meta"]["next_cursor"],
   });
+  const [run, setRun] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("home-page")) {
+      setRun(true);
+    }
+  }, [run]);
 
   return (
     <>
+      {isSuccess && (
+        <Joyride
+          callback={(state) => {
+            if (state.status === "finished" || state.status === "skipped") {
+              localStorage.setItem("home-page", "home-page");
+              setRun(false);
+            }
+          }}
+          steps={steps}
+          run={run}
+          continuous={true}
+          showSkipButton={true}
+          hideCloseButton={true}
+          locale={{
+            last: "Finish",
+            skip: "SKIP",
+          }}
+          styles={{
+            options: {
+              padding: 0,
+              primaryColor: "#0054e9",
+            },
+          }}
+        />
+      )}
       <IonMenu contentId="main-content" side="end">
         <IonHeader>
           <IonToolbar>
@@ -276,7 +356,11 @@ export default withIonPageQueryRefetch(function Home() {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <IonButton expand="block" routerLink="/app/sell">
+                <IonButton
+                  expand="block"
+                  routerLink="/app/sell"
+                  className="post-ad"
+                >
                   <IonIcon icon={addCircleOutline} slot="start" />
                   <div>Post ad</div>
                 </IonButton>
@@ -286,6 +370,7 @@ export default withIonPageQueryRefetch(function Home() {
                   color="dark"
                   expand="block"
                   routerLink="/app/demands"
+                  className="demand"
                 >
                   <IonIcon icon={megaphoneOutline} slot="start" />
                   Demand
@@ -338,7 +423,7 @@ const Category = () => {
       <IonSpinner />
     </div>
   ) : isSuccess ? (
-    <IonGrid className="px-0">
+    <IonGrid className="px-0 category">
       <IonRow className="ion-justify-content-center">
         {data.map((category) => (
           <IonCol

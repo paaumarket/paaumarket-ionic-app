@@ -54,48 +54,54 @@ export default withIonPageQueryRefetch(function SingleAdvertPage() {
   });
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/app"></IonBackButton>
-          </IonButtons>
-          <IonTitle>
-            {isPending ? "Loading..." : isSuccess ? advert["title"] : "Error!"}
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
+    <>
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonBackButton defaultHref="/app"></IonBackButton>
+            </IonButtons>
+            <IonTitle>
+              {isPending
+                ? "Loading..."
+                : isSuccess
+                ? advert["title"]
+                : "Error!"}
+            </IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
-      <IonContent fullscreen>
-        <IonGrid>
-          <IonRow className="ion-justify-start">
-            <IonCol size="12" sizeXl="8">
-              {isPending ? (
-                <AdvertPlaceholder />
-              ) : (
-                <div className="flex flex-col gap-4">
-                  <Advert full advert={advert} />
-                </div>
-              )}
-            </IonCol>
-            <IonCol size="12" sizeXl="4">
-              {isSuccess && advert["user_id"] !== user?.["id"] ? (
-                <AdvertContact advert={advert} />
-              ) : null}
-            </IonCol>
-          </IonRow>
-
-          {isSuccess && advert["status"] === "approved" ? (
+        <IonContent fullscreen>
+          <IonGrid>
             <IonRow className="ion-justify-start">
               <IonCol size="12" sizeXl="8">
-                <SimilarAdverts advert={advert} />
+                {isPending ? (
+                  <AdvertPlaceholder />
+                ) : (
+                  <div className="flex flex-col gap-4">
+                    <Advert full advert={advert} />
+                  </div>
+                )}
+              </IonCol>
+              <IonCol size="12" sizeXl="4">
+                {isSuccess && advert["user_id"] !== user?.["id"] ? (
+                  <AdvertContact advert={advert} />
+                ) : null}
               </IonCol>
             </IonRow>
-          ) : null}
-        </IonGrid>
-      </IonContent>
-      {/* <SignInModal /> */}
-    </IonPage>
+
+            {isSuccess && advert["status"] === "approved" ? (
+              <IonRow className="ion-justify-start">
+                <IonCol size="12" sizeXl="8">
+                  <SimilarAdverts advert={advert} />
+                </IonCol>
+              </IonRow>
+            ) : null}
+          </IonGrid>
+        </IonContent>
+        {/* <SignInModal /> */}
+      </IonPage>
+    </>
   );
 });
 
@@ -284,7 +290,7 @@ const AdvertContact = ({ advert }) => {
               onClick={handleShowContact}
             >
               <IonIcon icon={callOutline} className="ion-padding-end"></IonIcon>
-              Show Contact
+              View Contact
             </IonButton>
           )}
         </div>

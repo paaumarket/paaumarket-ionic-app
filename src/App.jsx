@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Tabs from "./components/Tabs";
 import useApp from "./hooks/useApp";
 import { ProfileUpdater } from "./ProfileUpdater";
+import Joyride from "react-joyride";
 
 /**
  * Ionic Dark Mode

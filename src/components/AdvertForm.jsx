@@ -143,7 +143,7 @@ export default function AdvertForm({
 
         <IonItemGroup>
           {/* Title */}
-          <IonItem>
+          <IonItem className="title">
             <FormIonInput
               {...form.register("title")}
               label="Title"
@@ -153,7 +153,7 @@ export default function AdvertForm({
           </IonItem>
 
           {/* Description */}
-          <IonItem>
+          <IonItem className="description">
             <FormIonTextarea
               {...form.register("description")}
               autoGrow
@@ -169,7 +169,7 @@ export default function AdvertForm({
             control={form.control}
             name="price"
             render={({ field, fieldState }) => (
-              <IonItem>
+              <IonItem className="price">
                 <CurrencyInput
                   customInput={FormIonInput}
                   label="Price"

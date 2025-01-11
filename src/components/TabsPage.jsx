@@ -34,7 +34,7 @@ export default function TabsPage({ children, ...props }) {
         </IonTabButton>
 
         {/* Sell */}
-        <IonTabButton tab="sell" href="/app/sell">
+        <IonTabButton tab="sell" href="/app/sell" className="sell">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Sell</IonLabel>
         </IonTabButton>

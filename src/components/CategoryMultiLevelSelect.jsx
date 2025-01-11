@@ -45,7 +45,7 @@ const CategoryMultiLevelSelect = ({ errorText, value = null, onSelect }) => {
 
   return (
     <>
-      <IonItem button id={id}>
+      <IonItem button id={id} className="select-category">
         {selected ? (
           <>
             <IonThumbnail slot="start" className="[--size:theme(spacing.10)]">

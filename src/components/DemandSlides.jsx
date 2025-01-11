@@ -50,7 +50,11 @@ export default function DemandSlides() {
     <>
       <h5 className="font-bold">Demands</h5>
       {isPending ? (
-        <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 5000 }}>
+        <Swiper
+          modules={[Autoplay, IonicSlides]}
+          autoplay={{ delay: 5000 }}
+          className="demand-list"
+        >
           {Array.from({ length: 10 }).map((_, i) => (
             <SwiperSlide key={i}>
               <DemandSlidePlaceholder />
@@ -59,7 +63,11 @@ export default function DemandSlides() {
         </Swiper>
       ) : isSuccess ? (
         demands.length ? (
-          <Swiper modules={[Autoplay, IonicSlides]} autoplay={{ delay: 7000 }}>
+          <Swiper
+            modules={[Autoplay, IonicSlides]}
+            autoplay={{ delay: 7000 }}
+            className="demand-list"
+          >
             {demands.map((demand) => (
               <SwiperSlide key={demand["id"]}>
                 <DemandSlide demand={demand} />
@@ -67,7 +75,7 @@ export default function DemandSlides() {
             ))}
           </Swiper>
         ) : (
-          <IonCard color={"tertiary"} className="ion-no-margin">
+          <IonCard color={"tertiary"} className="ion-no-margin demand-list">
             <IonCardContent>No demands to show</IonCardContent>
           </IonCard>
         )

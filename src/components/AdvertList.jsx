@@ -121,5 +121,5 @@ const AdvertCol = ({ mode, ...props }) => {
           sizeSm: "12",
           sizeMd: "12",
         };
-  return <IonCol {...colProps} {...props} />;
+  return <IonCol {...colProps} {...props} className="advert-list" />;
 };
