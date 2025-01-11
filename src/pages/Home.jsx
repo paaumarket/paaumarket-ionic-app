@@ -364,6 +364,7 @@ export default withIonPageQueryRefetch(function Home() {
                   expand="block"
                   routerLink="/app/sell"
                   className="post-advert"
+                  color="primary"
                 >
                   <IonIcon icon={addCircleOutline} slot="start" />
                   <div>Post ad</div>
