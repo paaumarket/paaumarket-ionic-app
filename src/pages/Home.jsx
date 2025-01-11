@@ -69,7 +69,7 @@ const steps = [
     placement: "center",
   },
   {
-    target: ".post-advert",
+    target: ".advert",
     content: (
       <p>
         Click "Post Ad" to post your products and services to wider audiences.
@@ -363,8 +363,7 @@ export default withIonPageQueryRefetch(function Home() {
                 <IonButton
                   expand="block"
                   routerLink="/app/sell"
-                  className="post-advert"
-                  color="primary"
+                  className="advert"
                 >
                   <IonIcon icon={addCircleOutline} slot="start" />
                   <div>Post ad</div>
