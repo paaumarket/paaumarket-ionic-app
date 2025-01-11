@@ -69,7 +69,7 @@ const steps = [
     placement: "center",
   },
   {
-    target: "post-advert",
+    target: ".post-advert",
     content: (
       <p>
         Click "Post Ad" to post your products and services to wider audiences.
